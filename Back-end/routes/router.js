@@ -17,8 +17,6 @@ router.post('/users/login', login);
 
 //when user buys/sells a holding
 router.put('/users/:username', updateHoldings)//when user adds/deletes a holding affects cash, investments, activities,
-//req.body = {date, company, action, quanitity, price} //basically sends the acitivty
-
 
 //to be able to get the ranking
 //router.get('/users/ranking', getRanking)
