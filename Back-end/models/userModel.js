@@ -9,10 +9,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  totalValue: {
-    type: Number,
-    "default": 50000
-  },
   Cash: {
     type: Number,
     "default": 50000
@@ -28,6 +24,10 @@ const userSchema = new mongoose.Schema({
   activities: {
     type: Array,
     "default": []
+  },
+  totalValueHistory: {
+    type: Array,
+    "default": [] //{totalValue, date}
   }
 }, {
   timestamps: true //creates an createdat and updated at field whenever a document is created
