@@ -2,18 +2,17 @@ const Router = require('express').Router;
 const router = Router();
 
 //import controller functions
-const {getAllUsers, createUser, login} = require('../controllers/users')
+const {getAllUsers, createUser, getUser, login} = require('../controllers/users')
 
 //HTTP requests (get, post, put, delete)
 
 
-//users
+//users/user
 router.get('/users', getAllUsers) //get all users
+router.get('/users/:username', getUser)//get Single User
 router.post('/users', createUser) //when new account is created
 router.post('/users/login', login);
 
-//user
-//router.get('/users/:user', getUser) //get Single User
 
 //when user buys/sells a holding
 //router.put('/users/:user', updateUser)//when user adds/deletes a holding affects cash, investments, activities,
