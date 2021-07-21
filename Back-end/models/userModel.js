@@ -9,13 +9,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  Cash: {
+  cash: {
     type: Number,
     "default": 50000
-  },
-  Investments:{
-    type: Number,
-    "default": 0
   },
   holdings: {
     type: Array,
@@ -35,3 +31,40 @@ const userSchema = new mongoose.Schema({
 //Mongoose automatically looks for the plural, lowercased version of your model name. Thus,
 // for the example above, the model Post is for the posts collection in the database.
 module.exports = mongoose.model('User', userSchema);
+
+
+
+
+/*
+
+Activity object:
+
+{
+"date": "26thjuly",
+"company": "Matterport",
+"ticker": "GHVI",
+"action": "buy",
+"quantity": 500,
+"price": 15.21,
+"netAmount": 7605
+}
+
+CreateUser:
+
+{
+  "userName": "RahmatYousufi",
+  "password": "123456"
+}
+
+holdings object:
+
+{
+  company:
+  ticker:
+  quantity:
+  avgCost:
+}
+
+
+
+*/

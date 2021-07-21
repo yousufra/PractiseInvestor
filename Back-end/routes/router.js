@@ -3,6 +3,7 @@ const router = Router();
 
 //import controller functions
 const {getAllUsers, createUser, getUser, login} = require('../controllers/users')
+const {updateHoldings} = require('../controllers/holdings');
 
 //HTTP requests (get, post, put, delete)
 
@@ -15,7 +16,7 @@ router.post('/users/login', login);
 
 
 //when user buys/sells a holding
-//router.put('/users/:user', updateUser)//when user adds/deletes a holding affects cash, investments, activities,
+router.put('/users/:username', updateHoldings)//when user adds/deletes a holding affects cash, investments, activities,
 //req.body = {date, company, action, quanitity, price} //basically sends the acitivty
 
 
