@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Holding = () => {
+const Holding = ({holding}) => {
   return (
     <div>
-      
+      {JSON.stringify(holding)}
     </div>
   )
 }
