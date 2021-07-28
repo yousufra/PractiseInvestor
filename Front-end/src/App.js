@@ -1,6 +1,5 @@
 import './App.css';
-import { useEffect, useState } from 'react';
-import {getUser} from './api/backendApi';
+import { useEffect} from 'react';
 import NavBar from './components/NavBar/navBar';
 import Dashboard from './components/Dashboard/dashboard';
 import {useDispatch} from 'react-redux';
@@ -13,6 +12,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getAllHoldings());
+    console.log('hello')
   }, [dispatch]);
 
   return (

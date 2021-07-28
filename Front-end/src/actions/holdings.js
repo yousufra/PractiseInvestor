@@ -5,6 +5,7 @@ import {getUser, putHoldings} from '../api/backendApi';//import all exports from
 export const getAllHoldings = () => async (dispatch) => { //need async (dispatch) middleware because we need some time to get all the holdings
   try {
     const {data} = await getUser('RahmatYousufi'); //decontruct response to grab data from response object
+  
     const holdings = data.holdings;
     const action = {
       type: 'FETCH_HOLDINGS',
