@@ -4,7 +4,7 @@ import Dashboard from './components/Dashboard/dashboard';
 import Order from './components/Order/order';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import {Container} from '@material-ui/core';
-import Login from './components/Login/login';
+import Authenticate from './components/Authenticate/authenticate';
 
 function App() {
 
@@ -12,7 +12,7 @@ function App() {
     <BrowserRouter>
       <Container maxWidth="lg">
         <Switch>
-          <Route path="/login" exact component={Login}/>
+          <Route path="/authenticate" exact component={Authenticate}/>
           <Route path="/" exact>
             <NavBar></NavBar>
             <Dashboard></Dashboard>
