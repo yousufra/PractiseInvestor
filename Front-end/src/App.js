@@ -12,7 +12,6 @@ function App() {
 
   useEffect(() => {
     dispatch(getAllHoldings());
-    console.log('hello')
   }, [dispatch]);
 
   return (

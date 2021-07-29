@@ -13,7 +13,7 @@ import Holding from './Holding/holding';
 
 const Holdings = () => {
   const classes = useStyles();
-  const holdings = useSelector(state => state.holdings);
+  const holdings = useSelector(state => state.holdings); //state object is all the states within the combine reducer in index.js in reducer folder
 
   return (
     !holdings.length ? <p>No Holdings, buy a stock</p> : (

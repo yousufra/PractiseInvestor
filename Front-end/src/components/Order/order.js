@@ -20,9 +20,16 @@ const Order = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault(); //prevent browser from refreshing , defualt when you submit a form
-
-
     dispatch(updateHoldings(order));
+    setOrder({
+      date: '',
+      company: '',
+      ticker: '',
+      action: '',
+      quantity: 0,
+      price: 0,
+      netAmount: 0
+    });
   }
 
   return (

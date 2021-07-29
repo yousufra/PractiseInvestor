@@ -9,7 +9,7 @@ import thunk from 'redux-thunk'
 import reducers from './reducers';
 
 
-const store = createStore(reducers, compose(applyMiddleware(thunk)));
+const store = createStore(reducers, compose(applyMiddleware(thunk))); //thunk allows us to handle asynchronous actions in redux
 
 ReactDOM.render(
   <React.StrictMode>
