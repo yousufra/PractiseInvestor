@@ -1,8 +1,10 @@
-const reducer = (holdings=[], action) => { //need to inialize state(holdings) , holdings is gunna be an array of objects, reducer returns the new state 
+import {fetchHoldings, updateHolding} from '../constants/actionTypes';
+
+const reducer = (holdings=[], action) => { //need to inialize state(holdings) , holdings is gunna be an array of objects, reducer returns the new state
   switch (action.type) {
-    case 'FETCH_HOLDINGS':
+    case fetchHoldings:
       return action.payload;
-    case 'UPDATE_HOLDING':
+    case updateHolding:
       return action.payload;
     default:
       return holdings;
