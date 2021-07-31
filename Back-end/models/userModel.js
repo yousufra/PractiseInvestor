@@ -3,37 +3,34 @@ const mongoose = require('./index');
 const userSchema = new mongoose.Schema({
   userName: {
     type: String,
-    required: true
+    required: true,
   },
   password: {
     type: String,
-    required: true
+    required: true,
   },
   cash: {
     type: Number,
-    "default": 50000
+    default: 50000,
   },
   holdings: {
     type: Array,
-    "default": []
+    default: [],
   },
   activities: {
     type: Array,
-    "default": []
+    default: [],
   },
   totalValueHistory: {
     type: Array,
-    "default": [] //{totalValue, date}
-  }
+    default: [], // {totalValue, date}
+  },
 }, {
-  timestamps: true //creates an createdat and updated at field whenever a document is created
+  timestamps: true, // creates an createdat and updated at field whenever a document is created
 });
-//Mongoose automatically looks for the plural, lowercased version of your model name. Thus,
+// Mongoose automatically looks for the plural, lowercased version of your model name. Thus,
 // for the example above, the model Post is for the posts collection in the database.
 module.exports = mongoose.model('User', userSchema);
-
-
-
 
 /*
 
@@ -64,7 +61,5 @@ holdings object:
   quantity:
   avgCost:
 }
-
-
 
 */

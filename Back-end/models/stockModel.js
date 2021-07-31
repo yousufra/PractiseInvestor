@@ -1,14 +1,13 @@
 const mongoose = require('./index');
 
-const stockSchema = new mongoose.Schema ({
+const stockSchema = new mongoose.Schema({
   symbol: {
     type: String,
-    required: true
+    required: true,
   },
   name: {
     type: String,
-    required: true
-  }
+  },
 });
 
 module.exports = mongoose.model('Stock', stockSchema);

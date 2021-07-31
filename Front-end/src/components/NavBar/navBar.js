@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react';
+/* eslint-disable react/jsx-filename-extension */
+import React, { useState, useEffect } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -12,11 +13,11 @@ import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import useStyles from './styles';
 import decode from 'jwt-decode';
 import { useDispatch } from 'react-redux';
-import {useHistory, useLocation } from 'react-router-dom';
-import {LOGOUT} from '../../constants/actionTypes';
+import { useHistory, useLocation } from 'react-router-dom';
+import useStyles from './styles';
+import { LOGOUT } from '../../constants/actionTypes';
 
 export default function NavBar() {
   const classes = useStyles();
@@ -35,7 +36,6 @@ export default function NavBar() {
 
     setUser(null);
   };
-
 
   useEffect(() => {
     const token = user?.token;

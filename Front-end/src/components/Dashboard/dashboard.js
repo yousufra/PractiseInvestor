@@ -1,12 +1,11 @@
-import React from 'react'
-import { useEffect} from 'react';
+/* eslint-disable react/jsx-filename-extension */
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import Holdings from './Holdings/holdings';
-import {useDispatch} from 'react-redux';
-import {getAllHoldings} from '../../actions/holdings';
+import { getAllHoldings } from '../../actions/holdings';
 
 const Dashboard = () => {
-
-  const dispatch = useDispatch();//allows us to dispatch an action
+  const dispatch = useDispatch(); // allows us to dispatch an action
 
   useEffect(() => {
     dispatch(getAllHoldings());
@@ -14,9 +13,9 @@ const Dashboard = () => {
 
   return (
     <>
-      <Holdings></Holdings>
+      <Holdings />
     </>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;

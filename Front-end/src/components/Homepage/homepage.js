@@ -1,17 +1,15 @@
-import React from 'react'
+/* eslint-disable react/jsx-filename-extension */
+import React from 'react';
 import NavBar from '../NavBar/navBar';
 import Dashboard from '../Dashboard/dashboard';
 import Order from '../Order/order';
 
+const Homepage = () => (
+  <>
+    <NavBar />
+    <Dashboard />
+    <Order />
+  </>
+);
 
-const Homepage = () => {
-  return (
-    <>
-      <NavBar></NavBar>
-      <Dashboard></Dashboard>
-      <Order></Order>
-    </>
-  )
-}
-
-export default Homepage
+export default Homepage;

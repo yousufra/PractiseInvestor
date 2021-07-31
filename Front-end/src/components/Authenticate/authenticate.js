@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -7,13 +7,13 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import useStyles from './styles';
-import {InputAdornment, IconButton } from '@material-ui/core';
+import { InputAdornment, IconButton } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import {useHistory} from 'react-router-dom';
-import {useDispatch} from 'react-redux';
-import {register, login} from '../../actions/authenticate';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import useStyles from './styles';
+import { register, login } from '../../actions/authenticate';
 
 const Authenticate = () => {
   const classes = useStyles();
@@ -23,40 +23,39 @@ const Authenticate = () => {
   const [form, setForm] = useState({
     userName: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
   });
 
   const dispatch = useDispatch();
   const history = useHistory();
 
   const handleShowPassword = () => {
-    setShowPassword((previousShowPassword) =>  previousShowPassword === 'password'? 'text':'password');
-  }
+    setShowPassword((previousShowPassword) => (previousShowPassword === 'password' ? 'text' : 'password'));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if(isRegister) {
-      //dispatch an action to signup
+    if (isRegister) {
+      // dispatch an action to signup
       dispatch(register(form, history));
-
-    } else{
-      //dspatch an action to sign in
+    } else {
+      // dspatch an action to sign in
       dispatch(login(form, history));
-
     }
-  }
+  };
 
   const handleChange = (e) => {
-    setForm({...form, [e.target.name]: e.target.value});
-  }
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
   const switchIsRegister = () => {
     setIsRegister((previousIsRegister) => !previousIsRegister);
     setShowPassword('password');
-  }
+  };
 
   return (
+    // eslint-disable-next-line react/jsx-filename-extension
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -64,7 +63,7 @@ const Authenticate = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          {isRegister? 'Register':'Login'}
+          {isRegister ? 'Register' : 'Login'}
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit} noValidate>
           <TextField
@@ -95,30 +94,30 @@ const Authenticate = () => {
                     {showPassword === 'password' ? <Visibility /> : <VisibilityOff />}
                   </IconButton>
                 </InputAdornment>
-              )
+              ),
             }}
           />
           {isRegister && (
           <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          name="confirmPassword"
-          label="Confirm Password"
-          type={showPassword}
-          id="confirmPassword"
-          onChange={handleChange}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton onClick={handleShowPassword}>
-                  {showPassword === 'password' ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              </InputAdornment>
-            )
-          }}
-        />
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="confirmPassword"
+            label="Confirm Password"
+            type={showPassword}
+            id="confirmPassword"
+            onChange={handleChange}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={handleShowPassword}>
+                    {showPassword === 'password' ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
           )}
           <Button
             type="submit"
@@ -127,12 +126,12 @@ const Authenticate = () => {
             color="primary"
             className={classes.submit}
           >
-             {isRegister? 'Register':'Login'}
+            {isRegister ? 'Register' : 'Login'}
           </Button>
           <Grid container>
             <Grid item>
               <Button onClick={switchIsRegister}>
-                {isRegister? 'Already have an account? Login' : "Don't have an account? Register"}
+                {isRegister ? 'Already have an account? Login' : "Don't have an account? Register"}
               </Button>
             </Grid>
           </Grid>
@@ -140,6 +139,6 @@ const Authenticate = () => {
       </div>
     </Container>
   );
-}
+};
 
-export default Authenticate
+export default Authenticate;
