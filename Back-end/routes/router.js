@@ -5,6 +5,7 @@ const router = Router();
 //import controller functions
 const {getAllUsers, createUser, getUser, login} = require('../controllers/users')
 const {updateHoldings} = require('../controllers/holdings');
+const {getAllStocks} = require('../controllers/stocks');
 
 //HTTP requests (get, post, put, delete)
 
@@ -21,6 +22,9 @@ router.put('/user/updateHolding', authenticate, updateHoldings)//when user adds/
 
 //to be able to get the ranking
 //router.get('/users/ranking', getRanking)
+
+//stock filter api (name and ticker)
+// router.get('/stocks', getAllStocks);
 
 
 module.exports = router;

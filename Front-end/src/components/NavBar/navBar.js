@@ -97,8 +97,8 @@ export default function NavBar() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
+        <IconButton aria-label="show 16 new notifications" color="inherit">
+          <Badge badgeContent={16} color="secondary">
             <NotificationsIcon />
           </Badge>
         </IconButton>
