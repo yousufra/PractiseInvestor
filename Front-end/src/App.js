@@ -1,4 +1,4 @@
-import './App.css';
+ import './App.css';
 import NavBar from './components/NavBar/navBar';
 import Dashboard from './components/Dashboard/dashboard';
 import Order from './components/Order/order';
@@ -12,7 +12,7 @@ function App() {
     <BrowserRouter>
       <Container maxWidth="lg">
         <Switch>
-          <Route path="/authenticate" exact component={Authenticate}/>
+          <Route path="/auth" exact component={Authenticate}/>
           <Route path="/" exact>
             <NavBar></NavBar>
             <Dashboard></Dashboard>

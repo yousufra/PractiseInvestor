@@ -15,16 +15,25 @@ exports.getAllUsers = async (req, res) => {
 };
 
 exports.createUser = async (req, res) => {
+  const {userName, password, confirmPassword} = req.body;
+
+  if(!userName || !password || !confirmPassword) return res.status(400).send({message: 'Please enter all fields.'}); //check if all fields filled in form
+
   try {
-    const user = await User.findOne({userName: req.body.userName});
-    if(user){
-      return res.status(400).send({message: 'username taken, chose another one'});
+    const user = await User.findOne({userName});
+    if (user) {
+      return res.status(400).send({message: 'Username taken, chose another one.'});
+    }
+    if (password != confirmPassword){
+      return res.status(400).send({message: "Passwords don't match."});
     }
     const salt = await bcrypt.genSalt();//adds salt infront of hashed password to make it harder to hack in case of same passwords
-    const hashedPassword = await bcrypt.hash(req.body.password, salt);
-    const newUser= await User.create({userName:req.body.userName, password: hashedPassword});
-    res.status(201);
-    res.send(newUser);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    const newUser= await User.create({userName, password: hashedPassword});
+    res.status(201).send({
+      user: newUser,
+      token: generateToken(userName)
+    });
   } catch (error) {
     res.status(500);
     res.send(error);
@@ -33,8 +42,8 @@ exports.createUser = async (req, res) => {
 
 exports.getUser = async (req, res) => {
   try {
-    const {username} = req.params;
-    const user = await User.findOne({userName: username});
+    const {userName} = req.user;
+    const user = await User.findOne({userName}).select('-password'); //remove Password when getting a user
     res.status(200);
     res.send(user);
   } catch (error) {
@@ -44,22 +53,24 @@ exports.getUser = async (req, res) => {
 }
 
 exports.login = async (req, res) => {
-  const user = await User.findOne({userName: req.body.userName});
-  if (!user) return res.status(400).send({message: 'Cannot find user'});
+  const {userName, password} = req.body;
+
+  if(!userName || !password) return res.status(400).send({message: 'Please enter all fields.'});
+
   try {
-    if (await bcrypt.compare(req.body.password, user.password)){
+    const user = await User.findOne({userName});
+    if (!user) return res.status(404).send({message: 'Cannot find user.'}); //404 - cannot find
+    if (await bcrypt.compare(password, user.password)){
       res.status(200).send(
         {
-          _id: user._id,
-          userName: user.userName,
-          password: user.password,
-          token: generateToken(user)
+          userName,
+          token: generateToken(userName)
         });
     } else {
       res.status(400).send({message: 'Wrong password'});
     }
   } catch (error) {
-    res.status(500);
+    res.status(500); //500 - undefined server error
     res.send(error);
   }
 }

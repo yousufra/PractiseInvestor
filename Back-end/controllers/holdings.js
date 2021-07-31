@@ -22,8 +22,11 @@ async function pushActivityChangeCash (username, activity) {
 
 exports.updateHoldings = async (req, res) => {
   try {
-    const {username} = req.params;
+
+    const username = req.user.userName;
     const activity = req.body;
+
+    if (!username) return res.status(401).send({message: 'Unauthenticated'}); //401 - unauthenticated error
 
     let updatedUser = await pushActivityChangeCash(username, activity);
 

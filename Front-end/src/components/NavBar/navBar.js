@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -13,11 +13,41 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import useStyles from './styles';
+import decode from 'jwt-decode';
+import { useDispatch } from 'react-redux';
+import {useHistory, useLocation } from 'react-router-dom';
+import {LOGOUT} from '../../constants/actionTypes';
 
 export default function NavBar() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const history = useHistory();
+
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('home')));
+
+  const signOut = () => {
+    dispatch({ type: LOGOUT });
+
+    history.push('/authenticate');
+
+    setUser(null);
+  };
+
+
+  useEffect(() => {
+    const token = user?.token;
+
+    if (token) {
+      const decodedToken = decode(token);
+
+      if (decodedToken.exp * 1000 < new Date().getTime()) signOut();
+    }
+
+    setUser(JSON.parse(localStorage.getItem('home')));
+  }, [location]);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -51,7 +81,7 @@ export default function NavBar() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={signOut}>Sign Out</MenuItem>
     </Menu>
   );
 

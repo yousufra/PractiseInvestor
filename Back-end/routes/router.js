@@ -1,4 +1,5 @@
 const Router = require('express').Router;
+const authenticate = require('../middleware/authenticate');
 const router = Router();
 
 //import controller functions
@@ -10,13 +11,13 @@ const {updateHoldings} = require('../controllers/holdings');
 
 //users/user
 router.get('/users', getAllUsers) //get all users
-router.get('/users/:username', getUser)//get Single User
+router.get('/user', authenticate , getUser)//get Single User
 router.post('/users', createUser) //when new account is created
-router.post('/users/login', login);
+router.post('/user/login', login);
 
 
 //when user buys/sells a holding
-router.put('/users/:username', updateHoldings)//when user adds/deletes a holding affects cash, investments, activities,
+router.put('/user/updateHolding', authenticate, updateHoldings)//when user adds/deletes a holding affects cash, investments, activities,
 
 //to be able to get the ranking
 //router.get('/users/ranking', getRanking)

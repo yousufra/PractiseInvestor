@@ -1,8 +1,10 @@
 import {combineReducers} from 'redux';
 
-import holdings from './holdings';
+import holdingsReducer from './holdingsReducer';
+import authReducer from './authenticateReducer';
 
 export default combineReducers({
   //put all individual reducers here
-  holdings,
+  holdings: holdingsReducer,
+  authenticate: authReducer
 });

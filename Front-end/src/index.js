@@ -9,7 +9,10 @@ import thunk from 'redux-thunk'
 import reducers from './reducers';
 
 
-const store = createStore(reducers, compose(applyMiddleware(thunk))); //thunk allows us to handle asynchronous actions in redux
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(reducers, composeEnhancers( //thunk allows us to handle asynchronous actions in redux
+  applyMiddleware(thunk)
+));
 
 ReactDOM.render(
   <React.StrictMode>

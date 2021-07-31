@@ -11,23 +11,44 @@ import useStyles from './styles';
 import {InputAdornment, IconButton } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import {useHistory} from 'react-router-dom';
+import {useDispatch} from 'react-redux';
+import {register, login} from '../../actions/authenticate';
 
 const Authenticate = () => {
   const classes = useStyles();
 
   const [showPassword, setShowPassword] = useState('password');
   const [isRegister, setIsRegister] = useState(false);
+  const [form, setForm] = useState({
+    userName: '',
+    password: '',
+    confirmPassword: ''
+  });
+
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleShowPassword = () => {
     setShowPassword((previousShowPassword) =>  previousShowPassword === 'password'? 'text':'password');
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
+    if(isRegister) {
+      //dispatch an action to signup
+      dispatch(register(form, history));
+
+    } else{
+      //dspatch an action to sign in
+      dispatch(login(form, history));
+
+    }
   }
 
-  const handleChange = () => {
-
+  const handleChange = (e) => {
+    setForm({...form, [e.target.name]: e.target.value});
   }
 
   const switchIsRegister = () => {
@@ -53,7 +74,7 @@ const Authenticate = () => {
             fullWidth
             id="userName"
             label="Username"
-            name="username"
+            name="userName"
             autoFocus
             onChange={handleChange}
           />
