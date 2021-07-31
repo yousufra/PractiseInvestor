@@ -31,7 +31,7 @@ export default function NavBar() {
   const signOut = () => {
     dispatch({ type: LOGOUT });
 
-    history.push('/authenticate');
+    history.push('/auth');
 
     setUser(null);
   };

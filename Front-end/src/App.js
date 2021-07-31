@@ -1,10 +1,9 @@
  import './App.css';
-import NavBar from './components/NavBar/navBar';
-import Dashboard from './components/Dashboard/dashboard';
-import Order from './components/Order/order';
+import Homepage from './components/Homepage/homepage';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import {Container} from '@material-ui/core';
 import Authenticate from './components/Authenticate/authenticate';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute'
 
 function App() {
 
@@ -13,11 +12,7 @@ function App() {
       <Container maxWidth="lg">
         <Switch>
           <Route path="/auth" exact component={Authenticate}/>
-          <Route path="/" exact>
-            <NavBar></NavBar>
-            <Dashboard></Dashboard>
-            <Order></Order>
-          </Route>
+          <PrivateRoute path="/" exact component={Homepage}/>
         </Switch>
       </Container>
     </BrowserRouter>
