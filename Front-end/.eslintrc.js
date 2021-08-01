@@ -20,6 +20,7 @@ module.exports = {
     'react',
   ],
   rules: {
-    noconsole: 0,
+    'no-console': 'off',
+    'max-len': 0,
   },
 };

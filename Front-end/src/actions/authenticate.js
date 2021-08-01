@@ -1,5 +1,5 @@
-import {AUTHENTICATE} from '../constants/actionTypes';
-import {signIn, signUp} from '../api/backendApi';
+import { AUTHENTICATE } from '../constants/actionTypes';
+import { signIn, signUp } from '../api/backendApi';
 
 export const login = (form, history) => async (dispatch) => {
   try {
@@ -7,15 +7,14 @@ export const login = (form, history) => async (dispatch) => {
 
     dispatch({
       type: AUTHENTICATE,
-      data
-    })
+      data,
+    });
 
-
-    history.push('/');//after login push user to homepage
+    history.push('/');// after login push user to homepage
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const register = (form, history) => async (dispatch) => {
   try {
@@ -23,12 +22,11 @@ export const register = (form, history) => async (dispatch) => {
 
     dispatch({
       type: AUTHENTICATE,
-      data
-    })
+      data,
+    });
 
     history.push('/');
   } catch (error) {
     console.log(error);
   }
-}
-
+};
