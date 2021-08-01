@@ -24,9 +24,9 @@ const Order = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault(); // prevent browser from refreshing , defualt when you submit a form
-    dispatch(updateHoldings(order));
+    dispatch(updateHoldings({ ...order, netAmount: order.quantity * order.price }));
     setOrder({
-      date: '',
+      date: moment().format('MMMM Do YYYY'),
       company: '',
       ticker: '',
       action: '',
@@ -46,7 +46,7 @@ const Order = () => {
         <TextField name="action" label="Action" variant="outlined" fullWidth value={order.action} onChange={(e) => setOrder({ ...order, action: e.target.value })} />
         <TextField type="number" name="quantity" label="Quantity" variant="outlined" fullWidth value={order.quantity} onChange={(e) => setOrder({ ...order, quantity: e.target.valueAsNumber })} />
         <TextField type="number" name="price" label="Price" variant="outlined" fullWidth value={order.price} onChange={(e) => setOrder({ ...order, price: e.target.valueAsNumber })} />
-        <TextField type="number" name="netAmount" label="NetAmount" variant="outlined" fullWidth value={order.price * order.quantity} onChange={(e) => setOrder({ ...order, netAmount: e.target.valueAsNumber })} />
+        <TextField type="number" name="netAmount" label="NetAmount" variant="outlined" autocomplete="netAmount" fullWidth value={order.price * order.quantity} onChange={(e) => setOrder({ ...order, netAmount: e.target.valueAsNumber })} />
         <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth>Submit Order</Button>
       </form>
     </Paper>
