@@ -7,8 +7,13 @@ import { useDispatch } from 'react-redux';
 import moment from 'moment';
 import { updateHoldings } from '../../actions/holdings';
 import useStyles from './styles';
+import { getMatchingStocks } from '../../api/backendApi';
+import { DebounceInput } from 'react-debounce-input';
 
 const Order = () => {
+  const classes = useStyles();
+  const dispatch = useDispatch();
+
   const [order, setOrder] = useState({
     date: moment().format('MMMM Do YYYY'),
     company: '',
@@ -19,8 +24,11 @@ const Order = () => {
     netAmount: 0,
   });
 
-  const classes = useStyles();
-  const dispatch = useDispatch();
+  const [stocks, setStocks] = useState([]);
+
+  const handleChange = (e) => {
+
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault(); // prevent browser from refreshing , defualt when you submit a form

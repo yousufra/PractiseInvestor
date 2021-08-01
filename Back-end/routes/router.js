@@ -8,7 +8,7 @@ const {
   getAllUsers, createUser, getUser, login,
 } = require('../controllers/users');
 const { updateHoldings } = require('../controllers/holdings');
-const { getAllStocks } = require('../controllers/stocks');
+const { getAllStocks, getMatchingStocks } = require('../controllers/stocks');
 
 // HTTP requests (get, post, put, delete)
 
@@ -26,6 +26,7 @@ router.put('/user/updateHolding', authenticate, updateHoldings);// when user add
 
 // stock filter api (name and ticker)
 router.get('/stocks', getAllStocks);
+router.get('/stocks/:filter', getMatchingStocks);
 
 module.exports = router;
 

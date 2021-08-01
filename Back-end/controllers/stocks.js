@@ -1,5 +1,4 @@
 const Stock = require('../models/stockModel');
-const request = require('request');
 
 exports.getAllStocks = async (req, res) => {
   try {
@@ -11,3 +10,16 @@ exports.getAllStocks = async (req, res) => {
     res.send(error);
   }
 };
+
+exports.getMatchingStocks = async (req, res) => {
+  try {
+    const { filter } = req.params;
+    var regex = new RegExp([filter].join(""), "i");
+    const filteredStocks = await Stock.find({ name: { $regex: regex}})
+    const firstFiveStocks = filteredStocks.slice(0,5);
+    res.status(200).send(firstFiveStocks);
+  } catch (error) {
+    res.status(500);
+    res.send(error);
+  }
+}
