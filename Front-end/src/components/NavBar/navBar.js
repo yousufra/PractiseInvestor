@@ -26,6 +26,7 @@ import LocalActivityIcon from '@material-ui/icons/LocalActivity';
 import StoreIcon from '@material-ui/icons/Store';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
+import AnnouncementIcon from '@material-ui/icons/Announcement';
 import useStyles from './styles';
 import { LOGOUT } from '../../constants/actionTypes';
 
@@ -120,6 +121,10 @@ export default function NavBar({toggleComponent}) {
           <ListItem button key={'Ranking'} onClick={() => toggleComponent('Ranking')}>
             <ListItemIcon><EqualizerIcon /></ListItemIcon>
             <ListItemText primary={'Ranking'} />
+          </ListItem>
+          <ListItem button key={'News'} onClick={() => toggleComponent('News')}>
+            <ListItemIcon><AnnouncementIcon /></ListItemIcon>
+            <ListItemText primary={'News'} />
           </ListItem>
       </List>
     </div>

@@ -5,6 +5,7 @@ import Dashboard from '../Dashboard/dashboard';
 import Order from '../Order/order';
 import PastActivities from '../PastActivities/PastActivities';
 import Ranking from '../Ranking/Ranking';
+import News from '../News/News'
 
 const Homepage = () => {
 
@@ -22,6 +23,7 @@ const Homepage = () => {
       {component==='Order' && <Order />}
       {component==='Past Activities' && <PastActivities />}
       {component==='Ranking' && <Ranking />}
+      {component==='News' && <News />}
     </>
   );
 };
