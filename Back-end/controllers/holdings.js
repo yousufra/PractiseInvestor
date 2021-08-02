@@ -12,7 +12,7 @@ async function pushActivityChangeCash (username, activity) {
   return await User.findOneAndUpdate(
     { userName: username},
     {
-      $push: {activities: activity},
+      $push: {activities: { $each: [activity], $position:0 }}, // push to front of array
       $inc: {cash: activity.action === 'buy' ? -Number((activity.netAmount).toFixed(2)): activity.netAmount}
     },
     {new: true} //when you send the put request you can actualy see the new user object in the the res.body
