@@ -1,21 +1,30 @@
-/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable */
 import React, { useState, useEffect } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
-import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import decode from 'jwt-decode';
 import { useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
+import clsx from 'clsx';
+import Drawer from '@material-ui/core/Drawer';
+import Button from '@material-ui/core/Button';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import LocalActivityIcon from '@material-ui/icons/LocalActivity';
+import StoreIcon from '@material-ui/icons/Store';
+import EqualizerIcon from '@material-ui/icons/Equalizer';
 import useStyles from './styles';
 import { LOGOUT } from '../../constants/actionTypes';
 
@@ -69,6 +78,47 @@ export default function NavBar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const [state, setState] = React.useState({
+    left: false,
+  });
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
+  };
+
+  const list = (anchor) => (
+    <div
+      className={clsx(classes.list, {
+        [classes.fullList]: anchor === 'top' || anchor === 'bottom',
+      })}
+      role="presentation"
+      onClick={toggleDrawer(anchor, false)}
+      onKeyDown={toggleDrawer(anchor, false)}
+    >
+      <List>
+        {['Order', 'Past Activities'].map((text, index) => (
+          <ListItem button key={text}>
+            <ListItemIcon>{index % 2 === 0 ? <StoreIcon /> : <LocalActivityIcon />}</ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItem>
+        ))}
+      </List>
+      <Divider />
+      <List>
+        {['Ranking'].map((text, index) => (
+          <ListItem button key={text}>
+            <ListItemIcon>{index % 2 === 0 ? <EqualizerIcon /> : null}</ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItem>
+        ))}
+      </List>
+    </div>
+  );
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -96,14 +146,6 @@ export default function NavBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton aria-label="show 16 new notifications" color="inherit">
-          <Badge badgeContent={16} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           aria-label="account of current user"
@@ -128,7 +170,14 @@ export default function NavBar() {
             color="inherit"
             aria-label="open drawer"
           >
-            <MenuIcon />
+            <>
+              <MenuIcon
+                onClick={toggleDrawer('left', true)}
+              />
+              <Drawer anchor={'left'} open={state['left']} onClose={toggleDrawer('left', false)}>
+                {list('left')}
+              </Drawer>
+            </>
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
             Practise Investing
@@ -147,12 +196,10 @@ export default function NavBar() {
             />
           </div>
           <div className={classes.grow} />
+          <Typography className={classes.title} variant="h6" noWrap>
+            { user.userName }
+          </Typography>
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={16} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
             <IconButton
               edge="end"
               aria-label="account of current user"
@@ -182,3 +229,4 @@ export default function NavBar() {
     </div>
   );
 }
+

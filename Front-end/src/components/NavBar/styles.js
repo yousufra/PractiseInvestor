@@ -62,4 +62,10 @@ export default makeStyles((theme) => ({
       display: 'none',
     },
   },
+  list: {
+    width: 250,
+  },
+  fullList: {
+    width: 'auto',
+  },
 }));

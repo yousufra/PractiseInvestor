@@ -45,7 +45,7 @@ exports.updateHoldings = async (req, res) => {
           company: activity.company,
           ticker: activity.ticker,
           quantity: activity.quantity,
-          avgCost: activity.price
+          avgCost: Number((activity.price).toFixed(2)),
         }
         updatedUser = await User.findOneAndUpdate(
           { userName: username},

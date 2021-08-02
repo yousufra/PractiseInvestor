@@ -32,7 +32,7 @@ exports.createUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
     const newUser = await User.create({ userName, password: hashedPassword });
     res.status(201).send({
-      user: newUser,
+      userName: newUser.userName,
       token: generateToken(userName),
     });
   } catch (error) {
