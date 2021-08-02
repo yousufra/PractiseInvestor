@@ -7,10 +7,10 @@ export const getAllHoldings = () => async (dispatch) => {
   try {
     const { data } = await getUser(); // decontruct response to grab data from response object
 
-    const { holdings } = data;
+    const { holdings, cash } = data;
     const action = {
       type: FETCH_HOLDINGS,
-      payload: holdings,
+      payload: { holdings, cash },
     };
 
     dispatch(action);
@@ -22,9 +22,14 @@ export const getAllHoldings = () => async (dispatch) => {
 export const updateHoldings = (order) => async (dispatch) => {
   try {
     const { data } = await putHoldings(order);
-    const { holdings } = data;
+    const { holdings, cash } = data;
 
-    dispatch({ type: UPDATE_HOLDING, payload: holdings });
+    const action = {
+      type: UPDATE_HOLDING,
+      payload: { holdings, cash },
+    };
+
+    dispatch(action);
   } catch (error) {
     console.log(error.message);
   }
