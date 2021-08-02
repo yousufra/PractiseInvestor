@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { combineReducers } from 'redux';
 
 import holdingsReducer from './holdingsReducer';

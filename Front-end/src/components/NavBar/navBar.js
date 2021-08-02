@@ -24,11 +24,12 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import LocalActivityIcon from '@material-ui/icons/LocalActivity';
 import StoreIcon from '@material-ui/icons/Store';
+import DashboardIcon from '@material-ui/icons/Dashboard';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import useStyles from './styles';
 import { LOGOUT } from '../../constants/actionTypes';
 
-export default function NavBar() {
+export default function NavBar({toggleComponent}) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -100,21 +101,26 @@ export default function NavBar() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {['Order', 'Past Activities'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <StoreIcon /> : <LocalActivityIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        <ListItem button key={'Dashboard'} onClick={() => toggleComponent('Dashboard')}>
+          <ListItemIcon><DashboardIcon /></ListItemIcon>
+          <ListItemText primary={'Dashboard'} />
+        </ListItem>
+        <ListItem button key={'Order'} onClick={() => toggleComponent('Order')}>
+          <ListItemIcon><StoreIcon /></ListItemIcon>
+          <ListItemText primary={'Order'} />
+        </ListItem>
+        <ListItem button key={'Past Activities'} onClick={() => toggleComponent('Past Activities')}>
+          <ListItemIcon><LocalActivityIcon /></ListItemIcon>
+          <ListItemText primary={'Past Activities'} />
+        </ListItem>
+
       </List>
       <Divider />
       <List>
-        {['Ranking'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <EqualizerIcon /> : null}</ListItemIcon>
-            <ListItemText primary={text} />
+          <ListItem button key={'Ranking'} onClick={() => toggleComponent('Ranking')}>
+            <ListItemIcon><EqualizerIcon /></ListItemIcon>
+            <ListItemText primary={'Ranking'} />
           </ListItem>
-        ))}
       </List>
     </div>
   );
