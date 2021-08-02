@@ -13,7 +13,7 @@ async function pushActivityChangeCash (username, activity) {
     { userName: username},
     {
       $push: {activities: activity},
-      $inc: {cash: activity.action === 'buy' ? -activity.netAmount: activity.netAmount}
+      $inc: {cash: activity.action === 'buy' ? -Number((activity.netAmount).toFixed(2)): activity.netAmount}
     },
     {new: true} //when you send the put request you can actualy see the new user object in the the res.body
   );
@@ -38,7 +38,7 @@ exports.updateHoldings = async (req, res) => {
     if (activity.action === 'buy') {//checks if its a buy order
       if (companyHolding) {//checks if currently owns the stock
         //add to current quanity and calculate new avg cost
-        companyHolding.avgCost = ((companyHolding.avgCost * companyHolding.quantity) + activity.netAmount)/(companyHolding.quantity + activity.quantity)
+        companyHolding.avgCost = Number((((companyHolding.avgCost * companyHolding.quantity) + activity.netAmount)/(companyHolding.quantity + activity.quantity)).toFixed(2))
         companyHolding.quantity += activity.quantity;
       } else {//else if doesnt own the stock currently then add the new holding
         companyHolding = {

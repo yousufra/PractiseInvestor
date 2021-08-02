@@ -7,7 +7,7 @@ const baseURL = 'http://localhost:4000'; // use .env file
 
 const API = axios.create({ baseURL });
 
-API.interceptors.request.use((req) => { // attach token to all headers in all requests
+API.interceptors.request.use((req) => { // attach token to all headers in all request
   if (localStorage.getItem('home')) {
     req.headers['x-auth-token'] = `${JSON.parse(localStorage.getItem('home')).token}`;
   }
@@ -25,3 +25,5 @@ export const signIn = (form) => API.post('/user/login', form);
 export const signUp = (form) => API.post('/users', form);
 
 export const getMatchingStocks = (filter) => API.get(`/stocks/${filter}`);
+
+export const getAllStocks = () => API.get('/stocks');

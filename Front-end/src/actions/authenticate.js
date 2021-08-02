@@ -4,7 +4,6 @@ import { signIn, signUp } from '../api/backendApi';
 export const login = (form, history) => async (dispatch) => {
   try {
     const { data } = await signIn(form);
-
     dispatch({
       type: AUTHENTICATE,
       data,

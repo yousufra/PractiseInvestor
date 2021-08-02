@@ -1,16 +1,14 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable */
 import React, { useEffect, useState } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import jwtDecode from 'jwt-decode';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const auth = useSelector((state) => state.auth);
+  const auth = useSelector((state) => state.authenticate);
   const [isAuthenticated, setIsAuthenticated] = useState(null);
   useEffect(() => {
-    const token = localStorage.getItem('home');
+    const token = `${JSON.parse(localStorage.getItem('home')).token}`;
     if (token) {
       const tokenExpiration = jwtDecode(token).exp;
       const dateNow = new Date();
