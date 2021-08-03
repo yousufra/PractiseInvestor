@@ -141,7 +141,6 @@ export default function NavBar({toggleComponent}) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={signOut}>Sign Out</MenuItem>
     </Menu>
   );

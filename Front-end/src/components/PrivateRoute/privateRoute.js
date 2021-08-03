@@ -8,8 +8,10 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   const auth = useSelector((state) => state.authenticate);
   const [isAuthenticated, setIsAuthenticated] = useState(null);
   useEffect(() => {
-    const token = `${JSON.parse(localStorage.getItem('home')).token}`;
-    if (token) {
+    const tokenObject = JSON.parse(localStorage.getItem('home'))
+
+    if (tokenObject) {
+      const token = tokenObject.token;
       const tokenExpiration = jwtDecode(token).exp;
       const dateNow = new Date();
 

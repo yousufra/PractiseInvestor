@@ -27,7 +27,6 @@ const Holdings = () => {
         // const price = 0;
         return {...holding, price };
       });
-      console.log('hello')
       Promise.all(apiCallArray).then((res)=>{
         setHoldingsPrices(res);
         let calcPortfolioValue = cash;
