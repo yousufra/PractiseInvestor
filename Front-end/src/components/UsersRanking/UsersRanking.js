@@ -1,35 +1,6 @@
 /* eslint-disable */
-// import React, {useEffect, useState} from 'react'
-// import { getRanking } from '../../api/backendApi';
-
-
-
-// const useStyles1 = makeStyles((theme) => ({
-//   root: {
-//     flexShrink: 0,
-//     marginLeft: theme.spacing(2.5),
-//   },
-// }));
-
-// const UsersRanking = () => {
-//   [rankings, setRankings] = useState([]);
-
-//   useEffect(async () => {
-//     const ranking = (await getRanking()).data;
-//     setRankings(ranking);
-//   }, [])
-
-//   //index+1 for ranking
-//   return (
-//     <div>
-//       Ranking component
-//     </div>
-//   )
-// }
-
-// export default UsersRanking;
-
 import React, {useEffect, useState} from 'react';
+import './UsersRanking.css';
 import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -49,6 +20,7 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import UserRanking from './UserRanking/UserRanking';
 import { getRanking } from '../../api/backendApi';
+import PacmanLoader from "react-spinners/PacmanLoader";
 
 const useStyles1 = makeStyles((theme) => ({
   root: {
@@ -122,6 +94,7 @@ const useStyles2 = makeStyles({
 });
 
 export default function CustomPaginationActionsTable() {
+  const [loading, setLoading] = useState(false);
   const classes = useStyles2();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -129,6 +102,10 @@ export default function CustomPaginationActionsTable() {
   const [rankings, setRankings] = useState([]);
 
   useEffect(async () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 4500);
     const ranking = (await getRanking()).data;
     setRankings(ranking);
   }, []);
@@ -146,53 +123,59 @@ export default function CustomPaginationActionsTable() {
 
 
   return (
-    <Box m={1}>
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="custom pagination table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Rank</TableCell>
-            <TableCell align="right">Username</TableCell>
-            <TableCell align="right">Total Value</TableCell>
-            <TableCell align="right"># of Order</TableCell>
-            <TableCell align="right"># of Current Holdings</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {(rowsPerPage > 0
-            ? rankings.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            : rankings
-          ).map((ranking, index) => (
-              <UserRanking key={index} ranking={ranking} index={index} />
-              ))}
-
-          {emptyRows > 0 && (
-            <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={6} />
+    <>
+    {
+      loading ? <div className="Homepage"><PacmanLoader color={"blue"} loading={loading} size={45} /></div>
+      :
+      <Box m={1}>
+      <TableContainer component={Paper}>
+        <Table className={classes.table} aria-label="custom pagination table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Rank</TableCell>
+              <TableCell align="right">Username</TableCell>
+              <TableCell align="right">Total Value</TableCell>
+              <TableCell align="right"># of Order</TableCell>
+              <TableCell align="right"># of Current Holdings</TableCell>
             </TableRow>
-          )}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-              colSpan={3}
-              count={rankings.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              SelectProps={{
-                inputProps: { 'aria-label': 'rows per page' },
-                native: true,
-              }}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              ActionsComponent={TablePaginationActions}
-            />
-          </TableRow>
-        </TableFooter>
-      </Table>
-    </TableContainer>
-    </Box>
+          </TableHead>
+          <TableBody>
+            {(rowsPerPage > 0
+              ? rankings.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              : rankings
+            ).map((ranking, index) => (
+                <UserRanking key={index} ranking={ranking} index={index} />
+                ))}
+
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 53 * emptyRows }}>
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                colSpan={3}
+                count={rankings.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                SelectProps={{
+                  inputProps: { 'aria-label': 'rows per page' },
+                  native: true,
+                }}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                ActionsComponent={TablePaginationActions}
+              />
+            </TableRow>
+          </TableFooter>
+        </Table>
+      </TableContainer>
+      </Box>
+      }
+    </>
   );
 }
 

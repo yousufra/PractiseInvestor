@@ -31,7 +31,7 @@ const Order = ({ toggleComponent }) => {
   const [quantity, setQuantity] = useState(0);
   const [price, setPrice] = useState(0);
 
-  const [value, setValue] = React.useState('buy');
+  const [value, setValue] = React.useState('');
 
   const handleChange = async (company) => {
     let matches = [];
@@ -63,7 +63,6 @@ const Order = ({ toggleComponent }) => {
   };
 
   const handleRadio = (event) => {
-    console.log(event.target.value);
     setValue(event.target.value);
     setAction(event.target.value)
   };
@@ -82,8 +81,8 @@ const Order = ({ toggleComponent }) => {
           ))}
           <TextField name="ticker" label="Ticker" variant="outlined" fullWidth value={ticker} onChange={(e) => setTicker({ ticker })} />
           <RadioGroup row aria-label="action" name="action1" value={value} onChange={handleRadio}>
-            <FormControlLabel value="buy" control={<Radio />} label="Buy" />
-            <FormControlLabel value="sell" control={<Radio />} label="Sell" />
+            <FormControlLabel value="buy" control={<Radio color="primary"/>} label="Buy" />
+            <FormControlLabel value="sell" control={<Radio color="primary"/>} label="Sell" />
           </RadioGroup>
           <TextField type="number" name="quantity" label="Quantity" variant="outlined" fullWidth value={quantity} onChange={(e) => setQuantity( e.target.valueAsNumber )} />
           <TextField type="number" name="price" label="Price" variant="outlined" fullWidth value={price.toFixed(2)} />

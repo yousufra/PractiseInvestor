@@ -1,14 +1,16 @@
 /* eslint-disable */
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import './Homepage.css';
 import NavBar from '../NavBar/navBar';
 import Dashboard from '../Dashboard/dashboard';
 import Order from '../Order/order';
 import PastActivities from '../PastActivities/PastActivities';
 import UsersRankings from '../UsersRanking/UsersRanking';
-import News from '../News/News'
+import News from '../News/News';
+import PacmanLoader from "react-spinners/PacmanLoader";
 
 const Homepage = () => {
-
+  const [loading, setLoading] = useState(false);
   const [component, setComponent] = useState('Dashboard');
   const [title, setTitle] = useState('Practise Investing');
 
@@ -18,14 +20,27 @@ const Homepage = () => {
     setTitle(componentString);
   }
 
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, [])
+
   return (
     <>
-      <NavBar toggleComponent={toggleComponent} title={title}/>
-      {component==='Dashboard' && <Dashboard />}
-      {component==='Order' && <Order toggleComponent={toggleComponent}/>}
-      {component==='Past Activities' && <PastActivities />}
-      {component==='Ranking' && <UsersRankings />}
-      {component==='News' && <News />}
+      {
+        loading ? <div className="Homepage"><PacmanLoader color={"blue"} loading={loading} size={45} /></div>
+        :
+          <>
+          <NavBar toggleComponent={toggleComponent} title={title}/>
+          {component==='Dashboard' && <Dashboard />}
+          {component==='Order' && <Order toggleComponent={toggleComponent}/>}
+          {component==='Past Activities' && <PastActivities />}
+          {component==='Ranking' && <UsersRankings />}
+          {component==='News' && <News />}
+          </>
+      }
     </>
   );
 };
