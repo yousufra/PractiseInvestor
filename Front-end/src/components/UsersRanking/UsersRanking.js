@@ -1,12 +1,13 @@
 /* eslint-disable */
 import React from 'react'
 
-const Ranking = () => {
+const UsersRanking = () => {
   return (
     <div>
-      Ranking
+      Ranking component
     </div>
   )
 }
 
-export default Ranking
+export default UsersRanking;
+

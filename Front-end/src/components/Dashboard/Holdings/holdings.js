@@ -10,7 +10,9 @@ import Paper from '@material-ui/core/Paper';
 import { useSelector } from 'react-redux'; // to retrieve the data from the store in redux
 import useStyles from './styles';
 import Holding from './Holding/holding';
+import Box from '@material-ui/core/Box';
 import { getCurrentPrice } from '../../../api/stockApi';
+import PieChart from './PieChart/PieChart';
 
 const Holdings = () => {
   const classes = useStyles();
@@ -48,7 +50,11 @@ const Holdings = () => {
 
   return (
     <>
+      <Box m={1}>
+        <PieChart portfolioValue={portfolioValue} cash={cash} holdingsValue={portfolioValue-cash} b="2rem"/>
+      </Box>
       {!holdings.length ? <p>No Holdings, buy a stock</p> : (
+        <Box m={1}>
           <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="simple table">
               <TableHead>
@@ -69,6 +75,7 @@ const Holdings = () => {
               </TableBody>
             </Table>
           </TableContainer>
+          </Box>
         )
       }
   </>

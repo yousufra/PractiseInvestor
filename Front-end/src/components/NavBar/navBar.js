@@ -30,7 +30,7 @@ import AnnouncementIcon from '@material-ui/icons/Announcement';
 import useStyles from './styles';
 import { LOGOUT } from '../../constants/actionTypes';
 
-export default function NavBar({toggleComponent}) {
+export default function NavBar({toggleComponent, title}) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -190,21 +190,8 @@ export default function NavBar({toggleComponent}) {
             </>
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            Practise Investing
+            {title}
           </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
           <div className={classes.grow} />
           <Typography className={classes.title} variant="h6" noWrap>
             { user.userName }

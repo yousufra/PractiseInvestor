@@ -27,3 +27,5 @@ export const signUp = (form) => API.post('/users', form);
 export const getMatchingStocks = (filter) => API.get(`/stocks/${filter}`);
 
 export const getAllStocks = () => API.get('/stocks');
+
+export const getAllUsers = () => API.get('/users');

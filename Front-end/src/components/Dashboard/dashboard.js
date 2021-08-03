@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable */
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import Holdings from './Holdings/holdings';

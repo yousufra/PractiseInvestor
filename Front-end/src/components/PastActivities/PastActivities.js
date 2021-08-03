@@ -13,6 +13,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import FirstPageIcon from '@material-ui/icons/FirstPage';
+import Box from '@material-ui/core/Box';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
@@ -118,6 +119,7 @@ export default function CustomPaginationActionsTable() {
 
 
   return (
+    <Box m={1}>
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="custom pagination table">
         <TableHead>
@@ -165,5 +167,6 @@ export default function CustomPaginationActionsTable() {
         </TableFooter>
       </Table>
     </TableContainer>
+    </Box>
   );
 }

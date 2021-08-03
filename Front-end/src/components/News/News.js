@@ -34,9 +34,9 @@ const News = () => {
   }, []);
 
   return (
-    <Box display="flex" flexWrap="wrap">
+    <Box display="flex" flexWrap="wrap" justifyContent="center">
       {articles.map(article => ( article.source.name !== "Bloomberg" && //get rid of bloomberg they have some protection
-        <div>
+        <Box m={1} width={0.3}>
           <Card className={classes.root}>
             <CardActionArea>
               <CardMedia
@@ -61,7 +61,7 @@ const News = () => {
               </Button>
             </CardActions>
           </Card>
-        </div>
+        </Box>
       ))}
     </Box>
   )
