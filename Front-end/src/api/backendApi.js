@@ -29,3 +29,5 @@ export const getMatchingStocks = (filter) => API.get(`/stocks/${filter}`);
 export const getAllStocks = () => API.get('/stocks');
 
 export const getAllUsers = () => API.get('/users');
+
+export const getRanking = () => API.get('/users/ranking');

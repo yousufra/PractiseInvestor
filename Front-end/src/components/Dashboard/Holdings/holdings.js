@@ -41,7 +41,7 @@ const Holdings = () => {
     };
 
     getPrice();
-    const interval = setInterval(() => getPrice(), 60000 ); // every 1 minute, 55 api calls/minute retriction
+    const interval = setInterval(() => getPrice(), 120000 ); // every 1 minute, 55 api calls/minute retriction
 
     return () => {
       clearInterval(interval);

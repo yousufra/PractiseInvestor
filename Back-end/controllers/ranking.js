@@ -10,60 +10,47 @@ const getStockTicker = async (company) => {
     return stockTicker;
 }
 
-
-
-
-exports.getRanking = async (req, res) => {
+exports.getRanking = async (req, response) => {
   try {
     const users = await User.find();
     const stocks = await Stock.find();
 
-    //array {rank, username, totalValue, totalNumberOfActivities, numberOfStocks}
     let rankings = [];
 
-    users.forEach((user) => {
-      const { userName, holdings, activities, cash } = user;
+    for (let j=0; j<users.length; j++){
+      const { userName, holdings, activities, cash } = users[j];
       const totalNumberOfActivities = activities.length;
       const numberOfStocks = holdings.length;
-
-      //totalValue
       const apiKey = process.env.API_KEY;
 
       let calcPortfolioValue = cash;
-      console.log('hello1');
-      function calcValue () {
+      async function calcValue () {
 
-        holdings.forEach(async (holding) =>{
+        for (let i=0; i<holdings.length; i++){
 
-          const ticker = await getStockTicker(holding.company);
-
-          // const requestPrice = async (ticker, apiKey) => {
+          const ticker = await getStockTicker(holdings[i].company);
 
           const url = 'https://api.twelvedata.com'+ `/price?symbol=${ticker}&apikey=${apiKey}`;
-          axios.get(url)
+          await axios.get(url)
             .then(res => {
               const price = Number(res.data.price);//current price for that specific holding
-                  const holdingValue = price * holding.quantity;
-                  calcPortfolioValue+=holdingValue;
-                  console.log('hello2');
+              const holdingValue = price * holdings[i].quantity;
+              calcPortfolioValue+=holdingValue;
+              if(i===holdings.length-1 ) {
+                rankings.push({userName, totalValue: calcPortfolioValue, totalNumberOfActivities, numberOfStocks});
+                if(j===users.length-1) {
+                  //I wanna sort by totalValue
+                  rankings.sort((a,b) => b.totalValue - a.totalValue);
+                  response.status(200);
+                  response.send(rankings);
+                }
+              }
             });
-          });
+          };
       }
-      calcValue();
-      let i=0;
-      while (i<10000000){
-        i++;
-      }
-      console.log('hello3');
-      // console.log(calcPortfolioValue, 1);
-
-      rankings.push({userName, totalValue: calcPortfolioValue, totalNumberOfActivities, numberOfStocks})
-    });
-
-    //filter ranking so index matches the ranking for easy rendering on front end, here adding the ranking number too
-
-    res.status(200);
-    res.send(rankings);
+      await calcValue();
+    };
+    return;
   } catch (error) {
     res.status(500);
     res.send(error);
