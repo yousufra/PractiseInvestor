@@ -20,7 +20,7 @@ const Homepage = () => {
     <>
       <NavBar toggleComponent={toggleComponent}/>
       {component==='Dashboard' && <Dashboard />}
-      {component==='Order' && <Order />}
+      {component==='Order' && <Order toggleComponent={toggleComponent}/>}
       {component==='Past Activities' && <PastActivities />}
       {component==='Ranking' && <Ranking />}
       {component==='News' && <News />}

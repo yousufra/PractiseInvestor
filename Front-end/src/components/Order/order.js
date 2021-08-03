@@ -12,7 +12,7 @@ import useStyles from './styles';
 import { getMatchingStocks } from '../../api/backendApi';
 import { getCurrentPrice } from '../../api/stockApi';
 
-const Order = () => {
+const Order = ({ toggleComponent }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -45,12 +45,12 @@ const Order = () => {
   const handleSubmit = (e) => {
     e.preventDefault(); // prevent browser from refreshing , defualt when you submit a form
     dispatch(updateHoldings({ date, company, ticker, action, quantity, price, netAmount: Number((price * quantity).toFixed(2)) }));
-
     setCompany('');
     setTicker('');
     setAction('');
     setQuantity(0);
     setPrice(0);
+    toggleComponent('Dashboard');
   };
 
   return (
