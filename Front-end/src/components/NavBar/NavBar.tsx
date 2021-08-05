@@ -1,69 +1,79 @@
-/* eslint-disable */
-import React, { useState, useEffect } from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import MoreIcon from '@material-ui/icons/MoreVert';
+import React, { useState, useEffect, MouseEvent, KeyboardEvent } from 'react';
 import decode from 'jwt-decode';
 import { useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import clsx from 'clsx';
-import Drawer from '@material-ui/core/Drawer';
-import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+
+import {
+  AppBar, 
+  Divider, 
+  Drawer, 
+  IconButton, 
+  List, 
+  ListItem, 
+  ListItemIcon, 
+  ListItemText, 
+  Menu, 
+  MenuItem, 
+  Toolbar, 
+  Typography
+} from '@material-ui/core';
+
+import {Menu as MenuIcon,
+        AccountCircle} from '@material-ui/icons';
+import MoreIcon from '@material-ui/icons/MoreVert';
 import LocalActivityIcon from '@material-ui/icons/LocalActivity';
 import StoreIcon from '@material-ui/icons/Store';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import AnnouncementIcon from '@material-ui/icons/Announcement';
+
 import useStyles from './styles';
 import { LOGOUT } from '../../constants/actionTypes';
 
-export default function NavBar({toggleComponent, title}) {
+interface Props {
+  title: string;
+  toggleComponent: (str: string) => void; 
+}
+
+const NavBar = (props: Props) => {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<HTMLElement | null>(null);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('home') || "{}"));
+  
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
 
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('home')));
-
   const signOut = () => {
     dispatch({ type: LOGOUT });
-
     history.push('/auth');
-
     setUser(null);
   };
+
+  interface JwtToken {
+    userName: string;
+    expiresIn: number;
+    secret: string;
+  }
 
   useEffect(() => {
     const token = user?.token;
 
     if (token) {
-      const decodedToken = decode(token);
+      const decodedToken = decode<JwtToken>(token);
 
-      if (decodedToken.exp * 1000 < new Date().getTime()) signOut();
+      if (decodedToken.expiresIn * 1000 < new Date().getTime()) signOut();
     }
 
-    setUser(JSON.parse(localStorage.getItem('home')));
+    setUser(JSON.parse(localStorage.getItem('home') || "{}"));
   }, [location]);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const handleProfileMenuOpen = (event) => {
+  const handleProfileMenuOpen = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -76,7 +86,7 @@ export default function NavBar({toggleComponent, title}) {
     handleMobileMenuClose();
   };
 
-  const handleMobileMenuOpen = (event) => {
+  const handleMobileMenuOpen = (event: MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
@@ -84,33 +94,36 @@ export default function NavBar({toggleComponent, title}) {
     left: false,
   });
 
-  const toggleDrawer = (anchor, open) => (event) => {
+  const toggleDrawerKey = (anchor: string, open: boolean) => (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
-
     setState({ ...state, [anchor]: open });
   };
 
-  const list = (anchor) => (
+  const toggleDrawerClick = (anchor: string, open: boolean) => (event: MouseEvent) => {
+    setState({ ...state, [anchor]: open });
+  };
+
+  const list = (anchor: string) => (
     <div
       className={clsx(classes.list, {
         [classes.fullList]: anchor === 'top' || anchor === 'bottom',
       })}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
+      onClick={toggleDrawerClick(anchor, false)}
+      onKeyDown={toggleDrawerKey(anchor, false)}
     >
       <List>
-        <ListItem button key={'Dashboard'} onClick={() => toggleComponent('Dashboard')}>
+        <ListItem button key={'Dashboard'} onClick={() => props.toggleComponent('Dashboard')}>
           <ListItemIcon><DashboardIcon /></ListItemIcon>
           <ListItemText primary={'Dashboard'} />
         </ListItem>
-        <ListItem button key={'Order'} onClick={() => toggleComponent('Order')}>
+        <ListItem button key={'Order'} onClick={() => props.toggleComponent('Order')}>
           <ListItemIcon><StoreIcon /></ListItemIcon>
           <ListItemText primary={'Order'} />
         </ListItem>
-        <ListItem button key={'Past Activities'} onClick={() => toggleComponent('Past Activities')}>
+        <ListItem button key={'Past Activities'} onClick={() => props.toggleComponent('Past Activities')}>
           <ListItemIcon><LocalActivityIcon /></ListItemIcon>
           <ListItemText primary={'Past Activities'} />
         </ListItem>
@@ -118,11 +131,11 @@ export default function NavBar({toggleComponent, title}) {
       </List>
       <Divider />
       <List>
-          <ListItem button key={'Ranking'} onClick={() => toggleComponent('Ranking')}>
+          <ListItem button key={'Ranking'} onClick={() => props.toggleComponent('Ranking')}>
             <ListItemIcon><EqualizerIcon /></ListItemIcon>
             <ListItemText primary={'Ranking'} />
           </ListItem>
-          <ListItem button key={'News'} onClick={() => toggleComponent('News')}>
+          <ListItem button key={'News'} onClick={() => props.toggleComponent('News')}>
             <ListItemIcon><AnnouncementIcon /></ListItemIcon>
             <ListItemText primary={'News'} />
           </ListItem>
@@ -170,6 +183,7 @@ export default function NavBar({toggleComponent, title}) {
     </Menu>
   );
 
+  
   return (
     <div className={classes.grow}>
       <AppBar position="static">
@@ -182,15 +196,15 @@ export default function NavBar({toggleComponent, title}) {
           >
             <>
               <MenuIcon
-                onClick={toggleDrawer('left', true)}
+                onClick={toggleDrawerClick('left', true)}
               />
-              <Drawer anchor={'left'} open={state['left']} onClose={toggleDrawer('left', false)}>
+              <Drawer anchor={'left'} open={state['left']} onClose={toggleDrawerClick('left', false)}>
                 {list('left')}
               </Drawer>
             </>
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            {title}
+            {props.title}
           </Typography>
           <div className={classes.grow} />
           <Typography className={classes.title} variant="h6" noWrap>
@@ -227,3 +241,4 @@ export default function NavBar({toggleComponent, title}) {
   );
 }
 
+export default NavBar;
