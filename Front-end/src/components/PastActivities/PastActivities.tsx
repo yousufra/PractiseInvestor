@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { PastActivity } from './PastActivity/PastActivity';
 import { getAllActivities } from '../../actions/activity';
 import TablePaginationActions from '../../utils/TablePaginationActions';
+import { StockI } from '../../interfaces/Stock';
 
 const useStyles2 = makeStyles({
   table: {
@@ -56,7 +57,7 @@ export default function CustomPaginationActionsTable() {
           {(rowsPerPage > 0
             ? activities.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : activities
-          ).map((activity, index) => (
+          ).map((activity: StockI, index: number) => (
               <PastActivity key={index} activity={activity} />
               ))}
 
