@@ -28,10 +28,11 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "PORT=4001 react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint src/**/*.js src/**/*.tsx"
   },
   "eslintConfig": {
     "extends": [
@@ -52,11 +53,16 @@
     ]
   },
   "devDependencies": {
+    "@types/jest": "^26.0.24",
+    "@types/node": "^16.4.12",
+    "@types/react": "^17.0.15",
+    "@types/react-dom": "^17.0.9",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.24.0",
-    "eslint-plugin-react-hooks": "^4.2.0"
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "typescript": "^4.3.5"
   }
 }

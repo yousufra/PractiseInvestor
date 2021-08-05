@@ -11,12 +11,11 @@ const authenticate = async (req, res, next) => {
       req.user = decodedData;
       next();
     } else {
-      res.status(401).send({message: 'No token, authorization denied.'});
+      res.status(401).send({ message: 'No token, authorization denied.' });
     }
-
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 module.exports = authenticate;

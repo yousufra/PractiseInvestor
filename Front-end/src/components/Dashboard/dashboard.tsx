@@ -1,10 +1,11 @@
 /* eslint-disable */
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import Holdings from './Holdings/holdings';
+import { Holdings } from './Holdings/Holdings';
 import { getAllHoldings } from '../../actions/holdings';
 
-const Dashboard = () => {
+export const Dashboard = () => {
+  
   const dispatch = useDispatch(); // allows us to dispatch an action
 
   useEffect(() => {
@@ -12,10 +13,9 @@ const Dashboard = () => {
   }, [dispatch]);
 
   return (
-    <>
+    <div>
       <Holdings />
-    </>
-  );
-};
+    </div>
+  )
+}
 
-export default Dashboard;
