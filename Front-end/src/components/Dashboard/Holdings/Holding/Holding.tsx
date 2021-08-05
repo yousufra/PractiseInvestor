@@ -1,6 +1,4 @@
-/* eslint-disable */
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
+import {TableRow, TableCell} from '@material-ui/core';
 
 interface Props {
   

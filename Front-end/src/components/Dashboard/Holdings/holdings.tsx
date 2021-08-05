@@ -1,12 +1,12 @@
-/* eslint-disable */
 import { useState, useEffect } from 'react';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper} from '@material-ui/core';
 import { useSelector } from 'react-redux'; // to retrieve the data from the store in redux
 import useStyles from './styles';
 import { Holding } from './Holding/Holding';
