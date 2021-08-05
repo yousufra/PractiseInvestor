@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, ChangeEvent, SyntheticEvent } from 'react';
 import {
   Avatar,
   Button,
@@ -37,7 +37,7 @@ const Authenticate = () => {
     setShowPassword((previousShowPassword) => (previousShowPassword === 'password' ? 'text' : 'password'));
   };
 
-  const handleSubmit = (e: { preventDefault: () => void; }) => {
+  const handleSubmit = (e: SyntheticEvent<HTMLInputElement>) => {
     e.preventDefault();
 
     if (isRegister) {
@@ -49,12 +49,12 @@ const Authenticate = () => {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const switchIsRegister = () => {
-    setIsRegister((previousIsRegister) => !previousIsRegister);
+    setIsRegister(!isRegister);
     setShowPassword('password');
   };
 
@@ -68,7 +68,7 @@ const Authenticate = () => {
         <Typography component="h1" variant="h5">
           {isRegister ? 'Register' : 'Login'}
         </Typography>
-        <form className={classes.form} onSubmit={handleSubmit} noValidate>
+        <form className={classes.form} onSubmit={() => handleSubmit} noValidate>
           <TextField
             variant="outlined"
             margin="normal"
