@@ -1,7 +1,10 @@
-export interface HoldingI {
+export interface NoPriceHoldingI {
   avgCost: number
   company: string
-  price: number
   quantity: number
   ticker: string
+}
+
+export interface HoldingI extends NoPriceHoldingI{
+  price: number
 }
