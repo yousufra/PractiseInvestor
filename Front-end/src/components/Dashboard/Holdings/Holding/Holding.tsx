@@ -1,10 +1,15 @@
 /* eslint-disable */
-import React, {useState, useEffect} from 'react';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
-import { getCurrentPrice } from '../../../../api/stockApi';
 
-const Holding = ({ holding, portfolioValue }) => {
+interface Props {
+  
+}
+
+export const Holding = ({ holding, portfolioValue }: any) => {
+  // create interface for these after all the files are tsx
+  console.log(holding);
+  console.log(portfolioValue);
 
   return (
     <TableRow key={holding.company}>
@@ -19,8 +24,8 @@ const Holding = ({ holding, portfolioValue }) => {
       <TableCell align="right">{Number(((holding.price*holding.quantity/portfolioValue)*100).toFixed(2))}%</TableCell>
     </TableRow>
   )
-};
+}
 
-export default Holding;
+
 
 
