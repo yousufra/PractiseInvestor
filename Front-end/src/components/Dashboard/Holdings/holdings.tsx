@@ -9,12 +9,17 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { useSelector } from 'react-redux'; // to retrieve the data from the store in redux
 import useStyles from './styles';
-import Holding from './Holding/holding';
+import { Holding } from './Holding/Holding';
 import Box from '@material-ui/core/Box';
 import { getCurrentPrice } from '../../../api/stockApi';
 import PieChart from './PieChart/PieChart';
 
-const Holdings = () => {
+interface Props {
+  
+}
+
+export const Holdings = (props: Props) => {
+
   const classes = useStyles();
   const [totalHoldingsValue, setTotalHoldingsValue] = useState(0); //state has to only refresh the component if first time user has come onto page
   const [holdingsPrices, setHoldingsPrices] = useState([]);
@@ -47,7 +52,6 @@ const Holdings = () => {
       clearInterval(interval);
     }
   }, [holdings])
-
   return (
     <>
       <Box m={1}>
@@ -79,7 +83,5 @@ const Holdings = () => {
         )
       }
   </>
-  );
-};
-
-export default Holdings;
+  )
+}

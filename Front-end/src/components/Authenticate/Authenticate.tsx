@@ -15,12 +15,19 @@ import { useDispatch } from 'react-redux';
 import useStyles from './styles';
 import { register, login } from '../../actions/authenticate';
 
+interface DefaultFormI {
+  userName: string,
+  password: string,
+  confirmPassword: string,
+}
+
 const Authenticate = () => {
+
   const classes = useStyles();
 
-  const [showPassword, setShowPassword] = useState('password');
-  const [isRegister, setIsRegister] = useState(false);
-  const [form, setForm] = useState({
+  const [showPassword, setShowPassword] = useState<string>('password');
+  const [isRegister, setIsRegister] = useState<boolean>(false);
+  const [form, setForm] = useState<DefaultFormI>({
     userName: '',
     password: '',
     confirmPassword: '',
@@ -45,7 +52,7 @@ const Authenticate = () => {
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -138,7 +145,8 @@ const Authenticate = () => {
         </form>
       </div>
     </Container>
-  );
-};
+  )
+}
 
 export default Authenticate;
+
