@@ -18,10 +18,10 @@ const useStyles1 = makeStyles((theme) => ({
 }));
 
 interface Props {
-  count: any,
-  page: any,
-  rowsPerPage: any,
-  onPageChange: any;
+  count: number,
+  page: number,
+  rowsPerPage: number,
+  onPageChange: Function;
 }
 
 function TablePaginationActions({ count, page, rowsPerPage, onPageChange }: Props) {
