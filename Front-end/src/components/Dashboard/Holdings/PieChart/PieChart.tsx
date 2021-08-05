@@ -3,11 +3,14 @@ import Chart from 'react-apexcharts';
 import {Paper, Box, Typography} from '@material-ui/core';
 
 interface Props {
-  
+  cash: number
+  portfolioValue: number
+  holdingsValue: number
+  b: string
 }
 
-export const PieChart = ({ cash, portfolioValue, holdingsValue }: any) => {
-
+export const PieChart = ({ cash, portfolioValue, holdingsValue }: Props) => {
+  
   const [chart, setChart] = useState({
     series: [Number(holdingsValue.toFixed(2)), Number(cash.toFixed(2))],
     options: {
@@ -30,8 +33,6 @@ export const PieChart = ({ cash, portfolioValue, holdingsValue }: any) => {
     },
   });
 
-
-  // create interfaces for props after the whole project is in typescript
   return (
       <Box width={0.27} >
       <Paper id="chart" >
