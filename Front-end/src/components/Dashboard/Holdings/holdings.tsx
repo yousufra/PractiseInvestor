@@ -16,10 +16,8 @@ import { PieChart } from './PieChart/PieChart';
 import { HoldingI, NoPriceHoldingI } from '../../../interfaces/Holding';
 
 export const Holdings = () => {
-  // create interfaces after all the code is in tsx
   
   const classes = useStyles();
-  const [totalHoldingsValue, setTotalHoldingsValue] = useState(0); //state has to only refresh the component if first time user has come onto page
   const [holdingsPrices, setHoldingsPrices] = useState<HoldingI[]>([]);
   const [portfolioValue, setPortfolioValue] = useState<number>(0);
 
@@ -70,7 +68,7 @@ export const Holdings = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {holdingsPrices.map((holding: any) => (
+                {holdingsPrices.map((holding: HoldingI) => (
                   <Holding key={holding.company} holding={holding} portfolioValue={portfolioValue}/>
                 ))}
               </TableBody>
