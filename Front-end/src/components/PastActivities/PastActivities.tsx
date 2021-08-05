@@ -1,14 +1,11 @@
 /* eslint-disable */
-import { useEffect, MouseEvent, useState } from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import {Table, TableBody, TableCell, TableContainer, TableFooter, TablePagination, TableHead, TableRow, Paper, IconButton, Box} from '@material-ui/core';
-import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import LastPageIcon from '@material-ui/icons/LastPage';
+import { MouseEvent, useEffect, useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import {Table, TableBody, TableCell, TableContainer, TableFooter, TablePagination, TableHead, TableRow, Paper, Box} from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { PastActivity } from './PastActivity/PastActivity';
 import { getAllActivities } from '../../actions/activity';
+<<<<<<< HEAD
 
 const useStyles1 = makeStyles((theme) => ({
   root: {
@@ -83,6 +80,9 @@ TablePaginationActions.propTypes = {
   page: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
 };
+=======
+import TablePaginationActions from '../../utils/TablePaginationActions';
+>>>>>>> a27d265128e16932892aaadc087bc8280ed07175
 
 const useStyles2 = makeStyles({
   table: {
@@ -105,11 +105,11 @@ export default function CustomPaginationActionsTable() {
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, activities.length - page * rowsPerPage);
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (_: any, newPage: number) => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event) => {
+  const handleChangeRowsPerPage = (event: MouseEvent<HTMLDivElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };

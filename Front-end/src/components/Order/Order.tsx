@@ -12,7 +12,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Box from '@material-ui/core/Box';
 
 import { DebounceInput } from 'react-debounce-input';
-import { updateHoldings } from '../../actions/Holdings';
+import { updateHoldings } from '../../actions/holdings';
 import { getMatchingStocks } from '../../api/backendApi';
 import { getCurrentPrice } from '../../api/stockApi';
 
