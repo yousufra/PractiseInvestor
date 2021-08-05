@@ -1,12 +1,11 @@
-/* eslint-disable */
-import React from 'react';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
+import Ranking from './Ranking';
 
-const UserRanking = ({ ranking, index }) => (
+const UserRanking = ({ranking, index}: {ranking: Ranking, index: number}) => (
   <TableRow>
     <TableCell component="th" scope="ranking">
-      {index+1}
+      {index + 1}
     </TableCell>
     <TableCell align="right">{ranking.userName}</TableCell>
     <TableCell align="right">${Number(ranking.totalValue.toFixed(2))}</TableCell>
@@ -16,3 +15,5 @@ const UserRanking = ({ ranking, index }) => (
 );
 
 export default UserRanking;
+
+
