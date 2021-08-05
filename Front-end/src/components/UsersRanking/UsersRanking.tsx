@@ -15,7 +15,7 @@ import {
   TableRow} from '@material-ui/core';
 
 import UserRanking from './UserRanking/UserRanking';
-import { getRanking } from '../../api/backendApi';
+import { getRanking } from '../../api/backendApi.js';
 import PacmanLoader from "react-spinners/PacmanLoader";
 import TablePaginationActions from '../../utils/TablePaginationActions';
 
