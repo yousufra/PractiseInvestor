@@ -2,7 +2,7 @@
 import React, {useState, useEffect} from 'react';
 import './Homepage.css';
 import NavBar from '../NavBar/navBar';
-import Dashboard from '../Dashboard/dashboard';
+import Dashboard from '../Dashboard/Dashboard';
 import Order from '../Order/Order';
 import PastActivities from '../PastActivities/PastActivities';
 import UsersRankings from '../UsersRanking/UsersRanking';
