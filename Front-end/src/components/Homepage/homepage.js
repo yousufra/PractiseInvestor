@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 import './Homepage.css';
 import NavBar from '../NavBar/navBar';
 import Dashboard from '../Dashboard/dashboard';
-import Order from '../Order/order';
+import Order from '../Order/Order';
 import PastActivities from '../PastActivities/PastActivities';
 import UsersRankings from '../UsersRanking/UsersRanking';
 import News from '../News/News';
