@@ -1,10 +1,12 @@
 /* eslint-disable */
-import React from 'react';
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
+import { TableRow, TableCell } from '@material-ui/core'
 
-const PastActivity = ({ activity }) => (
-  // eslint-disable-next-line react/jsx-filename-extension
+interface Props {
+  activity: any
+}
+// fix any type
+
+const PastActivity = ({ activity }: Props) => (
   <TableRow>
     <TableCell component="th" scope="activity">
       {activity.date}

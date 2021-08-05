@@ -1,18 +1,22 @@
 /* eslint-disable */
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import jwtDecode from 'jwt-decode';
+import { JwtTokenI } from '../../interfaces/JwtToken';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const auth = useSelector((state) => state.authenticate);
-  const [isAuthenticated, setIsAuthenticated] = useState(null);
+
+  const auth = useSelector((state: any) => state.authenticate);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+
   useEffect(() => {
-    const tokenObject = JSON.parse(localStorage.getItem('home'))
+    let tokenObject: any = localStorage.getItem('home');
+    tokenObject ? tokenObject = JSON.parse(tokenObject) : tokenObject = null;
 
     if (tokenObject) {
       const token = tokenObject.token;
-      const tokenExpiration = jwtDecode(token).exp;
+      const tokenExpiration = jwtDecode<JwtTokenI>(token).exp;
       const dateNow = new Date();
 
       if (tokenExpiration < dateNow.getTime() / 1000) {

@@ -27,9 +27,9 @@ import StoreIcon from '@material-ui/icons/Store';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import AnnouncementIcon from '@material-ui/icons/Announcement';
-
 import useStyles from './styles';
 import { LOGOUT } from '../../constants/actionTypes';
+import { JwtTokenI } from '../../interfaces/JwtToken';
 
 interface Props {
   title: string;
@@ -52,17 +52,11 @@ const NavBar = (props: Props) => {
     setUser(null);
   };
 
-  interface JwtToken {
-    userName: string;
-    expiresIn: number;
-    secret: string;
-  }
-
   useEffect(() => {
     const token = user?.token;
 
     if (token) {
-      const decodedToken = decode<JwtToken>(token);
+      const decodedToken = decode<JwtTokenI>(token);
 
       if (decodedToken.expiresIn * 1000 < new Date().getTime()) signOut();
     }

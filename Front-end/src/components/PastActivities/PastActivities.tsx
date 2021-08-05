@@ -1,24 +1,12 @@
 /* eslint-disable */
-import React, {useEffect} from 'react';
+import { useEffect, MouseEvent, useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableFooter from '@material-ui/core/TableFooter';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import IconButton from '@material-ui/core/IconButton';
+import {Table, TableBody, TableCell, TableContainer, TableFooter, TablePagination, TableHead, TableRow, Paper, IconButton, Box} from '@material-ui/core';
+import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons';
 import FirstPageIcon from '@material-ui/icons/FirstPage';
-import Box from '@material-ui/core/Box';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import PastActivity from './PastActivity/PastActivity';
 import { getAllActivities } from '../../actions/activity';
 
@@ -29,24 +17,33 @@ const useStyles1 = makeStyles((theme) => ({
   },
 }));
 
-function TablePaginationActions(props) {
+interface Props {
+  count: any,
+  page: any,
+  rowsPerPage: any,
+  onPageChange: any;
+}
+
+function TablePaginationActions({ count, page, rowsPerPage, onPageChange }: Props) {
+  // determine types after done with tsx
+  console.log(count, page, rowsPerPage, onPageChange);
+
   const classes = useStyles1();
   const theme = useTheme();
-  const { count, page, rowsPerPage, onPageChange } = props;
 
-  const handleFirstPageButtonClick = (event) => {
+  const handleFirstPageButtonClick = (event: MouseEvent<HTMLElement>) => {
     onPageChange(event, 0);
   };
 
-  const handleBackButtonClick = (event) => {
+  const handleBackButtonClick = (event: MouseEvent<HTMLElement>) => {
     onPageChange(event, page - 1);
   };
 
-  const handleNextButtonClick = (event) => {
+  const handleNextButtonClick = (event: MouseEvent<HTMLElement>) => {
     onPageChange(event, page + 1);
   };
 
-  const handleLastPageButtonClick = (event) => {
+  const handleLastPageButtonClick = (event: MouseEvent<HTMLElement>) => {
     onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
   };
 
@@ -95,8 +92,8 @@ const useStyles2 = makeStyles({
 
 export default function CustomPaginationActionsTable() {
   const classes = useStyles2();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const dispatch = useDispatch();
 
@@ -104,7 +101,7 @@ export default function CustomPaginationActionsTable() {
     dispatch(getAllActivities());
   }, [dispatch]);
 
-  const activities = useSelector((state) => state.activities);
+  const activities = useSelector((state: any) => state.activities);
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, activities.length - page * rowsPerPage);
 
@@ -116,7 +113,6 @@ export default function CustomPaginationActionsTable() {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
 
   return (
     <Box m={1}>
