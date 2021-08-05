@@ -18,10 +18,10 @@ const useStyles1 = makeStyles((theme) => ({
 }));
 
 interface Props {
-  count: number,
-  page: number,
-  rowsPerPage: number,
-  onPageChange: Function;
+  count: number;
+  page: number;
+  rowsPerPage: number;
+  onPageChange: (event: MouseEvent<HTMLButtonElement>, newPage: number) => void;
 }
 
 function TablePaginationActions({ count, page, rowsPerPage, onPageChange }: Props) {
@@ -31,19 +31,19 @@ function TablePaginationActions({ count, page, rowsPerPage, onPageChange }: Prop
   const classes = useStyles1();
   const theme = useTheme();
 
-  const handleFirstPageButtonClick = (event: MouseEvent<HTMLElement>) => {
+  const handleFirstPageButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
     onPageChange(event, 0);
   };
 
-  const handleBackButtonClick = (event: MouseEvent<HTMLElement>) => {
+  const handleBackButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
     onPageChange(event, page - 1);
   };
 
-  const handleNextButtonClick = (event: MouseEvent<HTMLElement>) => {
+  const handleNextButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
     onPageChange(event, page + 1);
   };
 
-  const handleLastPageButtonClick = (event: MouseEvent<HTMLElement>) => {
+  const handleLastPageButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
     onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
   };
 

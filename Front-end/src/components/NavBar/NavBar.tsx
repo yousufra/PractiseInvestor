@@ -39,7 +39,7 @@ interface Props {
   toggleComponent: (str: string) => void; 
 }
 
-const NavBar = (props: Props) => {
+const NavBar = ({title, toggleComponent}: Props) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<HTMLElement | null>(null);
@@ -112,15 +112,15 @@ const NavBar = (props: Props) => {
       onKeyDown={toggleDrawerKey(anchor, false)}
     >
       <List>
-        <ListItem button key={'Dashboard'} onClick={() => props.toggleComponent('Dashboard')}>
+        <ListItem button key={'Dashboard'} onClick={() => toggleComponent('Dashboard')}>
           <ListItemIcon><DashboardIcon /></ListItemIcon>
           <ListItemText primary={'Dashboard'} />
         </ListItem>
-        <ListItem button key={'Order'} onClick={() => props.toggleComponent('Order')}>
+        <ListItem button key={'Order'} onClick={() => toggleComponent('Order')}>
           <ListItemIcon><StoreIcon /></ListItemIcon>
           <ListItemText primary={'Order'} />
         </ListItem>
-        <ListItem button key={'Past Activities'} onClick={() => props.toggleComponent('Past Activities')}>
+        <ListItem button key={'Past Activities'} onClick={() => toggleComponent('Past Activities')}>
           <ListItemIcon><LocalActivityIcon /></ListItemIcon>
           <ListItemText primary={'Past Activities'} />
         </ListItem>
@@ -128,11 +128,11 @@ const NavBar = (props: Props) => {
       </List>
       <Divider />
       <List>
-          <ListItem button key={'Ranking'} onClick={() => props.toggleComponent('Ranking')}>
+          <ListItem button key={'Ranking'} onClick={() => toggleComponent('Ranking')}>
             <ListItemIcon><EqualizerIcon /></ListItemIcon>
             <ListItemText primary={'Ranking'} />
           </ListItem>
-          <ListItem button key={'News'} onClick={() => props.toggleComponent('News')}>
+          <ListItem button key={'News'} onClick={() => toggleComponent('News')}>
             <ListItemIcon><AnnouncementIcon /></ListItemIcon>
             <ListItemText primary={'News'} />
           </ListItem>
@@ -201,7 +201,7 @@ const NavBar = (props: Props) => {
             </>
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            {props.title}
+            {title}
           </Typography>
           <div className={classes.grow} />
           <Typography className={classes.title} variant="h6" noWrap>
