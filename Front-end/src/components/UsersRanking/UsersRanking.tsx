@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useState, MouseEvent } from 'react';
 import './UsersRanking.css';
 import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -23,6 +23,7 @@ import UserRanking from './UserRanking/UserRanking';
 import { getRanking } from '../../api/backendApi';
 import PacmanLoader from "react-spinners/PacmanLoader";
 
+
 const useStyles1 = makeStyles((theme) => ({
   root: {
     flexShrink: 0,
@@ -40,27 +41,26 @@ interface Props {
   count: number;
   page: number;
   rowsPerPage: number;
-  onPageChange: (event: any, num: number) => void;
+  onPageChange: (event: MouseEvent<HTMLButtonElement>, newPage: number) => void;
 }
 
-const TablePaginationActions = (props: Props) => {
+const TablePaginationActions = ({ count, page, rowsPerPage, onPageChange }: Props) => {
   const classes = useStyles1();
   const theme = useTheme();
-  const { count, page, rowsPerPage, onPageChange } = props;
 
-  const handleFirstPageButtonClick = (event: any) => {
+  const handleFirstPageButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
     onPageChange(event, 0);
   };
 
-  const handleBackButtonClick = (event: any) => {
+  const handleBackButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
     onPageChange(event, page - 1);
   };
 
-  const handleNextButtonClick = (event: any) => {
+  const handleNextButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
     onPageChange(event, page + 1);
   };
 
-  const handleLastPageButtonClick = (event: any) => {
+  const handleLastPageButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
     onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
   };
 
@@ -109,14 +109,15 @@ export const CustomPaginationActionsTable = () => {
 
   const [rankings, setRankings] = useState([]);
 
-  useEffect(async () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 4500);
-    const ranking = (await getRanking()).data;
-    setRankings(ranking);
-  }, []);
+  useEffect(() => {
+    (async function useEffectFunc () {
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+      }, 4500);
+      const ranking = await getRanking().data;
+      setRankings(ranking);
+    })()}, []);
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rankings.length - page * rowsPerPage);
 

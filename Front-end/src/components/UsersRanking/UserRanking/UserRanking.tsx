@@ -2,7 +2,12 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import Ranking from './Ranking';
 
-const UserRanking = ({ranking, index}: {ranking: Ranking, index: number}) => (
+interface Props {
+  ranking: Ranking;
+  index: number;
+}
+
+const UserRanking = ({ranking, index}: Props) => (
   <TableRow>
     <TableCell component="th" scope="ranking">
       {index + 1}
