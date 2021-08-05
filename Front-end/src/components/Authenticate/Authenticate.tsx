@@ -21,9 +21,7 @@ import DefaultFormI from './defaultFormI';
 
 
 const Authenticate = () => {
-
   const classes = useStyles();
-
   const [showPassword, setShowPassword] = useState<string>('password');
   const [isRegister, setIsRegister] = useState<boolean>(false);
   const [form, setForm] = useState<DefaultFormI>({
@@ -143,8 +141,7 @@ const Authenticate = () => {
         </form>
       </div>
     </Container>
-  )
-}
+  );
+};
 
 export default Authenticate;
-

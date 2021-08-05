@@ -32,7 +32,7 @@ import {
 
 import useStyles from './styles';
 import { LOGOUT } from '../../constants/actionTypes';
-import JwtToken from './JwtToken';
+import { JwtTokenI } from '../../interfaces/JwtToken';
 
 interface Props {
   title: string;
@@ -59,7 +59,8 @@ const NavBar = (props: Props) => {
     const token = user?.token;
 
     if (token) {
-      const decodedToken = decode<JwtToken>(token);
+      const decodedToken = decode<JwtTokenI>(token);
+
       if (decodedToken.expiresIn * 1000 < new Date().getTime()) signOut();
     }
 
