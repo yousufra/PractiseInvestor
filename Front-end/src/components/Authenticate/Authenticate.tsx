@@ -1,25 +1,24 @@
 import React, { useState } from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
-import { InputAdornment, IconButton } from '@material-ui/core';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  Grid,
+  InputAdornment,
+  IconButton,
+  TextField,
+  Typography,
+  Container} from '@material-ui/core';
+import {
+  LockOutlined as LockOutlinedIcon, 
+  Visibility, 
+  VisibilityOff} from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import useStyles from './styles';
 import { register, login } from '../../actions/authenticate';
+import DefaultFormI from './defaultFormI';
 
-interface DefaultFormI {
-  userName: string,
-  password: string,
-  confirmPassword: string,
-}
 
 const Authenticate = () => {
   const classes = useStyles();
@@ -38,7 +37,7 @@ const Authenticate = () => {
     setShowPassword((previousShowPassword) => (previousShowPassword === 'password' ? 'text' : 'password'));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
 
     if (isRegister) {
@@ -60,7 +59,6 @@ const Authenticate = () => {
   };
 
   return (
-    // eslint-disable-next-line react/jsx-filename-extension
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>

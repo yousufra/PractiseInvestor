@@ -1,9 +1,6 @@
-/* eslint-disable */
 import {useState} from 'react';
 import Chart from 'react-apexcharts';
-import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
+import {Paper, Box, Typography} from '@material-ui/core';
 
 interface Props {
   
