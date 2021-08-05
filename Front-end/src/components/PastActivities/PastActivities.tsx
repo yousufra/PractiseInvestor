@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { MouseEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {Table, TableBody, TableCell, TableContainer, TableFooter, TablePagination, TableHead, TableRow, Paper, Box} from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
@@ -32,7 +32,7 @@ export default function CustomPaginationActionsTable() {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event: MouseEvent<HTMLDivElement>) => {
+  const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
