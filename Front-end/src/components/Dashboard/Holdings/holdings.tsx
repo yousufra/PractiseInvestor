@@ -13,28 +13,28 @@ import { Holding } from './Holding/Holding';
 import Box from '@material-ui/core/Box';
 import { getCurrentPrice } from '../../../api/stockApi';
 import { PieChart } from './PieChart/PieChart';
+import { HoldingI, NoPriceHoldingI } from '../../../interfaces/Holding';
 
 export const Holdings = () => {
   // create interfaces after all the code is in tsx
   
   const classes = useStyles();
   const [totalHoldingsValue, setTotalHoldingsValue] = useState(0); //state has to only refresh the component if first time user has come onto page
-  const [holdingsPrices, setHoldingsPrices] = useState([]);
-  const [portfolioValue, setPortfolioValue] = useState(0);
+  const [holdingsPrices, setHoldingsPrices] = useState<HoldingI[]>([]);
+  const [portfolioValue, setPortfolioValue] = useState<number>(0);
 
   const { holdings, cash } = useSelector((state: any) => state.holdings); // state object is all the states within the combine reducer in index.js in reducer folder
 
   useEffect(() => {
     function getPrice () {
-      const apiCallArray = holdings.map(async (holding) => {
+      const apiCallArray = holdings.map(async (holding: NoPriceHoldingI) => {
         const price = Number((await getCurrentPrice(holding.ticker)).data.price)
-        // const price = 0;
         return {...holding, price };
       });
-      Promise.all(apiCallArray).then((res: any)=>{
+      Promise.all<HoldingI>(apiCallArray).then((res: HoldingI[]) => {
         setHoldingsPrices(res);
         let calcPortfolioValue = cash;
-        res.forEach((holding: any)=>{
+        res.forEach((holding: HoldingI)=>{
           calcPortfolioValue += holding.price*holding.quantity;
         });
         setPortfolioValue(Number(calcPortfolioValue.toFixed(2)));

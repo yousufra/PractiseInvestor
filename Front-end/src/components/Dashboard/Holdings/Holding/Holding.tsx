@@ -1,20 +1,12 @@
 import {TableRow, TableCell} from '@material-ui/core';
+import { HoldingI } from '../../../../interfaces/Holding';
 
 interface Props {
-  
+  holding: HoldingI
+  portfolioValue: number
 }
 
-export const Holding = ({ holding, portfolioValue }: any) => {
-  // create interface for these after all the files are tsx
-  console.log(holding);
-// holding format
-//   avgCost: 146.81
-// company: "Apple Inc"
-// price: 147.05499
-// quantity: 10
-// ticker: "AAPL"
-  console.log(portfolioValue);
-
+export const Holding = ({ holding, portfolioValue }: Props) => {
   return (
     <TableRow key={holding.company}>
       <TableCell component="th" scope="holding">
