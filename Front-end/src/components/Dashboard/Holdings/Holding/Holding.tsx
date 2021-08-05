@@ -9,6 +9,12 @@ interface Props {
 export const Holding = ({ holding, portfolioValue }: any) => {
   // create interface for these after all the files are tsx
   console.log(holding);
+// holding format
+//   avgCost: 146.81
+// company: "Apple Inc"
+// price: 147.05499
+// quantity: 10
+// ticker: "AAPL"
   console.log(portfolioValue);
 
   return (

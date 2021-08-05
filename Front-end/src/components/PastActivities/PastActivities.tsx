@@ -7,7 +7,7 @@ import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons';
 import FirstPageIcon from '@material-ui/icons/FirstPage';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import { useSelector, useDispatch } from 'react-redux';
-import PastActivity from './PastActivity/PastActivity';
+import { PastActivity } from './PastActivity/PastActivity';
 import { getAllActivities } from '../../actions/activity';
 
 const useStyles1 = makeStyles((theme) => ({

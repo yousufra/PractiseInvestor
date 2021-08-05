@@ -6,7 +6,7 @@ interface Props {
   activity: StockI;
 }
 
-const PastActivity = ({ activity }: Props) => {
+export const PastActivity = ({ activity }: Props) => {
   return (
     <TableRow>
       <TableCell component="th" scope="activity">
@@ -22,5 +22,3 @@ const PastActivity = ({ activity }: Props) => {
 
   )
 };
-
-export default PastActivity;
