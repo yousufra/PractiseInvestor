@@ -21,7 +21,7 @@ export const Holdings = () => {
   const classes = useStyles();
   const [totalHoldingsValue, setTotalHoldingsValue] = useState(0); //state has to only refresh the component if first time user has come onto page
   const [holdingsPrices, setHoldingsPrices] = useState<HoldingI[]>([]);
-  const [portfolioValue, setPortfolioValue] = useState(0);
+  const [portfolioValue, setPortfolioValue] = useState<number>(0);
 
   const { holdings, cash } = useSelector((state: any) => state.holdings); // state object is all the states within the combine reducer in index.js in reducer folder
 
