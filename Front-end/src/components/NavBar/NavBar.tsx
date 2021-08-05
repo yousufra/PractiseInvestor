@@ -19,17 +19,20 @@ import {
   Typography
 } from '@material-ui/core';
 
-import {Menu as MenuIcon,
-        AccountCircle} from '@material-ui/icons';
-import MoreIcon from '@material-ui/icons/MoreVert';
-import LocalActivityIcon from '@material-ui/icons/LocalActivity';
-import StoreIcon from '@material-ui/icons/Store';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import EqualizerIcon from '@material-ui/icons/Equalizer';
-import AnnouncementIcon from '@material-ui/icons/Announcement';
+import {
+  Menu as MenuIcon,
+  AccountCircle as AccountCircleIcon,
+  MoreVert as MoreIcon,
+  LocalActivity as LocalActivityIcon,
+  Store as StoreIcon,
+  Dashboard as DashboardIcon,
+  Equalizer as EqualizerIcon,
+  Announcement as AnnouncementIcon
+} from '@material-ui/icons';
 
 import useStyles from './styles';
 import { LOGOUT } from '../../constants/actionTypes';
+import JwtToken from './JwtToken';
 
 interface Props {
   title: string;
@@ -52,18 +55,11 @@ const NavBar = (props: Props) => {
     setUser(null);
   };
 
-  interface JwtToken {
-    userName: string;
-    expiresIn: number;
-    secret: string;
-  }
-
   useEffect(() => {
     const token = user?.token;
 
     if (token) {
       const decodedToken = decode<JwtToken>(token);
-
       if (decodedToken.expiresIn * 1000 < new Date().getTime()) signOut();
     }
 
@@ -176,7 +172,7 @@ const NavBar = (props: Props) => {
           aria-haspopup="true"
           color="inherit"
         >
-          <AccountCircle />
+          <AccountCircleIcon />
         </IconButton>
         <p>Profile</p>
       </MenuItem>
@@ -219,7 +215,7 @@ const NavBar = (props: Props) => {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircle />
+              <AccountCircleIcon />
             </IconButton>
           </div>
           <div className={classes.sectionMobile}>
