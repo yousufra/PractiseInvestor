@@ -10,8 +10,6 @@ import News from '../News/News';
 
 export const Homepage = () => {
 
-  console.log('homepage 1');
-  
   const [loading, setLoading] = useState(false);
   const [component, setComponent] = useState('Dashboard');
   const [title, setTitle] = useState('Practise Investing');  
@@ -22,7 +20,6 @@ export const Homepage = () => {
   };
 
   useEffect(() => {
-    console.log('homepage use effect')
     setLoading(true);
     setTimeout(() => {
       setLoading(false);

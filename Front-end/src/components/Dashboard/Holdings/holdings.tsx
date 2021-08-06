@@ -28,9 +28,7 @@ export const Holdings = () => {
       const apiCallArray = holdings?.map(async (holding: NoPriceHoldingI) => {
         const price = Number((await getCurrentPrice(holding.ticker)).data.price)
         return {...holding, price };
-      });
-      console.log('api call array', apiCallArray);
-      
+      });      
       apiCallArray && Promise.all<HoldingI>(apiCallArray).then((res: HoldingI[]) => {
         setHoldingsPrices(res);
         let calcPortfolioValue = cash;

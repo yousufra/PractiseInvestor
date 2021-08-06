@@ -39,7 +39,6 @@ const Authenticate = () => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    console.log('hello')
     if (isRegister) {
       // dispatch an action to signup
       dispatch(register(form, history));

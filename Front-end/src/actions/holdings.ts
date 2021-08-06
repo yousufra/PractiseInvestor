@@ -8,7 +8,6 @@ import { StockI } from '../interfaces/Stock'
 export const getAllHoldings = () => async (dispatch: (arg: { type: string; payload: { holdings: HoldingI[]; cash: number; }; }) => void) => {
   try {
     const { data } = await getUser(); // decontruct response to grab data from response object
-    console.log('get all holdings holdings.ts', data);
     const { holdings, cash } = data;
     const action = {
       type: EReduxActionTypes.FETCH_HOLDINGS,
