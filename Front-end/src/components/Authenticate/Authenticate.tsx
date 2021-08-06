@@ -17,8 +17,12 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import useStyles from './styles';
 import { register, login } from '../../actions/authenticate';
-import DefaultFormI from './defaultFormI';
 
+interface DefaultFormI {
+  userName: string,
+  password: string,
+  confirmPassword: string,
+}
 
 const Authenticate = () => {
   const classes = useStyles();
@@ -39,7 +43,6 @@ const Authenticate = () => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    console.log('hello')
     if (isRegister) {
       // dispatch an action to signup
       dispatch(register(form, history));

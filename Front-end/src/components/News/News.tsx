@@ -13,7 +13,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import PacmanLoader from "react-spinners/PacmanLoader";
 
-import { NewsInterface, Articles } from './new-interface';
+import { ArticlesI } from '../../interfaces/News';
 
 const useStyles = makeStyles({
   root: {
@@ -25,7 +25,7 @@ const useStyles = makeStyles({
 export default function News(): ReactElement {
   const [loading, setLoading] = useState(false);
   const classes = useStyles();
-  const [articles, setArticles] = useState<Articles[]>([]);
+  const [articles, setArticles] = useState<ArticlesI[]>([]);
 
   useEffect(() => {
     setLoading(true);
