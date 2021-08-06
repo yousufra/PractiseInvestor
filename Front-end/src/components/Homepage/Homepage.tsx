@@ -8,12 +8,13 @@ import PastActivities from '../PastActivities/PastActivities';
 import UsersRankings from '../UsersRanking/UsersRanking';
 import News from '../News/News';
 
-
 export const Homepage = () => {
+
+  console.log('homepage 1');
+  
   const [loading, setLoading] = useState(false);
   const [component, setComponent] = useState('Dashboard');
-  const [title, setTitle] = useState('Practise Investing');
-  
+  const [title, setTitle] = useState('Practise Investing');  
    //Dashboard, Order, Past Acitivities, Ranking
    const toggleComponent = (componentString: string): void => {
     setComponent(componentString);
@@ -21,7 +22,7 @@ export const Homepage = () => {
   };
 
   useEffect(() => {
-    console.log('homepage')
+    console.log('homepage use effect')
     setLoading(true);
     setTimeout(() => {
       setLoading(false);

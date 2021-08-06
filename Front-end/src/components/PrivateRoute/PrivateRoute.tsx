@@ -8,8 +8,9 @@ import { JwtTokenI } from '../../interfaces/JwtToken';
 const PrivateRoute = ({ component: Component, ...rest }) => {
 
   const auth = useSelector((state: any) => state.authenticate);
+  console.log('private route auth 1', auth)
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-
+  console.log('is authenticated', isAuthenticated);
   useEffect(() => {
     const tokenObject: any = localStorage.getItem('home');
     console.log('token obj private route', tokenObject)
@@ -27,6 +28,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
       setIsAuthenticated(false);
     }
     // eslint-disable-next-line
+    console.log('private route auth 2', auth)
+
   }, [auth])
 
   if (isAuthenticated === null) {
