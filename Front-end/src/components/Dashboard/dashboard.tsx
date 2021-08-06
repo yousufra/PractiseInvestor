@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Holdings } from './Holdings/Holdings';
+import { Holdings } from './Holdings/Holdings'
 import { getAllHoldings } from '../../actions/holdings';
 
 export const Dashboard = () => {

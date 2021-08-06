@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import './Homepage.css';
 import PacmanLoader from "react-spinners/PacmanLoader";
 import NavBar from '../NavBar/NavBar';
-import Dashboard from '../Dashboard/Dashboard';
+import { Dashboard } from '../Dashboard/Dashboard';
 import Order from '../Order/Order';
 import PastActivities from '../PastActivities/PastActivities';
 import UsersRankings from '../UsersRanking/UsersRanking';
