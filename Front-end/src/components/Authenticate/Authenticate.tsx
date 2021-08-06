@@ -37,9 +37,9 @@ const Authenticate = () => {
     setShowPassword((previousShowPassword) => (previousShowPassword === 'password' ? 'text' : 'password'));
   };
 
-  const handleSubmit = (e: SyntheticEvent<HTMLInputElement>) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
-
+    console.log('hello')
     if (isRegister) {
       // dispatch an action to signup
       dispatch(register(form, history));
@@ -68,7 +68,7 @@ const Authenticate = () => {
         <Typography component="h1" variant="h5">
           {isRegister ? 'Register' : 'Login'}
         </Typography>
-        <form className={classes.form} onSubmit={() => handleSubmit} noValidate>
+        <form className={classes.form} onSubmit={(e) => handleSubmit(e)} noValidate>
           <TextField
             variant="outlined"
             margin="normal"
