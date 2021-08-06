@@ -1,11 +1,11 @@
-import { AUTHENTICATE, LOGOUT } from '../constants/actionTypes';
+import { IReduxBaseAction, EReduxActionTypes } from '../constants/actionTypes';
 
-const authReducer = (state = { authData: null }, action) => {
+const authReducer = (state = { authData: null }, action:IReduxBaseAction) => {
   switch (action.type) {
-    case AUTHENTICATE:
+    case EReduxActionTypes.AUTHENTICATE:
       localStorage.setItem('home', JSON.stringify({ ...action?.data })); // action?.data - does not throw an error when action doesnt have a data property
       return { ...state, authData: action?.data };
-    case LOGOUT:
+    case EReduxActionTypes.LOGOUT:
       localStorage.clear();
       return { ...state, authData: null };
 
