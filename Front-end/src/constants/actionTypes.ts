@@ -4,7 +4,7 @@
 export interface IReduxBaseAction {
   payload: any;
   type: EReduxActionTypes;
-  data?: any
+  data?: any;
 }
 
 export enum EReduxActionTypes {

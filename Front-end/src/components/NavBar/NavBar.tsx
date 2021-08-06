@@ -47,7 +47,7 @@ const NavBar = ({title, toggleComponent}: Props) => {
   
   const dispatch = useDispatch();
   const location = useLocation();
-  const history = useHistory();
+  const history: any = useHistory();
 
   const signOut = () => {
     dispatch({ type: EReduxActionTypes.LOGOUT });

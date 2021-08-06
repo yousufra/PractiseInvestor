@@ -31,7 +31,7 @@ const Authenticate = () => {
   });
 
   const dispatch = useDispatch();
-  const history = useHistory();
+  const history: any = useHistory();
 
   const handleShowPassword = () => {
     setShowPassword((previousShowPassword) => (previousShowPassword === 'password' ? 'text' : 'password'));

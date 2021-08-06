@@ -3,8 +3,7 @@ import { signIn, signUp } from '../api/backendApi';
 import { HeaderHomeI } from '../interfaces/HeaderHome'
 import { UserI } from '../interfaces/User';
 
-export const login = (form: UserI, history: string[]) => async (dispatch: (arg: { type: string; data: HeaderHomeI; }) => void) => {
-  // TO-DO define interface for data
+export const login = (form: UserI, history: any) => async (dispatch: (arg: { type: string; data: HeaderHomeI; }) => void) => {
   try {
     const { data }: any = await signIn(form);
     dispatch({
