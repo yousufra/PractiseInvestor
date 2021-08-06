@@ -1,13 +1,13 @@
-import { AUTHENTICATE } from '../constants/actionTypes';
+import { EReduxActionTypes } from '../constants/actionTypes';
 import { signIn, signUp } from '../api/backendApi';
 import { HeaderHomeI } from '../interfaces/HeaderHome'
 import { UserI } from '../interfaces/User';
 
-export const login = (form: UserI, history: string[]) => async (dispatch: (arg: { type: string; data: HeaderHomeI; }) => void) => {
+export const login = (form: UserI, history: any) => async (dispatch: (arg: { type: string; data: HeaderHomeI; }) => void) => {
   try {
     const { data } = await signIn(form);
     dispatch({
-      type: AUTHENTICATE,
+      type: EReduxActionTypes.AUTHENTICATE,
       data,
     });
 
@@ -22,7 +22,7 @@ export const register = (form: UserI, history: string[]) => async (dispatch: (ar
     const { data } = await signUp(form);
 
     dispatch({
-      type: AUTHENTICATE,
+      type: EReduxActionTypes.AUTHENTICATE,
       data,
     });
 

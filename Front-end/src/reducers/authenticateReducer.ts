@@ -1,4 +1,4 @@
-import { IReduxBaseAction, EReduxActionTypes } from '../constants/actionTypes';
+import { EReduxActionTypes, IReduxBaseAction } from '../constants/actionTypes';
 
 const authReducer = (state = { authData: null }, action:IReduxBaseAction) => {
   switch (action.type) {

@@ -31,7 +31,7 @@ import {
 } from '@material-ui/icons';
 
 import useStyles from './styles';
-import { LOGOUT } from '../../constants/actionTypes';
+import { EReduxActionTypes } from '../../constants/actionTypes';
 import { JwtTokenI } from '../../interfaces/JwtToken';
 
 interface Props {
@@ -47,10 +47,10 @@ const NavBar = ({title, toggleComponent}: Props) => {
   
   const dispatch = useDispatch();
   const location = useLocation();
-  const history = useHistory();
+  const history: any = useHistory();
 
   const signOut = () => {
-    dispatch({ type: LOGOUT });
+    dispatch({ type: EReduxActionTypes.LOGOUT });
     history.push('/auth');
     setUser(null);
   };
