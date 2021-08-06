@@ -23,7 +23,7 @@ export default function(state: IReduxMoviesState = initialState, action: TMovies
 } */
 
 
-const activitiesReducer = (activities: any[], action:IReduxBaseAction) => { // need to inialize state(holdings) , holdings is gunna be an array of objects, reducer returns the new state
+const activitiesReducer = (activities: any[] = [], action:IReduxBaseAction) => { // need to inialize state(holdings) , holdings is gunna be an array of objects, reducer returns the new state
   switch (action.type) {
     case EReduxActionTypes.FETCH_ACTIVITIES:
       return action.payload;

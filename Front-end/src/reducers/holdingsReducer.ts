@@ -8,7 +8,7 @@ interface Holdings {
 }
 
 // eslint-disable-next-line max-len
-const holdingsReducer = (holdings: Holdings[], action:IReduxBaseAction) => { // need to inialize state(holdings) , holdings is gunna be an array of objects, reducer returns the new state
+const holdingsReducer = (holdings: Holdings[] = [], action:IReduxBaseAction) => { // need to inialize state(holdings) , holdings is gunna be an array of objects, reducer returns the new state
   switch (action.type) {
     case EReduxActionTypes.FETCH_HOLDINGS:
       return action.payload;
