@@ -39,7 +39,7 @@ interface ChartI {
 export const PieChart = ({ cash, portfolioValue, holdingsValue }: Props) => {
   
   const [chart, setChart] = useState<ChartI>({
-    series: [Number(holdingsValue.toFixed(2)), Number(cash.toFixed(2))],
+    series: [Number(holdingsValue?.toFixed(2)), Number(cash?.toFixed(2))],
     options: {
       chart: {
         width: 380,
@@ -64,7 +64,7 @@ export const PieChart = ({ cash, portfolioValue, holdingsValue }: Props) => {
       <Box width={0.27} >
       <Paper id="chart" >
         <Typography variant="h6">Total Value: ${portfolioValue}</Typography>
-        <Chart options={chart.options} series={[Number(holdingsValue.toFixed(2)), Number(cash.toFixed(2))]} type="pie" width={380} />
+        <Chart options={chart.options} series={[Number(holdingsValue?.toFixed(2)), Number(cash?.toFixed(2))]} type="pie" width={380} />
       </Paper>
     </Box>
   )

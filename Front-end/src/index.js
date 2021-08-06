@@ -6,11 +6,11 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import reportWebVitals from './reportWebVitals';
 import App from './App.tsx';
-import combineReducers from './reducers';
+import reducers from './reducers';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 // eslint-disable-next-line max-len
-const store = createStore(combineReducers, composeEnhancers( // thunk allows us to handle asynchronous actions in redux
+const store = createStore(reducers, composeEnhancers( // thunk allows us to handle asynchronous actions in redux
   applyMiddleware(thunk),
 ));
 
