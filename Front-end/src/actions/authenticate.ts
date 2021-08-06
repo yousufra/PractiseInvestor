@@ -5,7 +5,7 @@ import { UserI } from '../interfaces/User';
 
 export const login = (form: UserI, history: any) => async (dispatch: (arg: { type: string; data: HeaderHomeI; }) => void) => {
   try {
-    const { data } = await signIn(form);
+    const { data }: any = await signIn(form);
     dispatch({
       type: EReduxActionTypes.AUTHENTICATE,
       data,
