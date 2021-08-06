@@ -1,6 +1,5 @@
 import {useEffect, useState } from 'react';
 import './UsersRanking.css';
-
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Box,
@@ -13,23 +12,16 @@ import {
   TableHead,
   TablePagination,
   TableRow} from '@material-ui/core';
-
 import UserRanking from './UserRanking/UserRanking';
-import { getRanking } from '../../api/backendApi';
+import { getRanking } from '../../api/backendApi.js';
 import PacmanLoader from "react-spinners/PacmanLoader";
 import TablePaginationActions from '../../utils/TablePaginationActions';
-
-
 
 const useStyles2 = makeStyles({
   table: {
     minWidth: 500,
   },
 });
-
-
-
-
 
 export const CustomPaginationActionsTable = () => {
   const [loading, setLoading] = useState(false);
@@ -45,8 +37,8 @@ export const CustomPaginationActionsTable = () => {
       setTimeout(() => {
         setLoading(false);
       }, 4500);
-      const ranking = await getRanking().data;
-      setRankings(ranking);
+      const ranking = await getRanking();
+      setRankings(ranking.data);
     })()}, []);
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rankings.length - page * rowsPerPage);

@@ -1,11 +1,12 @@
 /* eslint-disable */
-import { MouseEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {Table, TableBody, TableCell, TableContainer, TableFooter, TablePagination, TableHead, TableRow, Paper, Box} from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { PastActivity } from './PastActivity/PastActivity';
 import { getAllActivities } from '../../actions/activity';
 import TablePaginationActions from '../../utils/TablePaginationActions';
+import { StockI } from '../../interfaces/Stock';
 
 const useStyles2 = makeStyles({
   table: {
@@ -32,7 +33,7 @@ export default function CustomPaginationActionsTable() {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event: MouseEvent<HTMLDivElement>) => {
+  const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
@@ -56,7 +57,7 @@ export default function CustomPaginationActionsTable() {
           {(rowsPerPage > 0
             ? activities.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : activities
-          ).map((activity, index) => (
+          ).map((activity: StockI, index: number) => (
               <PastActivity key={index} activity={activity} />
               ))}
 
