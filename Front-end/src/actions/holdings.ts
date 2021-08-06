@@ -1,4 +1,4 @@
-import { FETCH_HOLDINGS, UPDATE_HOLDING } from '../constants/actionTypes';
+import { EReduxActionTypes } from '../constants/actionTypes';
 import { getUser, putHoldings } from '../api/backendApi';// import all exports from api folder (EX, api.(function) to use a function )
 import { HoldingI } from '../interfaces/Holding';
 import { StockI } from '../interfaces/Stock'
@@ -11,7 +11,7 @@ export const getAllHoldings = () => async (dispatch: (arg: { type: string; paylo
 
     const { holdings, cash } = data;
     const action = {
-      type: FETCH_HOLDINGS,
+      type: EReduxActionTypes.FETCH_HOLDINGS,
       payload: { holdings, cash },
     };
 
@@ -27,7 +27,7 @@ export const updateHoldings = (order: StockI) => async (dispatch: (arg: { type: 
     const { holdings, cash } = data;
 
     const action = {
-      type: UPDATE_HOLDING,
+      type: EReduxActionTypes.UPDATE_HOLDING,
       payload: { holdings, cash },
     };
 

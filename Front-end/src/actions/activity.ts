@@ -1,4 +1,4 @@
-import { FETCH_ACTIVITIES } from '../constants/actionTypes';
+import { EReduxActionTypes } from '../constants/actionTypes';
 import { getUser } from '../api/backendApi';// import all exports from api folder (EX, api.(function) to use a function )
 
 // Action Creators - functions that return an action
@@ -9,7 +9,7 @@ export const getAllActivities = () => async (dispatch: (arg: { type: string; pay
 
     const { activities } = data;
     const action = {
-      type: FETCH_ACTIVITIES,
+      type: EReduxActionTypes.FETCH_ACTIVITIES,
       payload: activities,
     };
 
