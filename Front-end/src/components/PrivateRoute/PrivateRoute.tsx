@@ -11,9 +11,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
   useEffect(() => {
-    let tokenObject: any = localStorage.getItem('home');
-    tokenObject ? tokenObject = JSON.parse(tokenObject) : tokenObject = null;
-
+    const tokenObject: any = localStorage.getItem('home');
+    console.log('token obj private route', tokenObject)
     if (tokenObject) {
       const token = tokenObject.token;
       const tokenExpiration = jwtDecode<JwtTokenI>(token).exp;
