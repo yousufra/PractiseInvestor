@@ -1,7 +1,9 @@
 import { AUTHENTICATE } from '../constants/actionTypes';
 import { signIn, signUp } from '../api/backendApi';
+import { HeaderHomeI } from '../interfaces/HeaderHome'
+import { UserI } from '../interfaces/User';
 
-export const login = (form, history) => async (dispatch) => {
+export const login = (form: UserI, history: string[]) => async (dispatch: (arg: { type: string; data: HeaderHomeI; }) => void) => {
   try {
     const { data } = await signIn(form);
     dispatch({
@@ -15,7 +17,7 @@ export const login = (form, history) => async (dispatch) => {
   }
 };
 
-export const register = (form, history) => async (dispatch) => {
+export const register = (form: UserI, history: string[]) => async (dispatch: (arg: { type: string; data: HeaderHomeI; }) => void) => {
   try {
     const { data } = await signUp(form);
 
