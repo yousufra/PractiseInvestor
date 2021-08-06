@@ -21,6 +21,7 @@ export const Homepage = () => {
   };
 
   useEffect(() => {
+    console.log('homepage')
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
