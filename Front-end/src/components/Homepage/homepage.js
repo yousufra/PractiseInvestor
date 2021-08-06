@@ -19,7 +19,7 @@ const Homepage = () => {
     setComponent(componentString);
     setTitle(componentString);
   }
-
+  console.log('homepage');
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {

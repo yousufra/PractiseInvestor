@@ -7,9 +7,9 @@ import jwtDecode from 'jwt-decode';
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const auth = useSelector((state) => state.authenticate);
   const [isAuthenticated, setIsAuthenticated] = useState(null);
+  console.log('private route');
   useEffect(() => {
     const tokenObject = JSON.parse(localStorage.getItem('home'))
-
     if (tokenObject) {
       const token = tokenObject.token;
       const tokenExpiration = jwtDecode(token).exp;
