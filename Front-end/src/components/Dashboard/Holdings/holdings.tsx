@@ -1,38 +1,38 @@
-/* eslint-disable */
-import React, { useState, useEffect } from 'react';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import { useState, useEffect } from 'react';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper} from '@material-ui/core';
 import { useSelector } from 'react-redux'; // to retrieve the data from the store in redux
 import useStyles from './styles';
-import Holding from './Holding/holding';
+import { Holding } from './Holding/Holding';
 import Box from '@material-ui/core/Box';
 import { getCurrentPrice } from '../../../api/stockApi';
-import PieChart from './PieChart/PieChart';
+import { PieChart } from './PieChart/PieChart';
+import { HoldingI, NoPriceHoldingI } from '../../../interfaces/Holding';
 
-const Holdings = () => {
+export const Holdings = () => {
+  
   const classes = useStyles();
-  const [totalHoldingsValue, setTotalHoldingsValue] = useState(0); //state has to only refresh the component if first time user has come onto page
-  const [holdingsPrices, setHoldingsPrices] = useState([]);
-  const [portfolioValue, setPortfolioValue] = useState(0);
+  const [holdingsPrices, setHoldingsPrices] = useState<HoldingI[]>([]);
+  const [portfolioValue, setPortfolioValue] = useState<number>(0);
 
-  const { holdings, cash } = useSelector((state) => state.holdings); // state object is all the states within the combine reducer in index.js in reducer folder
+  const { holdings, cash } = useSelector((state: any) => state.holdings); // state object is all the states within the combine reducer in index.js in reducer folder
 
   useEffect(() => {
     function getPrice () {
-      const apiCallArray = holdings.map(async (holding) => {
+      const apiCallArray = holdings.map(async (holding: NoPriceHoldingI) => {
         const price = Number((await getCurrentPrice(holding.ticker)).data.price)
-        // const price = 0;
         return {...holding, price };
       });
-      Promise.all(apiCallArray).then((res)=>{
+      Promise.all<HoldingI>(apiCallArray).then((res: HoldingI[]) => {
         setHoldingsPrices(res);
         let calcPortfolioValue = cash;
-        res.forEach((holding)=>{
+        res.forEach((holding: HoldingI)=>{
           calcPortfolioValue += holding.price*holding.quantity;
         });
         setPortfolioValue(Number(calcPortfolioValue.toFixed(2)));
@@ -47,7 +47,6 @@ const Holdings = () => {
       clearInterval(interval);
     }
   }, [holdings])
-
   return (
     <>
       <Box m={1}>
@@ -69,7 +68,7 @@ const Holdings = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {holdingsPrices.map((holding) => (
+                {holdingsPrices.map((holding: HoldingI) => (
                   <Holding key={holding.company} holding={holding} portfolioValue={portfolioValue}/>
                 ))}
               </TableBody>
@@ -79,7 +78,5 @@ const Holdings = () => {
         )
       }
   </>
-  );
-};
-
-export default Holdings;
+  )
+}

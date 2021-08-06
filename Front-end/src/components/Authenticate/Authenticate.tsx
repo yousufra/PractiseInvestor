@@ -1,39 +1,43 @@
-import React, { useState } from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
-import { InputAdornment, IconButton } from '@material-ui/core';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import { useState, ChangeEvent, SyntheticEvent } from 'react';
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  Grid,
+  InputAdornment,
+  IconButton,
+  TextField,
+  Typography,
+  Container} from '@material-ui/core';
+import {
+  LockOutlined as LockOutlinedIcon, 
+  Visibility, 
+  VisibilityOff} from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import useStyles from './styles';
 import { register, login } from '../../actions/authenticate';
+import DefaultFormI from './defaultFormI';
+
 
 const Authenticate = () => {
   const classes = useStyles();
-
-  const [showPassword, setShowPassword] = useState('password');
-  const [isRegister, setIsRegister] = useState(false);
-  const [form, setForm] = useState({
+  const [showPassword, setShowPassword] = useState<string>('password');
+  const [isRegister, setIsRegister] = useState<boolean>(false);
+  const [form, setForm] = useState<DefaultFormI>({
     userName: '',
     password: '',
     confirmPassword: '',
   });
 
   const dispatch = useDispatch();
-  const history = useHistory();
+  const history: any = useHistory();
 
   const handleShowPassword = () => {
     setShowPassword((previousShowPassword) => (previousShowPassword === 'password' ? 'text' : 'password'));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: SyntheticEvent<HTMLInputElement>) => {
     e.preventDefault();
 
     if (isRegister) {
@@ -45,17 +49,16 @@ const Authenticate = () => {
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const switchIsRegister = () => {
-    setIsRegister((previousIsRegister) => !previousIsRegister);
+    setIsRegister(!isRegister);
     setShowPassword('password');
   };
 
   return (
-    // eslint-disable-next-line react/jsx-filename-extension
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -65,7 +68,7 @@ const Authenticate = () => {
         <Typography component="h1" variant="h5">
           {isRegister ? 'Register' : 'Login'}
         </Typography>
-        <form className={classes.form} onSubmit={handleSubmit} noValidate>
+        <form className={classes.form} onSubmit={() => handleSubmit} noValidate>
           <TextField
             variant="outlined"
             margin="normal"

@@ -1,11 +1,12 @@
-/* eslint-disable */
-import React, {useState, useEffect} from 'react';
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
-import { getCurrentPrice } from '../../../../api/stockApi';
+import {TableRow, TableCell} from '@material-ui/core';
+import { HoldingI } from '../../../../interfaces/Holding';
 
-const Holding = ({ holding, portfolioValue }) => {
+interface Props {
+  holding: HoldingI
+  portfolioValue: number
+}
 
+export const Holding = ({ holding, portfolioValue }: Props) => {
   return (
     <TableRow key={holding.company}>
       <TableCell component="th" scope="holding">
@@ -19,8 +20,8 @@ const Holding = ({ holding, portfolioValue }) => {
       <TableCell align="right">{Number(((holding.price*holding.quantity/portfolioValue)*100).toFixed(2))}%</TableCell>
     </TableRow>
   )
-};
+}
 
-export default Holding;
+
 
 

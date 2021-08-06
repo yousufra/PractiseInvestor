@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -6,12 +5,12 @@ import { Provider } from 'react-redux';// provider keeps track of the store and 
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import reportWebVitals from './reportWebVitals';
-import App from './App';
-import reducers from './reducers';
+import App from './App.tsx';
+import combineReducers from './reducers';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 // eslint-disable-next-line max-len
-const store = createStore(reducers, composeEnhancers( // thunk allows us to handle asynchronous actions in redux
+const store = createStore(combineReducers, composeEnhancers( // thunk allows us to handle asynchronous actions in redux
   applyMiddleware(thunk),
 ));
 
