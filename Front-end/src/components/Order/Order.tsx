@@ -52,11 +52,6 @@ export default function order({toggleComponent}: Props): ReactElement {
     setPrice(realTimePrice)
   }
 
-  const handleQuantity = (e) => {
-    console.log(e.target.value)
-    setQuantity(Number(e.target))
-  }
-
   const handleSubmit = (e:any) => {
 
     e.preventDefault(); // prevent browser from refreshing , defualt when you submit a form
@@ -91,7 +86,7 @@ export default function order({toggleComponent}: Props): ReactElement {
             <FormControlLabel value="buy" control={<Radio color="primary"/>} label="Buy" />
             <FormControlLabel value="sell" control={<Radio color="primary"/>} label="Sell" />
           </RadioGroup>
-          <TextField type="number" name="quantity" label="Quantity" variant="outlined" fullWidth value={quantity} onChange={(e) => handleQuantity(e)} />
+          <TextField type="number" name="quantity" InputProps={{inputProps: { min: 0 }}} label="Quantity" variant="outlined" fullWidth defaultValue={quantity} onChange={(e) => setQuantity(+e.target.value)} />
           <TextField type="number" name="price" label="Price" variant="outlined" fullWidth value={price.toFixed(2)} />
           <TextField type="number" name="netAmount" label="NetAmount" variant="outlined" autoComplete="netAmount" fullWidth value={(price * quantity).toFixed(2)} />
           <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth>Submit Order</Button>
