@@ -33,6 +33,7 @@ import {
 import useStyles from './styles';
 import { EReduxActionTypes } from '../../constants/actionTypes';
 import { JwtTokenI } from '../../interfaces/JwtToken';
+import { HeaderHomeI } from '../../interfaces/HeaderHome';
 
 interface Props {
   title: string;
@@ -43,7 +44,7 @@ const NavBar = ({title, toggleComponent}: Props) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<HTMLElement | null>(null);
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('home') || "{}"));
+  const [user, setUser] = useState<any>(JSON.parse(localStorage.getItem('home') || "{}"));
   
   const dispatch = useDispatch();
   const location = useLocation();
@@ -56,13 +57,11 @@ const NavBar = ({title, toggleComponent}: Props) => {
   };
 
   useEffect(() => {
-    const token = user?.token;
-
-    if (token) {
-      const decodedToken = decode<JwtTokenI>(token);
-
-      if (decodedToken.expiresIn * 1000 < new Date().getTime()) signOut();
-    }
+    // const token: any = user?.token;
+    // if (user.token) {
+    //   const decodedToken = decode<JwtTokenI>(token);
+    //   if (decodedToken.expiresIn * 1000 < new Date().getTime()) signOut();
+    // }
 
     setUser(JSON.parse(localStorage.getItem('home') || "{}"));
   }, [location]);
