@@ -1,22 +1,20 @@
 /* eslint-disable */
 /* eslint-disable react/jsx-filename-extension */
 import React, { useState, ReactElement, } from 'react';
-import useStyles from './Styles';
+import useStyles from './styles';
 import { useDispatch } from 'react-redux';
 import moment from 'moment';
 import {TextField, Button, Typography, Paper, Tooltip} from '@material-ui/core';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-
 import Box from '@material-ui/core/Box';
-
 import { DebounceInput } from 'react-debounce-input';
 import { updateHoldings } from '../../actions/holdings';
 import { getMatchingStocks } from '../../api/backendApi';
 import { getCurrentPrice } from '../../api/stockApi';
 
-import { CompanyStateProperties, SuggestionsStateProperties } from './order-interfaces';
+import { CompanyStatePropertiesI, SuggestionsStatePropertiesI } from '../../interfaces/Order';
 
 interface Props {
   toggleComponent:any;
@@ -26,7 +24,7 @@ export default function order({toggleComponent}: Props): ReactElement {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const [suggestions, setSuggestions] = useState<SuggestionsStateProperties[]>([]);
+  const [suggestions, setSuggestions] = useState<SuggestionsStatePropertiesI[]>([]);
   const [company, setCompany] = useState<any>([]);
   const [ticker, setTicker] = useState('');
   const [action, setAction] = useState('');
@@ -37,7 +35,7 @@ export default function order({toggleComponent}: Props): ReactElement {
   const [value, setValue] = React.useState('');
 
   const handleChange = async (company) => {
-    let matches: CompanyStateProperties[] = [];
+    let matches: CompanyStatePropertiesI[] = [];
     if (company.length > 0) {
       matches = (await getMatchingStocks(company)).data;
     }
@@ -78,7 +76,7 @@ export default function order({toggleComponent}: Props): ReactElement {
           <Typography variant="h6">Order</Typography>
           <TextField name="date" label="Date" variant="outlined" fullWidth value={date}/>
           <DebounceInput element={TextField} minLength={3} debounceTimeout={0} name="company" label="Company" variant="outlined" fullWidth value={company} onChange={(e) => handleChange(e.target.value)} />
-          {suggestions && suggestions.map((suggestion: SuggestionsStateProperties) => (
+          {suggestions && suggestions.map((suggestion: SuggestionsStatePropertiesI) => (
             <Tooltip key={suggestion.name} title="Choose" arrow>
               <Button onClick={() => SuggestionHandler(suggestion)}>{ suggestion.name }</Button>
             </Tooltip>
