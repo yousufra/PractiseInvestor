@@ -9,6 +9,8 @@ export const Dashboard = () => {
   const dispatch = useDispatch(); // allows us to dispatch an action
 
   useEffect(() => {
+    console.log('getting all holdings dashboard');
+    
     dispatch(getAllHoldings());
   }, [dispatch]);
 
