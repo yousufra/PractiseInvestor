@@ -1,60 +1,50 @@
 const axios = require('axios');
 const User = require('../models/userModel');
-const Stock = require('../models/stockModel');
 require('dotenv').config();
 
-const getStockTicker = async (company) => {
-  const regex = new RegExp([company].join(''), 'i');
-  const stockObject = (await Stock.find({ name: { $regex: regex } }))[0];
-  const stockTicker = stockObject.symbol;
-  return stockTicker;
-};
+async function getPrices() {
+  const users = await User.find();
+  const prices = {};
+  for (const user of users) {
+    for (const holding of user.holdings) {
+      prices[holding.ticker] = 0;
+    }
+  }
+  for (const [key] of Object.entries(prices)) {
+    await axios.get(`https://api.twelvedata.com/price?symbol=${key}&apikey=${process.env.API_KEY}`)
+      .then((res) => {
+        prices[key] = Number(res.data.price);
+      });
+  }
+  return [prices, users];
+}
 
 exports.getRanking = async (req, response) => {
+  const [prices, users] = await getPrices();
   try {
-    const users = await User.find();
-    const stocks = await Stock.find();
-
     const rankings = [];
-
-    for (let j = 0; j < users.length; j++) {
+    for (let j = 0; j < users.length; j += 1) {
       const {
         userName, holdings, activities, cash,
       } = users[j];
       const totalNumberOfActivities = activities.length;
       const numberOfStocks = holdings.length;
-      const apiKey = process.env.API_KEY;
-
       let calcPortfolioValue = cash;
-      async function calcValue() {
-        for (let i = 0; i < holdings.length; i++) {
-          const ticker = await getStockTicker(holdings[i].company);
-
-          const url = 'https://api.twelvedata.com' + `/price?symbol=${ticker}&apikey=${apiKey}`;
-          await axios.get(url)
-            .then((res) => {
-              const price = Number(res.data.price);// current price for that specific holding
-              const holdingValue = price * holdings[i].quantity;
-              calcPortfolioValue += holdingValue;
-              if (i === holdings.length - 1) {
-                rankings.push({
-                  userName, totalValue: calcPortfolioValue, totalNumberOfActivities, numberOfStocks,
-                });
-                if (j === users.length - 1) {
-                  // I wanna sort by totalValue
-                  rankings.sort((a, b) => b.totalValue - a.totalValue);
-                  response.status(200);
-                  response.send(rankings);
-                }
-              }
-            });
-        }
+      for (let i = 0; i < holdings.length; i += 1) {
+        calcPortfolioValue += prices[holdings[i].ticker] * holdings[i].quantity;
       }
-      await calcValue();
+      rankings.push({
+        userName,
+        totalValue: calcPortfolioValue,
+        totalNumberOfActivities,
+        numberOfStocks,
+      });
     }
-    return;
+    rankings.sort((a, b) => b.totalValue - a.totalValue); // Sort by totalValue
+    response.status(200);
+    response.send(rankings);
   } catch (error) {
-    res.status(500);
-    res.send(error);
+    response.status(500);
+    response.send(error);
   }
 };
