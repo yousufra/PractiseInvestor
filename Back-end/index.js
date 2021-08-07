@@ -1,7 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const cron = require('node-cron');
 const router = require('./routes/router');
+const storeRanking = require('./controllers/ranking');
 
 const app = express();
 
@@ -17,3 +19,5 @@ app.listen(PORT, () => {
   // eslint-disable-next-line no-console
   console.log(`Server listening at http://localhost:${PORT}`);
 });
+
+cron.schedule('5 16 * * 1-5', () => storeRanking(), { timezone: 'America/New_York' });
