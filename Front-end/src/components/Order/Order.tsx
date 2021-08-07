@@ -35,9 +35,12 @@ export default function order({toggleComponent}: Props): ReactElement {
   const [value, setValue] = React.useState('');
 
   const handleChange = async (company) => {
+    console.log('handle change company', company)
+    // input
     let matches: CompanyStatePropertiesI[] = [];
-    if (company.length > 0) {
+    if (company) {
       matches = (await getMatchingStocks(company)).data;
+      console.log('handle change matches', matches)
     }
     setSuggestions(matches);
   };
@@ -57,7 +60,7 @@ export default function order({toggleComponent}: Props): ReactElement {
     
     e.preventDefault(); // prevent browser from refreshing , defualt when you submit a form
     // checking if the form is entirely filled
-    if (company && quantity && action) {
+    if (ticker && quantity && action) {
       // checking if the user already owns that holding
       const holding = holdings.find(holding => holding.company === company);
       // checking if the type of action is sell
@@ -78,7 +81,6 @@ export default function order({toggleComponent}: Props): ReactElement {
         // check cash
         const netAmount: number = Number((price * quantity).toFixed(2));
         if (cash >= netAmount) {
-          console.log('enough funds')
           dispatch(updateHoldings({ date, company, ticker, action, quantity, price, netAmount }));
           setCompany('');
           setTicker('');
@@ -87,7 +89,6 @@ export default function order({toggleComponent}: Props): ReactElement {
           setPrice(0);
           toggleComponent('Dashboard');
         } else {
-          console.log('not enough funds')
           alert(`Not enough funds`);
         }
       }
