@@ -1,6 +1,6 @@
 /* eslint-disable */
 /* eslint-disable react/jsx-filename-extension */
-import React, { useState, ReactElement, } from 'react';
+import React, { useState, ReactElement, useEffect, } from 'react';
 import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
@@ -11,12 +11,13 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Box from '@material-ui/core/Box';
 import { DebounceInput } from 'react-debounce-input';
 import { updateHoldings } from '../../actions/holdings';
-import { getMatchingStocks } from '../../api/backendApi';
+import { getAllStocks } from '../../api/backendApi';
 import { getCurrentPrice } from '../../api/stockApi';
-import { CompanyStatePropertiesI, SuggestionsStatePropertiesI } from '../../interfaces/Order';
+import { SuggestionsStatePropertiesI } from '../../interfaces/Order';
+import { BasicStockI } from '../../interfaces/Stock';
 
 interface Props {
-  toggleComponent:any;
+  toggleComponent: Function;
 }
 
 export default function order({toggleComponent}: Props): ReactElement {
@@ -24,37 +25,45 @@ export default function order({toggleComponent}: Props): ReactElement {
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  const [allStocks, setAllStocks] = useState<BasicStockI[]>([]);
   const [suggestions, setSuggestions] = useState<SuggestionsStatePropertiesI[]>([]);
-  const [company, setCompany] = useState<any>([]);
-  const [ticker, setTicker] = useState('');
-  const [action, setAction] = useState('');
-  const [date, setDate] = useState(moment().format('MMMM Do YYYY'));
-  const [quantity, setQuantity] = useState(0);
-  const [price, setPrice] = useState(0);
+  const [company, setCompany] = useState<string>('');
+  const [ticker, setTicker] = useState<string>('');
+  const [action, setAction] = useState<string>('');
+  const [date, setDate] = useState<string>(moment().format('MMMM Do YYYY'));
+  const [quantity, setQuantity] = useState<number>(0);
+  const [price, setPrice] = useState<number>(0);
 
-  const [value, setValue] = React.useState('');
+  const [value, setValue] = useState<string>('');
+
+  useEffect(() => {
+    // getting all stocks to filter them later instead of making one api call for each filter
+    getAllStocks().then(res => setAllStocks(res.data));
+  }, [])
 
   const handleChange = async (company) => {
-    // input
-    let matches: CompanyStatePropertiesI[] = [];
+    let matches: BasicStockI[] = [];
     if (company) {
-      matches = (await getMatchingStocks(company)).data;
+      // filtering all companies that the name matches with the input
+      const filteredStocks = allStocks.filter((stock: BasicStockI) => stock.name.toLowerCase().includes(company.toLowerCase()));
+      // since some come duplicated we filter them again to remove duplicates
+      filteredStocks.forEach((stock: BasicStockI) => {
+        !matches.find(el => el.name === stock.name) && matches.push(stock);
+      })
     }
+    // setting the suggestions so they don't have any duplicates
     setSuggestions(matches);
   };
-
   const SuggestionHandler = async (company) => {
     setCompany(company.name);
     setSuggestions([]);
     setTicker(company.symbol);
-
     //set price here with real time api call
     const realTimePrice:number = Number((await getCurrentPrice(company.symbol)).data.price);
     setPrice(realTimePrice)
   }
 
-  const handleSubmit = (e:any) => {
-    
+  const handleSubmit = (e:any) => { 
     e.preventDefault(); // prevent browser from refreshing , defualt when you submit a form
     // checking if the form is entirely filled
     const holding = holdings.find(holding => holding.company === company);
@@ -78,7 +87,6 @@ export default function order({toggleComponent}: Props): ReactElement {
         } else {
           alert(`You currently own ${holding.quantity} shares from this company.`)
         }
-      
       } else {
         // check cash
         const netAmount: number = Number((price * quantity).toFixed(2));

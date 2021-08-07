@@ -33,10 +33,10 @@ export const CustomPaginationActionsTable = () => {
 
   useEffect(() => {
     (async function useEffectFunc () {
-      setLoading(true);
-      setTimeout(() => {
-        setLoading(false);
-      }, 4500);
+      // setLoading(true);
+      // setTimeout(() => {
+      //   setLoading(false);
+      // }, 100);
       const ranking = await getRanking();
       setRankings(ranking.data);
     })()}, []);
