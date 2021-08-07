@@ -1,9 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const cron = require('node-cron');
+const { CronJob } = require('cron');
 const router = require('./routes/router');
-const storeRanking = require('./controllers/ranking');
+const ranking = require('./controllers/ranking');
 
 const app = express();
 
@@ -15,9 +15,15 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(router);
 
+const job = new CronJob({
+  cronTime: '5 16 * * 1-5',
+  onTick: ranking.storeRanking(),
+  start: false,
+  timeZone: 'America/New_York',
+});
+job.start();
+
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
   console.log(`Server listening at http://localhost:${PORT}`);
 });
-
-cron.schedule('5 16 * * 1-5', () => storeRanking(), { timezone: 'America/New_York' });
