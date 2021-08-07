@@ -38,6 +38,7 @@ export const PieChart = ({ cash, portfolioValue, holdingsValue }: Props) => {
       <Box width={0.27} >
       <Paper id="chart" >
         <Typography variant="h6">Total Value: ${portfolioValue}</Typography>
+        <Typography variant="h6">Your Funds: ${cash?.toFixed(2)}</Typography>
         <Chart options={chart.options} series={[Number(holdingsValue?.toFixed(2)), Number(cash?.toFixed(2))]} type="pie" width={380} />
       </Paper>
     </Box>

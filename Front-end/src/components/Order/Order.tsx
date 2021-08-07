@@ -56,13 +56,45 @@ export default function order({toggleComponent}: Props): ReactElement {
     console.log('form', { date, company, ticker, action, quantity, price, netAmount: Number((price * quantity).toFixed(2)) });
     
     e.preventDefault(); // prevent browser from refreshing , defualt when you submit a form
-    dispatch(updateHoldings({ date, company, ticker, action, quantity, price, netAmount: Number((price * quantity).toFixed(2)) }));
-    setCompany('');
-    setTicker('');
-    setAction('');
-    setQuantity(0);
-    setPrice(0);
-    toggleComponent('Dashboard');
+    // checking if the form is entirely filled
+    if (company && quantity && action) {
+      // checking if the user already owns that holding
+      const holding = holdings.find(holding => holding.company === company);
+      // checking if the type of action is sell
+      if ( holding && action === 'sell')  {
+        // checking if the user is trying to sell more than he currently owns
+        if (quantity <= holding.quantity) {
+          dispatch(updateHoldings({ date, company, ticker, action, quantity, price, netAmount: Number((price * quantity).toFixed(2)) }));
+          setCompany('');
+          setTicker('');
+          setAction('');
+          setQuantity(0);
+          setPrice(0);
+          toggleComponent('Dashboard');
+        } else {
+          alert(`You currently own ${holding.quantity} shares from this company.`)
+        }
+      } else {
+        // check cash
+        const netAmount: number = Number((price * quantity).toFixed(2));
+        if (cash >= netAmount) {
+          console.log('enough funds')
+          dispatch(updateHoldings({ date, company, ticker, action, quantity, price, netAmount }));
+          setCompany('');
+          setTicker('');
+          setAction('');
+          setQuantity(0);
+          setPrice(0);
+          toggleComponent('Dashboard');
+        } else {
+          console.log('not enough funds')
+          alert(`Not enough funds`);
+        }
+      }
+    }
+    else {
+      alert('Please fill out all fields');
+    }
   };
 
   const handleRadio = (event: { target: { value: React.SetStateAction<string>; }; }) => {
