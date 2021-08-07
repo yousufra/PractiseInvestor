@@ -22,7 +22,7 @@ export const Holdings = () => {
   const [portfolioValue, setPortfolioValue] = useState<number>(0);
 
   const { holdings, cash } = useSelector((state: any) => state.holdings); // state object is all the states within the combine reducer in index.js in reducer folder
-
+  
   useEffect(() => {
     function getPrice () {
       const apiCallArray = holdings?.map(async (holding: NoPriceHoldingI) => {
