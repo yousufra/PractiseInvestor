@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-filename-extension */
 import React, { useState, ReactElement, } from 'react';
 import useStyles from './styles';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import {TextField, Button, Typography, Paper, Tooltip} from '@material-ui/core';
 import Radio from '@material-ui/core/Radio';
@@ -10,10 +10,9 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Box from '@material-ui/core/Box';
 import { DebounceInput } from 'react-debounce-input';
-import { updateHoldings } from '../../actions/Holdings';
+import { updateHoldings } from '../../actions/holdings';
 import { getMatchingStocks } from '../../api/backendApi';
 import { getCurrentPrice } from '../../api/stockApi';
-
 import { CompanyStatePropertiesI, SuggestionsStatePropertiesI } from '../../interfaces/Order';
 
 interface Props {
@@ -21,6 +20,7 @@ interface Props {
 }
 
 export default function order({toggleComponent}: Props): ReactElement {
+  const { holdings, cash } = useSelector((state: any) => state.holdings);
   const classes = useStyles();
   const dispatch = useDispatch();
 
