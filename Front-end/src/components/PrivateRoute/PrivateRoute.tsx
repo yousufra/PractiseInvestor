@@ -24,8 +24,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     } else {
       setIsAuthenticated(false);
     }
-    // eslint-disable-next-line
-
   }, [auth])
 
   if (isAuthenticated === null) {

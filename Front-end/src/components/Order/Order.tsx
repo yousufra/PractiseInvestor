@@ -13,14 +13,13 @@ import { DebounceInput } from 'react-debounce-input';
 import { updateHoldings } from '../../actions/holdings';
 import { getMatchingStocks } from '../../api/backendApi';
 import { getCurrentPrice } from '../../api/stockApi';
-
 import { CompanyStatePropertiesI, SuggestionsStatePropertiesI } from '../../interfaces/Order';
 
 interface Props {
-  toggleComponent:any;
+  toggleComponent: Function
 }
 
-export default function order({toggleComponent}: Props): ReactElement {
+export default function Order({toggleComponent}: Props): ReactElement {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -52,9 +51,7 @@ export default function order({toggleComponent}: Props): ReactElement {
     setPrice(realTimePrice)
   }
 
-  const handleSubmit = (e:any) => {
-    console.log('form', { date, company, ticker, action, quantity, price, netAmount: Number((price * quantity).toFixed(2)) });
-    
+  const handleSubmit = (e:any) => {    
     e.preventDefault(); // prevent browser from refreshing , defualt when you submit a form
     dispatch(updateHoldings({ date, company, ticker, action, quantity, price, netAmount: Number((price * quantity).toFixed(2)) }));
     setCompany('');
