@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-filename-extension */
 import React, { useState, ReactElement, } from 'react';
 import useStyles from './styles';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import {TextField, Button, Typography, Paper, Tooltip} from '@material-ui/core';
 import Radio from '@material-ui/core/Radio';
@@ -21,17 +21,33 @@ interface Props {
   toggleComponent: Function
 }
 
+interface OrderFormI {
+  company: string;
+  ticker: string;
+  action: string;
+  quantity: number;
+  price: number;
+}
+
 export default function Order({toggleComponent}: Props): ReactElement {
+  const { holdings, cash } = useSelector((state: any) => state.holdings);
   const classes = useStyles();
   const dispatch = useDispatch();
+  console.log('order holdings', holdings);
 
+  const defaultForm = {
+    company: '',
+    ticker: '',
+    action: '',
+    date: moment().format('MMMM Do YYYY'),
+    quantity: 0,
+    price: 0,
+  }
+  
   const [suggestions, setSuggestions] = useState<SuggestionsStatePropertiesI[]>([]);
-  const [company, setCompany] = useState<any>([]);
-  const [ticker, setTicker] = useState('');
-  const [action, setAction] = useState('');
-  const [date, setDate] = useState(moment().format('MMMM Do YYYY'));
-  const [quantity, setQuantity] = useState(0);
-  const [price, setPrice] = useState(0);
+
+
+  const [form, setForm] = useState<OrderFormI>(defaultForm)
 
   const [value, setValue] = React.useState('');
 
@@ -55,14 +71,35 @@ export default function Order({toggleComponent}: Props): ReactElement {
 
   const handleSubmit = (e: any) => {
     e.preventDefault(); // prevent browser from refreshing , defualt when you submit a form
+    // checking if the form is entirely filled
     if (company && quantity && action) {
-      dispatch(updateHoldings({ date, company, ticker, action, quantity, price, netAmount: Number((price * quantity).toFixed(2)) }));
-      setCompany('');
-      setTicker('');
-      setAction('');
-      setQuantity(0);
-      setPrice(0);
-      toggleComponent('Dashboard');
+      // checking if the user already owns that holding
+      const holding = holdings.find(holding => holding.company === company);
+      // checking if the type of action is sell
+      if ( holding && action === 'sell')  {
+        // checking if the user is trying to sell more than he currently owns
+        if (quantity <= holding.quantity) {
+          dispatch(updateHoldings({ date, company, ticker, action, quantity, price, netAmount: Number((price * quantity).toFixed(2)) }));
+          setCompany('');
+          setTicker('');
+          setAction('');
+          setQuantity(0);
+          setPrice(0);
+          toggleComponent('Dashboard');
+        } else {
+          alert(`You currently own ${holding.quantity} shares from this company.`)
+        }
+
+      } else {
+        // check cash
+        dispatch(updateHoldings({ date, company, ticker, action, quantity, price, netAmount: Number((price * quantity).toFixed(2)) }));
+        setCompany('');
+        setTicker('');
+        setAction('');
+        setQuantity(0);
+        setPrice(0);
+        toggleComponent('Dashboard');
+      }
     }
     else {
       alert('Please fill out all fields');
