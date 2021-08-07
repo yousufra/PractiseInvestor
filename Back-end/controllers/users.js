@@ -55,7 +55,6 @@ exports.getUser = async (req, res) => {
 
 exports.login = async (req, res) => {
   const { userName, password } = req.body;
-  console.log('login');
   if (!userName || !password) return res.status(400).send({ message: 'Please enter all fields.' });
 
   try {

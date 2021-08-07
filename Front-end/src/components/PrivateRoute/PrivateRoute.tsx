@@ -4,17 +4,13 @@ import { Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import jwtDecode from 'jwt-decode';
 import { JwtTokenI } from '../../interfaces/JwtToken';
-import { combineReducers } from '../../reducers/index';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  console.log(JSON.stringify(combineReducers));
-  const auth = useSelector((state) => state.authenticate);
-  console.log(JSON.stringify(auth));
-  console.log(JSON.stringify(DefaultRootState));
-  const [isAuthenticated, setIsAuthenticated] = useState(null);
-  console.log('private route');
+
+  const auth = useSelector((state: any) => state.authenticate);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   useEffect(() => {
-    const tokenObject = JSON.parse(localStorage.getItem('home'))
+    const tokenObject: any = localStorage.getItem('home');
     if (tokenObject) {
       const token = JSON.parse(tokenObject).token;
       const tokenExpiration = jwtDecode<JwtTokenI>(token).exp;
@@ -28,8 +24,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     } else {
       setIsAuthenticated(false);
     }
-    // eslint-disable-next-line
-
   }, [auth])
 
   if (isAuthenticated === null) {

@@ -1,6 +1,6 @@
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
-import Ranking from './Ranking';
+import Ranking from '../../../interfaces/Ranking';
 
 interface Props {
   ranking: Ranking;
