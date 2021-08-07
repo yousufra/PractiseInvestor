@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import Chart from 'react-apexcharts';
 import {Paper, Box, Typography} from '@material-ui/core';
+import {ChartI} from '../../../../interfaces/Chart'
 
 interface Props {
   cash: number
@@ -8,33 +9,6 @@ interface Props {
   holdingsValue: number
   b: string
 }
-
-// interface ChartType {
-//   width: number
-//   type?: string
-// }
-
-interface ChartI {
-  series: number[]
-  options: any
-}
-
-// interface ChartOptions {
-//   chart: ChartType
-//   labels?: string[]
-//   responsive?:ResponsiveEl[]
-//   legend?: Legend
-// }
-
-
-// interface ResponsiveEl {
-//   breakpoint: number
-//   options: ChartOptions
-// }
-
-// interface Legend {
-//   position: string
-// }
 
 export const PieChart = ({ cash, portfolioValue, holdingsValue }: Props) => {
   
