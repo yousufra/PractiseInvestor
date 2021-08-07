@@ -73,16 +73,22 @@ export default function Order({toggleComponent}: Props): ReactElement {
         } else {
           alert(`You currently own ${holding.quantity} shares from this company.`)
         }
-
       } else {
         // check cash
-        dispatch(updateHoldings({ date, company, ticker, action, quantity, price, netAmount: Number((price * quantity).toFixed(2)) }));
-        setCompany('');
-        setTicker('');
-        setAction('');
-        setQuantity(0);
-        setPrice(0);
-        toggleComponent('Dashboard');
+        const netAmount: number = Number((price * quantity).toFixed(2));
+        if (cash >= netAmount) {
+          console.log('enough funds')
+          dispatch(updateHoldings({ date, company, ticker, action, quantity, price, netAmount }));
+          setCompany('');
+          setTicker('');
+          setAction('');
+          setQuantity(0);
+          setPrice(0);
+          toggleComponent('Dashboard');
+        } else {
+          console.log('not enough funds')
+          alert(`Not enough funds`);
+        }
       }
     }
     else {
