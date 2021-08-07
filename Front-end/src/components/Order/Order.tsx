@@ -10,7 +10,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Box from '@material-ui/core/Box';
 import { DebounceInput } from 'react-debounce-input';
-import { updateHoldings } from '../../actions/holdings';
+import { updateHoldings } from '../../actions/Holdings';
 import { getMatchingStocks } from '../../api/backendApi';
 import { getCurrentPrice } from '../../api/stockApi';
 

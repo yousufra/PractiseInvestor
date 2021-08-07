@@ -2,7 +2,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Holdings } from './Holdings/Holdings';
-import { getAllHoldings } from '../../actions/holdings';
+import { getAllHoldings } from '../../actions/Holdings';
 
 export const Dashboard = () => {
   
