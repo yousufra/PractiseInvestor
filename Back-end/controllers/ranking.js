@@ -4,16 +4,17 @@ require('dotenv').config();
 
 async function getPrices() {
   const users = await User.find();
-  const prices = {};
+  const tickers = [];
   for (const user of users) {
     for (const holding of user.holdings) {
-      prices[holding.ticker] = 0;
+      tickers.push(holding.ticker);
     }
   }
-  for (const [key] of Object.entries(prices)) {
-    await axios.get(`https://api.twelvedata.com/price?symbol=${key}&apikey=${process.env.API_KEY}`)
+  const prices = {};
+  for (const ticker of tickers) {
+    await axios.get(`https://api.twelvedata.com/price?symbol=${ticker}&apikey=${process.env.API_KEY}`)
       .then((res) => {
-        prices[key] = Number(res.data.price);
+        prices[ticker] = Number(res.data.price);
       });
   }
   return [prices, users];
