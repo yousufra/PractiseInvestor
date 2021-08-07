@@ -17,5 +17,4 @@ export interface TickerStatePropertiesI {
 
 export interface SuggestionsStatePropertiesI {
   name: any;
-  
 }
