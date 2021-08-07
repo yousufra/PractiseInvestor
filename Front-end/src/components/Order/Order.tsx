@@ -35,12 +35,10 @@ export default function order({toggleComponent}: Props): ReactElement {
   const [value, setValue] = React.useState('');
 
   const handleChange = async (company) => {
-    console.log('handle change company', company)
     // input
     let matches: CompanyStatePropertiesI[] = [];
     if (company) {
       matches = (await getMatchingStocks(company)).data;
-      console.log('handle change matches', matches)
     }
     setSuggestions(matches);
   };
@@ -56,17 +54,28 @@ export default function order({toggleComponent}: Props): ReactElement {
   }
 
   const handleSubmit = (e:any) => {
-    console.log('form', { date, company, ticker, action, quantity, price, netAmount: Number((price * quantity).toFixed(2)) });
     
     e.preventDefault(); // prevent browser from refreshing , defualt when you submit a form
     // checking if the form is entirely filled
+    const holding = holdings.find(holding => holding.company === company);
+  
     if (ticker && quantity && action) {
+
       // checking if the user already owns that holding
-      const holding = holdings.find(holding => holding.company === company);
+      if (!holding) {
+        return alert("You do not own any shares of this company");
+      }
       // checking if the type of action is sell
-      if ( holding && action === 'sell')  {
+      if (holding  && action === 'sell')  {
+  
+        console.log(holding);
+      
         // checking if the user is trying to sell more than he currently owns
+
         if (quantity <= holding.quantity) {
+
+          
+
           dispatch(updateHoldings({ date, company, ticker, action, quantity, price, netAmount: Number((price * quantity).toFixed(2)) }));
           setCompany('');
           setTicker('');
@@ -77,6 +86,7 @@ export default function order({toggleComponent}: Props): ReactElement {
         } else {
           alert(`You currently own ${holding.quantity} shares from this company.`)
         }
+      
       } else {
         // check cash
         const netAmount: number = Number((price * quantity).toFixed(2));
