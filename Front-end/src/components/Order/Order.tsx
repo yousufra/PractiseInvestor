@@ -13,27 +13,26 @@ import { DebounceInput } from 'react-debounce-input';
 import { updateHoldings } from '../../actions/holdings';
 import { getMatchingStocks } from '../../api/backendApi';
 import { getCurrentPrice } from '../../api/stockApi';
-import { v4 as uuidv4 } from 'uuid';
-
 import { CompanyStatePropertiesI, SuggestionsStatePropertiesI } from '../../interfaces/Order';
 
 interface Props {
-  toggleComponent: Function
+  toggleComponent:any;
 }
 
-export default function Order({toggleComponent}: Props): ReactElement {
+export default function order({toggleComponent}: Props): ReactElement {
   const { holdings, cash } = useSelector((state: any) => state.holdings);
   const classes = useStyles();
   const dispatch = useDispatch();
- 
-  const [suggestions, setSuggestions] = useState<CompanyStatePropertiesI[]>([]);
-  const [company, setCompany] = useState<string>('');
-  const [ticker, setTicker] = useState<string>('');
-  const [action, setAction] = useState<string>('');
-  const [date, setDate] = useState<string>(moment().format('MMMM Do YYYY'));
-  const [quantity, setQuantity] = useState<number>(0);
-  const [price, setPrice] = useState<number>(0);
-  const [value, setValue] = useState<string>('');
+
+  const [suggestions, setSuggestions] = useState<SuggestionsStatePropertiesI[]>([]);
+  const [company, setCompany] = useState<any>([]);
+  const [ticker, setTicker] = useState('');
+  const [action, setAction] = useState('');
+  const [date, setDate] = useState(moment().format('MMMM Do YYYY'));
+  const [quantity, setQuantity] = useState(0);
+  const [price, setPrice] = useState(0);
+
+  const [value, setValue] = React.useState('');
 
   const handleChange = async (company) => {
     let matches: CompanyStatePropertiesI[] = [];
@@ -53,7 +52,9 @@ export default function Order({toggleComponent}: Props): ReactElement {
     setPrice(realTimePrice)
   }
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e:any) => {
+    console.log('form', { date, company, ticker, action, quantity, price, netAmount: Number((price * quantity).toFixed(2)) });
+    
     e.preventDefault(); // prevent browser from refreshing , defualt when you submit a form
     // checking if the form is entirely filled
     if (company && quantity && action) {
@@ -109,14 +110,14 @@ export default function Order({toggleComponent}: Props): ReactElement {
           <TextField name="date" label="Date" variant="outlined" fullWidth value={date}/>
           <DebounceInput element={TextField} minLength={3} debounceTimeout={0} name="company" label="Company" variant="outlined" fullWidth value={company} onChange={(e) => handleChange(e.target.value)} />
           {suggestions && suggestions.map((suggestion: SuggestionsStatePropertiesI) => (
-            <Tooltip key={uuidv4()} title="Choose" arrow>
+            <Tooltip key={suggestion.name} title="Choose" arrow>
               <Button onClick={() => SuggestionHandler(suggestion)}>{ suggestion.name }</Button>
             </Tooltip>
           ))}
           <TextField name="ticker" label="Ticker" variant="outlined" fullWidth value={ticker} onChange={(e) => setTicker( ticker )} />
           <RadioGroup row aria-label="action" name="action1" value={value} onChange={handleRadio}>
-            <FormControlLabel value="buy" control={<Radio color="primary" />} label="Buy" />
-            <FormControlLabel value="sell" control={<Radio color="primary" />} label="Sell" />
+            <FormControlLabel value="buy" control={<Radio color="primary"/>} label="Buy" />
+            <FormControlLabel value="sell" control={<Radio color="primary"/>} label="Sell" />
           </RadioGroup>
           <TextField type="number" name="quantity" InputProps={{inputProps: { min: 0 }}} label="Quantity" variant="outlined" fullWidth defaultValue={quantity} onChange={(e) => setQuantity(+e.target.value)} />
           <TextField type="number" name="price" label="Price" variant="outlined" fullWidth value={price.toFixed(2)} />

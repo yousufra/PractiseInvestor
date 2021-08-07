@@ -25,6 +25,12 @@ interface DefaultFormI {
   confirmPassword: string,
 }
 
+/* interface DefaultFormI {
+  userName: string,
+  password: string,
+  confirmPassword: string,
+} */
+
 const Authenticate = () => {
   const classes = useStyles();
   const [showPassword, setShowPassword] = useState<string>('password');
