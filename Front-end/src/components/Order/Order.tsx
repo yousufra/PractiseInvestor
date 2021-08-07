@@ -53,7 +53,8 @@ export default function order({toggleComponent}: Props): ReactElement {
   }
 
   const handleSubmit = (e:any) => {
-
+    console.log('form', { date, company, ticker, action, quantity, price, netAmount: Number((price * quantity).toFixed(2)) });
+    
     e.preventDefault(); // prevent browser from refreshing , defualt when you submit a form
     dispatch(updateHoldings({ date, company, ticker, action, quantity, price, netAmount: Number((price * quantity).toFixed(2)) }));
     setCompany('');
