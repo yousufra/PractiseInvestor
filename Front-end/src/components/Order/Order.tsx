@@ -21,35 +21,19 @@ interface Props {
   toggleComponent: Function
 }
 
-interface OrderFormI {
-  company: string;
-  ticker: string;
-  action: string;
-  quantity: number;
-  price: number;
-}
-
 export default function Order({toggleComponent}: Props): ReactElement {
   const { holdings, cash } = useSelector((state: any) => state.holdings);
   const classes = useStyles();
   const dispatch = useDispatch();
-  console.log('order holdings', holdings);
-
-  const defaultForm = {
-    company: '',
-    ticker: '',
-    action: '',
-    date: moment().format('MMMM Do YYYY'),
-    quantity: 0,
-    price: 0,
-  }
-  
-  const [suggestions, setSuggestions] = useState<SuggestionsStatePropertiesI[]>([]);
-
-
-  const [form, setForm] = useState<OrderFormI>(defaultForm)
-
-  const [value, setValue] = React.useState('');
+ 
+  const [suggestions, setSuggestions] = useState<CompanyStatePropertiesI[]>([]);
+  const [company, setCompany] = useState<string>('');
+  const [ticker, setTicker] = useState<string>('');
+  const [action, setAction] = useState<string>('');
+  const [date, setDate] = useState<string>(moment().format('MMMM Do YYYY'));
+  const [quantity, setQuantity] = useState<number>(0);
+  const [price, setPrice] = useState<number>(0);
+  const [value, setValue] = useState<string>('');
 
   const handleChange = async (company) => {
     let matches: CompanyStatePropertiesI[] = [];
