@@ -22,5 +22,7 @@ module.exports = {
   rules: {
     'no-console': 'off',
     'max-len': 0,
+    'react/react-in-jsx-scope': 'off',
+    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.tsx'] }],
   },
 };
