@@ -55,15 +55,16 @@ export default function order({toggleComponent}: Props): ReactElement {
     e.preventDefault(); // prevent browser from refreshing , defualt when you submit a form
     // checking if the form is entirely filled
     const holding = holdings.find(holding => holding.company === company);
+    // checking if the form fields are all filled
     if (ticker && quantity && action) {
-      // checking if the user already owns that holding
-      if (!holding) {
-        return alert("You do not own any shares of this company");
-      }
+      // checking if the holding is one you own if you are trying to sell
+      if (action === 'sell' && !holding) return alert("You do not own any shares of this company");
+      
       // checking if the type of action is sell
       if (holding  && action === 'sell')  {
-        // checking if the user is trying to sell more than he currently own
+        // checking if the user is trying to sell more than he currently owns
         if (quantity <= holding.quantity) {
+
           dispatch(updateHoldings({ date, company, ticker, action, quantity, price, netAmount: Number((price * quantity).toFixed(2)) }));
           setCompany('');
           setTicker('');
