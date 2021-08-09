@@ -20,7 +20,7 @@ export const Dashboard = () => {
       <Holdings />
     </div>
     :
-    // if api call takes a little while to load the info pacman loader will pop up until the api call is done
+    // if api call takes a little while to load the info, pacman loader will pop up until the api call is done
     <div className="loader-box">
       <PacmanLoader color={'blue'} size={45} />
     </div>
