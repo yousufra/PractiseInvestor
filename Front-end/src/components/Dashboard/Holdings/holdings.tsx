@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import {
+  Button,
   Table,
   TableBody,
   TableCell,
@@ -15,7 +16,11 @@ import { getCurrentPrice } from '../../../api/stockApi';
 import { PieChart } from './PieChart/PieChart';
 import { HoldingI, NoPriceHoldingI } from '../../../interfaces/Holding';
 
-export const Holdings = () => {
+interface Props {
+  toggleComponent: (str: string) => void; 
+}
+
+export const Holdings = ({toggleComponent}: Props) => {
   
   const classes = useStyles();
   const [holdingsPrices, setHoldingsPrices] = useState<HoldingI[]>([]);
@@ -52,7 +57,7 @@ export const Holdings = () => {
       <Box m={1}>
         <PieChart portfolioValue={portfolioValue} cash={cash} holdingsValue={portfolioValue-cash} b="2rem"/>
       </Box>
-      {!holdings?.length ? <p>No Holdings, buy a stock</p> : (
+      {!holdings?.length ? <Button variant="contained" color="secondary" onClick={() => {toggleComponent('Order')}}>No Holdings: Buy Your First Stock</Button> : (
         <Box m={1}>
           <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="simple table">
