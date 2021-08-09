@@ -129,7 +129,7 @@ export default function Order({toggleComponent}: Props): ReactElement {
       <Paper className={classes.paper}>
         <form className={`${classes.form} ${classes.root}`} noValidate autoComplete="off" onSubmit={handleSubmit}>
           <Typography variant="h6">Order</Typography>
-          <TextField name="date" label="Date" variant="outlined" fullWidth value={date}/>
+          <TextField name="date" label="Date/Time" variant="outlined" fullWidth value={date}/>
           {renderAutocomplete}
           <TextField name="ticker" label="Ticker" variant="outlined" fullWidth value={ticker} onChange={(e) => setTicker( ticker )} />
           <RadioGroup row aria-label="action" name="action1" value={value} onChange={handleRadio}>

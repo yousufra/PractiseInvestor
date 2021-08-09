@@ -2,6 +2,7 @@ const axios = require('axios');
 const rateLimit = require('axios-rate-limit');
 const Ranking = require('../models/rankingModel');
 const User = require('../models/userModel');
+const { totalValueHistory } = require('./users');
 require('dotenv').config();
 
 async function getPrices() {
@@ -25,9 +26,10 @@ async function getPrices() {
 async function storeRanking() {
   const [prices, users] = await getPrices();
   const rankings = [];
+  const date = new Date();
   for (let j = 0; j < users.length; j += 1) {
     const {
-      userName, holdings, activities, cash,
+      userName, holdings, activities, cash, _id,
     } = users[j];
     const totalNumberOfActivities = activities.length;
     const numberOfStocks = holdings.length;
@@ -41,6 +43,7 @@ async function storeRanking() {
       totalNumberOfActivities,
       numberOfStocks,
     });
+    totalValueHistory(_id, calcPortfolioValue, date);
   }
   await Ranking.deleteMany();
   Ranking.create(rankings);
@@ -49,7 +52,7 @@ async function storeRanking() {
 
 async function getRanking(req, res) {
   let rankings = await Ranking.find();
-  if (!rankings.length) {
+  if (!rankings.length) { // Will create rankings if none have ever been created. Only happens once.
     rankings = await storeRanking();
   }
   rankings.sort((a, b) => b.totalValue - a.totalValue);
