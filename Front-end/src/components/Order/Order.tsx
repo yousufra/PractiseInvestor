@@ -39,7 +39,7 @@ export default function order({toggleComponent}: Props): ReactElement {
     let matches: BasicStockI[] = [];
     if (company.length > 0) {
       matches = (await getMatchingStocks(company)).data;
-    }
+    } 
     setSuggestions(matches);
   }
 
