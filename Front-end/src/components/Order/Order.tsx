@@ -36,12 +36,13 @@ export default function order({toggleComponent}: Props): ReactElement {
   const [value, setValue] = useState<string>('');
 
   const handleChange = async (company) => {
-     let matches: BasicStockI[] = [];
+    let matches: BasicStockI[] = [];
     if (company.length > 0) {
       matches = (await getMatchingStocks(company)).data;
     }
     setSuggestions(matches);
-  };
+  }
+
   const SuggestionHandler = async (company) => {
     setCompany(company.name);
     setSuggestions([]);
