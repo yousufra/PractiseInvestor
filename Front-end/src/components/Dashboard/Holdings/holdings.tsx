@@ -66,8 +66,9 @@ export const Holdings = ({toggleComponent}: Props) => {
                   <TableCell>Company</TableCell>
                   <TableCell align="right">Ticker</TableCell>
                   <TableCell align="right">Quantity</TableCell>
-                  <TableCell align="right">Current Price</TableCell>
-                  <TableCell align="right">Avg Cost</TableCell>
+                  <TableCell align="right">Market Value</TableCell>
+                  <TableCell align="right">Avg Book Cost</TableCell>
+                  <TableCell align="right">Total Avg Cost</TableCell>
                   <TableCell align="right">Unrealized Gain/Loss</TableCell>
                   <TableCell align="right">% of Portfolio</TableCell>
                 </TableRow>
