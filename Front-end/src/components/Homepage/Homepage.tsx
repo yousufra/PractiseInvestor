@@ -20,7 +20,7 @@ export const Homepage = () => {
   return (
     <>
       <NavBar toggleComponent={toggleComponent} title={title} />
-      {component === 'Dashboard' && <Dashboard />}
+      {component === 'Dashboard' && <Dashboard toggleComponent={toggleComponent} />}
       {component === 'Order' && <Order toggleComponent={toggleComponent} />}
       {component === 'Past Activities' && <PastActivities />}
       {component === 'Ranking' && <UsersRankings />}

@@ -41,9 +41,15 @@ export default function Order({toggleComponent}: Props): ReactElement {
     getMatchingStocks(company).then(res => setAllStocks(res.data));
   }, [])
 
-  const SuggestionHandler = async () => {
-    const realTimePrice:number = Number((await getCurrentPrice(ticker)).data.price);
-    setPrice(realTimePrice)
+  useEffect(() => {
+    if (ticker.length > 0) {
+      suggestionHandler()
+    }
+  }, [ticker])
+
+  const suggestionHandler = async () => {
+      const realTimePrice:number = Number((await getCurrentPrice(ticker)).data.price);
+      setPrice(realTimePrice)
   }
 
   const handleSubmit = (e:any) => { 
@@ -101,11 +107,19 @@ export default function Order({toggleComponent}: Props): ReactElement {
       id="autocomplete-suggestion"
       options={allStocks}
       fullWidth
+      forcePopupIcon={false}
       getOptionLabel={(option) => `${option.name} (${option.symbol})`}
-      onChange={(_, newValue: BasicStockI | null) => {if (newValue) {
-        setCompany(newValue.name)
-        setTicker(newValue.symbol)}}}
-      onClose={() => SuggestionHandler()}
+      onChange={(_, newValue: BasicStockI | null, reason: string) => {
+        if (newValue) {
+          setCompany(newValue.name);
+          setTicker(newValue.symbol);
+        }
+        if (reason === 'clear') {
+          setCompany('');
+          setTicker('');
+          setPrice(0);
+        }
+      }}
       renderInput={(params) => <TextField {...params} label="Company" variant="outlined" />}
     ></Autocomplete>
   )
