@@ -22,7 +22,7 @@ interface Props {
   toggleComponent: Function;
 }
 
-export default function order({toggleComponent}: Props): ReactElement {
+export default function Order({toggleComponent}: Props): ReactElement {
   const { holdings, cash } = useSelector((state: any) => state.holdings);
   const classes = useStyles();
   const dispatch = useDispatch();
