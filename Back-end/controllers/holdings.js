@@ -29,7 +29,6 @@ exports.updateHoldings = async (req, res) => {
     /// /////////////////////////////////////////////////////////////////////////////////////
     // add or delete from holdings, if holdings zero need to remove the whole object for that company
     const userHoldings = (await User.findOne({ userName: username }, 'holdings')).holdings;
-    console.log('userholdings', userHoldings);
     let companyHolding = userHoldings.filter((userHolding) => userHolding.company === activity.company)[0];
 
     if (activity.action === 'buy') { // checks if its a buy order
