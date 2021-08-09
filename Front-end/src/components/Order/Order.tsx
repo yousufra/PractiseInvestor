@@ -29,7 +29,7 @@ export default function order({toggleComponent}: Props): ReactElement {
   const [company, setCompany] = useState<string>('');
   const [ticker, setTicker] = useState<string>('');
   const [action, setAction] = useState<string>('');
-  const [date, setDate] = useState<string>(moment().format('MMMM Do YYYY'));
+  const [date, setDate] = useState<string>(moment().format('MMMM Do YYYY, h:mm a'));
   const [quantity, setQuantity] = useState<number>(0);
   const [price, setPrice] = useState<number>(0);
 
