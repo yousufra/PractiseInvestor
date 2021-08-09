@@ -10,7 +10,7 @@ test('should render UserRanking component', () => {
     numberOfStocks: 6,
     totalNumberOfActivities: 15,
     totalValue: 279339.5944,
-    userName: "bianca"
+    userName: "test"
   }
 
   const index = 0;
@@ -21,7 +21,7 @@ test('should render UserRanking component', () => {
   expect(screen.getByTestId("ranking-rank").textContent).toBe("1");
 
   expect(screen.getByTestId("ranking-username")).toBeInTheDocument();
-  expect(screen.getByTestId("ranking-username").textContent).toBe("bianca");
+  expect(screen.getByTestId("ranking-username").textContent).toBe("test");
 
   expect(screen.getByTestId("ranking-totalValue")).toBeInTheDocument();
   expect(screen.getByTestId("ranking-totalValue").textContent).toBe("$279339.59");
