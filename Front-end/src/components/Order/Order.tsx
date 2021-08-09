@@ -11,12 +11,10 @@ import {Box,
   Radio,
   RadioGroup,
   TextField,
-  Tooltip,
   Typography} from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
-import { DebounceInput } from 'react-debounce-input';
 import { updateHoldings } from '../../actions/holdings';
-import { getAllStocks } from '../../api/backendApi';
+import { getMatchingStocks } from '../../api/backendApi';
 import { getCurrentPrice } from '../../api/stockApi';
 import { BasicStockI } from '../../interfaces/Stock';
 
@@ -30,7 +28,6 @@ export default function order({toggleComponent}: Props): ReactElement {
   const dispatch = useDispatch();
 
   const [allStocks, setAllStocks] = useState<BasicStockI[]>([]);
-  // const [suggestions, setSuggestions] = useState<BasicStockI[]>([]);
   const [company, setCompany] = useState<string>('');
   const [ticker, setTicker] = useState<string>('');
   const [action, setAction] = useState<string>('');
@@ -41,11 +38,10 @@ export default function order({toggleComponent}: Props): ReactElement {
 
   useEffect(() => {
     // getting all stocks to filter them later instead of making one api call for each filter
-    getAllStocks().then(res => setAllStocks(res.data));
+    getMatchingStocks(company).then(res => setAllStocks(res.data));
   }, [])
 
   const SuggestionHandler = async () => {
-    console.log('48');
     const realTimePrice:number = Number((await getCurrentPrice(ticker)).data.price);
     setPrice(realTimePrice)
   }

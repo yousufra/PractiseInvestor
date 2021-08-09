@@ -8,6 +8,5 @@ const apiKey = process.env.REACT_APP_API_STOCKPRICE_KEY;
 
 // get a current price of a stock
 export const getCurrentPrice = (ticker) => {
-  console.log('11', ticker);
   return axios.get(baseURL + `/price?symbol=${ticker}&apikey=${apiKey}`);
 };
