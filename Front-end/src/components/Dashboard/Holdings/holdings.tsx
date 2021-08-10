@@ -14,6 +14,7 @@ import Box from '@material-ui/core/Box';
 import { getCurrentPrice } from '../../../api/stockApi';
 import { PieChart } from './PieChart/PieChart';
 import { HoldingI, NoPriceHoldingI } from '../../../interfaces/Holding';
+import { StockChart } from './StockChart/StockChart'
 
 export const Holdings = () => {
   
@@ -51,6 +52,9 @@ export const Holdings = () => {
     <>
       <Box m={1}>
         <PieChart portfolioValue={portfolioValue} cash={cash} holdingsValue={portfolioValue-cash} b="2rem"/>
+      </Box>
+      <Box m={1}>
+        <StockChart/>
       </Box>
       {!holdings?.length ? <p>No Holdings, buy a stock</p> : (
         <Box m={1}>

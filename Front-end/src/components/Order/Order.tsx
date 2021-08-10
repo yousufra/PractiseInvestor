@@ -11,7 +11,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Box from '@material-ui/core/Box';
 import { DebounceInput } from 'react-debounce-input';
 import { updateHoldings } from '../../actions/holdings';
-import { getAllStocks } from '../../api/backendApi';
+import { getMatchingStocks } from '../../api/backendApi';
 import { getCurrentPrice } from '../../api/stockApi';
 import { SuggestionsStatePropertiesI } from '../../interfaces/Order';
 import { BasicStockI } from '../../interfaces/Stock';
@@ -25,33 +25,21 @@ export default function order({toggleComponent}: Props): ReactElement {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const [allStocks, setAllStocks] = useState<BasicStockI[]>([]);
   const [suggestions, setSuggestions] = useState<SuggestionsStatePropertiesI[]>([]);
   const [company, setCompany] = useState<string>('');
   const [ticker, setTicker] = useState<string>('');
   const [action, setAction] = useState<string>('');
-  const [date, setDate] = useState<string>(moment().format('MMMM Do YYYY'));
+  const [date, setDate] = useState<string>(moment().format('MMMM Do YYYY, h:mm a'));
   const [quantity, setQuantity] = useState<number>(0);
   const [price, setPrice] = useState<number>(0);
 
   const [value, setValue] = useState<string>('');
 
-  useEffect(() => {
-    // getting all stocks to filter them later instead of making one api call for each filter
-    getAllStocks().then(res => setAllStocks(res.data));
-  }, [])
-
   const handleChange = async (company) => {
-    let matches: BasicStockI[] = [];
-    if (company) {
-      // filtering all companies that the name matches with the input
-      const filteredStocks = allStocks.filter((stock: BasicStockI) => stock.name.toLowerCase().includes(company.toLowerCase()));
-      // since some come duplicated we filter them again to remove duplicates
-      filteredStocks.forEach((stock: BasicStockI) => {
-        !matches.find(el => el.name === stock.name) && matches.push(stock);
-      })
+     let matches: BasicStockI[] = [];
+    if (company.length > 0) {
+      matches = (await getMatchingStocks(company)).data;
     }
-    // setting the suggestions so they don't have any duplicates
     setSuggestions(matches);
   };
   const SuggestionHandler = async (company) => {

@@ -6,7 +6,7 @@ import { getAllHoldings } from '../../actions/holdings';
 export const Dashboard = () => {
   
   const dispatch = useDispatch(); // allows us to dispatch an action
-  useEffect(() => {    
+  useEffect(() => {  
     dispatch(getAllHoldings());
   }, [dispatch]);
 
