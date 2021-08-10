@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const Dashboard = ({toggleComponent}: Props) => {
-  
+  const { holdings, cash } = useSelector((state: any) => state.holdings);
   const dispatch = useDispatch(); // allows us to dispatch an action
   useEffect(() => {  
     dispatch(getAllHoldings());

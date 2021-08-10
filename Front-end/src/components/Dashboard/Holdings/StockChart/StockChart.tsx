@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { CanvasJSChart } from 'canvasjs-react-charts';
 import { useSelector } from 'react-redux';
 
