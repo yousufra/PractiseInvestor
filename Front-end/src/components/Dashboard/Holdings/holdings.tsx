@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import {
+  Button,
   Table,
   TableBody,
   TableCell,
@@ -9,14 +10,18 @@ import {
   Paper} from '@material-ui/core';
 import { useSelector } from 'react-redux'; // to retrieve the data from the store in redux
 import useStyles from './styles';
-import { Holding } from './Holding/Holding';
+import { Holding } from './StockChart/Holding/Holding';
 import Box from '@material-ui/core/Box';
 import { getCurrentPrice } from '../../../api/stockApi';
 import { PieChart } from './PieChart/PieChart';
 import { HoldingI, NoPriceHoldingI } from '../../../interfaces/Holding';
 import { StockChart } from './StockChart/StockChart'
 
-export const Holdings = () => {
+interface Props {
+  toggleComponent: (str: string) => void; 
+}
+
+export const Holdings = ({toggleComponent}: Props) => {
   
   const classes = useStyles();
   const [holdingsPrices, setHoldingsPrices] = useState<HoldingI[]>([]);
@@ -53,11 +58,10 @@ export const Holdings = () => {
       <Box m={1}>
         <PieChart portfolioValue={portfolioValue} cash={cash} holdingsValue={portfolioValue-cash} b="2rem"/>
       </Box>
-      <Box m={1}>
+      <Box>
         <StockChart/>
       </Box>
-      <button></button>
-      {!holdings?.length ? <p>No Holdings, buy a stock</p> : (
+      {!holdings?.length ? <Button variant="contained" color="secondary" onClick={() => {toggleComponent('Order')}}>No Holdings: Buy Your First Stock</Button> : (
         <Box m={1}>
           <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="simple table">
@@ -66,8 +70,9 @@ export const Holdings = () => {
                   <TableCell>Company</TableCell>
                   <TableCell align="right">Ticker</TableCell>
                   <TableCell align="right">Quantity</TableCell>
-                  <TableCell align="right">Current Price</TableCell>
-                  <TableCell align="right">Avg Cost</TableCell>
+                  <TableCell align="right">Market Value</TableCell>
+                  <TableCell align="right">Avg Book Cost</TableCell>
+                  <TableCell align="right">Total Avg Cost</TableCell>
                   <TableCell align="right">Unrealized Gain/Loss</TableCell>
                   <TableCell align="right">% of Portfolio</TableCell>
                 </TableRow>

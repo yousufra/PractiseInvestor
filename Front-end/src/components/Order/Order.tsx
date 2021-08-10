@@ -4,51 +4,52 @@ import React, { useState, ReactElement, useEffect, } from 'react';
 import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
-import {TextField, Button, Typography, Paper, Tooltip} from '@material-ui/core';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Box from '@material-ui/core/Box';
-import { DebounceInput } from 'react-debounce-input';
+import {Box,
+  Button,
+  FormControlLabel,
+  Paper,
+  Radio,
+  RadioGroup,
+  TextField,
+  Typography} from '@material-ui/core';
+import { Autocomplete } from '@material-ui/lab';
 import { updateHoldings } from '../../actions/holdings';
 import { getMatchingStocks } from '../../api/backendApi';
 import { getCurrentPrice } from '../../api/stockApi';
-import { SuggestionsStatePropertiesI } from '../../interfaces/Order';
 import { BasicStockI } from '../../interfaces/Stock';
 
 interface Props {
   toggleComponent: Function;
 }
 
-export default function order({toggleComponent}: Props): ReactElement {
+export default function Order({toggleComponent}: Props): ReactElement {
   const { holdings, cash } = useSelector((state: any) => state.holdings);
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const [suggestions, setSuggestions] = useState<SuggestionsStatePropertiesI[]>([]);
+  const [allStocks, setAllStocks] = useState<BasicStockI[]>([]);
   const [company, setCompany] = useState<string>('');
   const [ticker, setTicker] = useState<string>('');
   const [action, setAction] = useState<string>('');
   const [date, setDate] = useState<string>(moment().format('MMMM Do YYYY, h:mm a'));
   const [quantity, setQuantity] = useState<number>(0);
   const [price, setPrice] = useState<number>(0);
-
   const [value, setValue] = useState<string>('');
 
-  const handleChange = async (company) => {
-     let matches: BasicStockI[] = [];
-    if (company.length > 0) {
-      matches = (await getMatchingStocks(company)).data;
+  useEffect(() => {
+    // getting all stocks to filter them later instead of making one api call for each filter
+    getMatchingStocks(company).then(res => setAllStocks(res.data));
+  }, [])
+
+  useEffect(() => {
+    if (ticker.length > 0) {
+      suggestionHandler()
     }
-    setSuggestions(matches);
-  };
-  const SuggestionHandler = async (company) => {
-    setCompany(company.name);
-    setSuggestions([]);
-    setTicker(company.symbol);
-    //set price here with real time api call
-    const realTimePrice:number = Number((await getCurrentPrice(company.symbol)).data.price);
-    setPrice(realTimePrice)
+  }, [ticker])
+
+  const suggestionHandler = async () => {
+      const realTimePrice:number = Number((await getCurrentPrice(ticker)).data.price);
+      setPrice(realTimePrice)
   }
 
   const handleSubmit = (e:any) => { 
@@ -98,18 +99,35 @@ export default function order({toggleComponent}: Props): ReactElement {
     setAction(event.target.value)
   };
  
+  const renderAutocomplete = (
+    <Autocomplete
+      id="autocomplete-suggestion"
+      options={allStocks}
+      fullWidth
+      forcePopupIcon={false}
+      getOptionLabel={(option) => `${option.name} (${option.symbol})`}
+      onChange={(_, newValue: BasicStockI | null, reason: string) => {
+        if (newValue) {
+          setCompany(newValue.name);
+          setTicker(newValue.symbol);
+        }
+        if (reason === 'clear') {
+          setCompany('');
+          setTicker('');
+          setPrice(0);
+        }
+      }}
+      renderInput={(params) => <TextField {...params} label="Company" variant="outlined" />}
+    ></Autocomplete>
+  )
+
   return (
     <Box m={1}>
       <Paper className={classes.paper}>
         <form className={`${classes.form} ${classes.root}`} noValidate autoComplete="off" onSubmit={handleSubmit}>
           <Typography variant="h6">Order</Typography>
-          <TextField name="date" label="Date" variant="outlined" fullWidth value={date}/>
-          <DebounceInput element={TextField} minLength={3} debounceTimeout={0} name="company" label="Company" variant="outlined" fullWidth value={company} onChange={(e) => handleChange(e.target.value)} />
-          {suggestions && suggestions.map((suggestion: SuggestionsStatePropertiesI) => (
-            <Tooltip key={suggestion.name} title="Choose" arrow>
-              <Button onClick={() => SuggestionHandler(suggestion)}>{ suggestion.name }</Button>
-            </Tooltip>
-          ))}
+          <TextField name="date" label="Date/Time" variant="outlined" fullWidth value={date}/>
+          {renderAutocomplete}
           <TextField name="ticker" label="Ticker" variant="outlined" fullWidth value={ticker} onChange={(e) => setTicker( ticker )} />
           <RadioGroup row aria-label="action" name="action1" value={value} onChange={handleRadio}>
             <FormControlLabel value="buy" control={<Radio color="primary"/>} label="Buy" />
