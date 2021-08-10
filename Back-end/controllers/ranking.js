@@ -24,6 +24,7 @@ async function getPrices() {
 }
 
 async function storeRanking() {
+  console.log('hello');
   const [prices, users] = await getPrices();
   const rankings = [];
   const date = new Date();

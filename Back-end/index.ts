@@ -1,10 +1,10 @@
-const cors = require('cors');
-const express = require('express');
-const { CronJob } = require('cron');
-const router = require('./routes/router');
-const ranking = require('./controllers/ranking');
+import cors from 'cors';
+import express from 'express';
+import { CronJob } from 'cron';
+import router from './routes/router';
+import ranking from './controllers/ranking';
 
-const server = (PORT) => {
+export const server = (PORT: number | string) => {
   const app = express();
   
   app.use(cors());// allows server to interact with the client side
@@ -12,10 +12,10 @@ const server = (PORT) => {
   app.use(express.urlencoded({ extended: true }));
   
   app.use(router);
-  
+
   const job = new CronJob({
     cronTime: '5 16 * * 1-5',
-    onTick: ranking.storeRanking(),
+    onTick: ranking.storeRanking,
     start: false,
     timeZone: 'America/New_York',
   });
@@ -28,6 +28,3 @@ const server = (PORT) => {
 
   return serverListen;
 }
-
-
-module.exports = server;
