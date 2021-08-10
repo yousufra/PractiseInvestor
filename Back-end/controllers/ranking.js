@@ -1,7 +1,9 @@
+/* eslint-disable no-console */
 const axios = require('axios');
 const rateLimit = require('axios-rate-limit');
 const Ranking = require('../models/rankingModel');
 const User = require('../models/userModel');
+const LastUpdate = require('../models/lastUpdateModel');
 const { totalValueHistory } = require('./users');
 require('dotenv').config();
 
@@ -23,10 +25,16 @@ async function getPrices() {
   return [prices, users];
 }
 
-async function storeRanking() {
+async function setLastUpdate(date) {
+  LastUpdate.updateOne({}, { date }, (err, success) => {
+    if (err) console.log('err', err);
+    else console.log('success', success);
+  });
+}
+
+async function storeRanking(date) {
   const [prices, users] = await getPrices();
   const rankings = [];
-  const date = new Date();
   for (let j = 0; j < users.length; j += 1) {
     const {
       userName, holdings, activities, cash, _id,
@@ -50,6 +58,23 @@ async function storeRanking() {
   return rankings;
 }
 
+async function checkLastUpdate() {
+  const lastUpdate = await LastUpdate.findOne();
+  const date = new Date();
+  if (lastUpdate.date) {
+    const lastDayOfMonth = lastUpdate.date.getDate();
+    const todayDayOfWeek = date.getDay();
+    const todayDayOfMonth = date.getDate(); // only triggers Mon-Fri if last update before today
+    if (todayDayOfWeek > 0 && todayDayOfWeek < 6 && todayDayOfMonth !== lastDayOfMonth) {
+      storeRanking(date);
+      setLastUpdate(date);
+    }
+  } else {
+    storeRanking(date);
+    setLastUpdate(date);
+  }
+}
+
 async function getRanking(req, res) {
   let rankings = await Ranking.find();
   if (!rankings.length) { // Will create rankings if none have ever been created. Only happens once.
@@ -62,5 +87,5 @@ async function getRanking(req, res) {
 
 module.exports = {
   getRanking,
-  storeRanking,
+  checkLastUpdate,
 };

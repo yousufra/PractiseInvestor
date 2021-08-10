@@ -82,6 +82,5 @@ exports.totalValueHistory = async (_id, totalValue, date) => {
       /* eslint-disable no-console */
       if (err) console.log(err);
       else console.log(success);
-      /* eslint-disable no-console */
     });
 };
