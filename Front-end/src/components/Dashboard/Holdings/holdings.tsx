@@ -56,6 +56,7 @@ export const Holdings = () => {
       <Box m={1}>
         <StockChart/>
       </Box>
+      <button></button>
       {!holdings?.length ? <p>No Holdings, buy a stock</p> : (
         <Box m={1}>
           <TableContainer component={Paper}>
