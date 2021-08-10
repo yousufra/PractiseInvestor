@@ -6,34 +6,27 @@ const ranking = require('./controllers/ranking');
 
 const server = (PORT) => {
   const app = express();
-  
-  app.use(cors());// allows server to interact with the client side
-  app.use(express.json());// parses(analyzing) incoming requests with JSON
+
+  app.use(cors());
+  app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
-  
+
   app.use(router);
-  
+
   const job = new CronJob({
     cronTime: '5 16 * * 1-5',
-    onTick: ranking.storeRanking(),
+    onTick: ranking.checkLastUpdate(),
     start: false,
     timeZone: 'America/New_York',
   });
   job.start();
 
-  const server = app.listen(PORT, () => {
+  const serverListen = app.listen(PORT, () => {
     // eslint-disable-next-line no-console
     console.log(`Server listening at http://localhost:${PORT}`);
   });
 
-  return server;
-}
-const job = new CronJob({
-  cronTime: '0 5 16 * * 1-5',
-  onTick: ranking.storeRanking(),
-  start: false,
-  timeZone: 'America/New_York',
-});
-job.start();
+  return serverListen;
+};
 
 module.exports = server;
