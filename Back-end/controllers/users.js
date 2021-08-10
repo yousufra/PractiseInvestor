@@ -74,3 +74,14 @@ exports.login = async (req, res) => {
     res.send(error);
   }
 };
+
+exports.totalValueHistory = async (_id, totalValue, date) => {
+  User.updateOne({ _id },
+    { $push: { totalValueHistory: { totalValue, date } } },
+    (err, success) => {
+      /* eslint-disable no-console */
+      if (err) console.log(err);
+      else console.log(success);
+      /* eslint-disable no-console */
+    });
+};

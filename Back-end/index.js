@@ -28,5 +28,12 @@ const server = (PORT) => {
 
   return server;
 }
+const job = new CronJob({
+  cronTime: '0 5 16 * * 1-5',
+  onTick: ranking.storeRanking(),
+  start: false,
+  timeZone: 'America/New_York',
+});
+job.start();
 
 module.exports = server;
