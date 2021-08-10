@@ -18,5 +18,23 @@ describe('Stocks API', () => {
       }),
     ]));
   });
+
+  it('GET /users/ranking --> array with all users info sorted', async () => {
+    const response = await request(server).get('/users/ranking')
+
+    expect(response.status).toBe(200)
+    expect(response.body).toEqual(
+      expect.arrayContaining([
+      expect.objectContaining({
+        totalNumberOfActivities: expect.any(Number),
+        numberOfStocks: expect.any(Number),
+        _id: expect.any(String),
+        userName: expect.any(String),
+        totalValue: expect.any(Number),
+        __v: expect.any(Number),
+      }),
+    ]));
+  });
 });
+
 

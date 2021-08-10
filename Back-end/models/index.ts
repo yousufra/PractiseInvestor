@@ -1,15 +1,15 @@
 /* eslint-disable no-console */
-require('dotenv').config();
-const mongoose = require('mongoose');
+import dotenv from 'dotenv';
+dotenv.config();
+import mongoose from 'mongoose';
 
 const DB_URL = process.env.DB_URL || '';
 
 mongoose.connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true }).then(
   () => console.log('Connected to DB!'),
-  (err) => console.log(`Could not connect to DB: ${err}`),
+  (err: Error) => console.log(`Could not connect to DB: ${err}`),
 );
-
 // to remove deprecated log for findoneandupdate
 mongoose.set('useFindAndModify', false);
 
-module.exports = mongoose;
+export default mongoose;

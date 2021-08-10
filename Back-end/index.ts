@@ -1,21 +1,21 @@
-const cors = require('cors');
-const express = require('express');
-const { CronJob } = require('cron');
-const router = require('./routes/router');
-const ranking = require('./controllers/ranking');
+import cors from 'cors';
+import express from 'express';
+import { CronJob } from 'cron';
+import router from './routes/router';
+import { checkLastUpdate } from './controllers/ranking';
 
-const server = (PORT) => {
+export const server = (PORT: number | string) => {
   const app = express();
-
-  app.use(cors());
-  app.use(express.json());
+  
+  app.use(cors());// allows server to interact with the client side
+  app.use(express.json());// parses(analyzing) incoming requests with JSON
   app.use(express.urlencoded({ extended: true }));
-
+  
   app.use(router);
 
   const job = new CronJob({
     cronTime: '5 16 * * 1-5',
-    onTick: ranking.checkLastUpdate(),
+    onTick: checkLastUpdate,
     start: false,
     timeZone: 'America/New_York',
   });
@@ -27,6 +27,4 @@ const server = (PORT) => {
   });
 
   return serverListen;
-};
-
-module.exports = server;
+}

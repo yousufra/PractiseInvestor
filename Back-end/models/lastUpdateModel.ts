@@ -1,4 +1,4 @@
-const mongoose = require('./index');
+import mongoose from './index';
 
 // tracks last update of Ranking and users' totalValueHistory
 const lastUpdateSchema = new mongoose.Schema({
@@ -9,4 +9,4 @@ const lastUpdateSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('LastUpdate', lastUpdateSchema);
+export default mongoose.model('LastUpdate', lastUpdateSchema);

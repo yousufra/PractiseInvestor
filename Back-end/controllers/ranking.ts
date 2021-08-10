@@ -1,15 +1,17 @@
-/* eslint-disable no-console */
-const axios = require('axios');
-const rateLimit = require('axios-rate-limit');
-const Ranking = require('../models/rankingModel');
-const User = require('../models/userModel');
-const LastUpdate = require('../models/lastUpdateModel');
-const { totalValueHistory } = require('./users');
-require('dotenv').config();
+import axios from 'axios';
+import rateLimit from 'axios-rate-limit';
+import Ranking from '../models/rankingModel';
+import User from '../models/userModel';
+import LastUpdate from '../models/lastUpdateModel';
+import { totalValueHistory } from './users';
+import { Request, Response } from 'express';
+import dotenv from 'dotenv';
+import RankingI from '../interfaces/Ranking';
+dotenv.config();
 
 async function getPrices() {
   const users = await User.find();
-  const prices = {};
+  const prices: any = {};
   for (const user of users) {
     for (const holding of user.holdings) {
       prices[holding.ticker] = 0;
@@ -25,14 +27,13 @@ async function getPrices() {
   return [prices, users];
 }
 
-async function setLastUpdate(date) {
-  LastUpdate.updateOne({}, { date }, (err, success) => {
-    if (err) console.log('err', err);
-    else console.log('success', success);
-  });
+async function setLastUpdate(date: Date) {
+  LastUpdate.updateOne({}, { date })
+  .then((success: any) => console.log('success', success))
+  .catch((err: Error) => console.log('err', err));
 }
 
-async function storeRanking(date) {
+export async function storeRanking (date: Date) {
   const [prices, users] = await getPrices();
   const rankings = [];
   for (let j = 0; j < users.length; j += 1) {
@@ -58,7 +59,7 @@ async function storeRanking(date) {
   return rankings;
 }
 
-async function checkLastUpdate() {
+export async function checkLastUpdate() {
   const lastUpdate = await LastUpdate.findOne();
   const date = new Date();
   if (lastUpdate.date) {
@@ -75,17 +76,18 @@ async function checkLastUpdate() {
   }
 }
 
-async function getRanking(req, res) {
-  let rankings = await Ranking.find();
-  if (!rankings.length) { // Will create rankings if none have ever been created. Only happens once.
-    rankings = await storeRanking();
+export async function getRanking(req: Request, res: Response) {
+  try {
+    let rankings = await Ranking.find();
+    const date = new Date();
+    if (!rankings.length) { // Will create rankings if none have ever been created. Only happens once.
+      rankings = await storeRanking(date);
+    }
+    rankings.sort((a: RankingI, b: RankingI) => b.totalValue - a.totalValue);
+    res.send(rankings);
+    res.status(200);
+  } catch(error) {
+    console.log(`Could not get ranking: ${error}`);
+    res.status(500);
   }
-  rankings.sort((a, b) => b.totalValue - a.totalValue);
-  res.send(rankings);
-  res.status(200);
-}
-
-module.exports = {
-  getRanking,
-  checkLastUpdate,
 };
