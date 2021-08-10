@@ -1,27 +1,35 @@
 import { useState, useEffect } from 'react';
 import {
+  Box,
   Button,
+  Divider,
+  Grid,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
   Paper} from '@material-ui/core';
 import { useSelector } from 'react-redux'; // to retrieve the data from the store in redux
 import useStyles from './styles';
 import { Holding } from './Holding/Holding';
-import Box from '@material-ui/core/Box';
 import { getCurrentPrice } from '../../../api/stockApi';
 import { PieChart } from './PieChart/PieChart';
 import { HoldingI, NoPriceHoldingI } from '../../../interfaces/Holding';
 import { StockChart } from './StockChart/StockChart'
+import { DialogButton, DialogProps } from './DialogButton';
 
 interface Props {
   toggleComponent: (str: string) => void; 
 }
 
 export const Holdings = ({toggleComponent}: Props) => {
+
+  const [open, setOpen] = useState<boolean>(false);
+  const [selectedValue, setSelectedValue] = useState<string>('');
+  const [selectedStock, setSelectedStock] = useState<string>('');
   
   const classes = useStyles();
   const [holdingsPrices, setHoldingsPrices] = useState<HoldingI[]>([]);
@@ -30,6 +38,7 @@ export const Holdings = ({toggleComponent}: Props) => {
   const { holdings, cash } = useSelector((state: any) => state.holdings); // state object is all the states within the combine reducer in index.js in reducer folder
   
   useEffect(() => {
+    
     function getPrice () {
       const apiCallArray = holdings?.map(async (holding: NoPriceHoldingI) => {
         const price = Number((await getCurrentPrice(holding.ticker)).data.price)
@@ -53,15 +62,49 @@ export const Holdings = ({toggleComponent}: Props) => {
       clearInterval(interval);
     }
   }, [holdings])
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (value:  any) => {
+    setOpen(false);
+    setSelectedValue(value.company);
+    setSelectedStock(value.ticker)
+  };
+
   return (
     <>
-      <Box m={1}>
-        <PieChart portfolioValue={portfolioValue} cash={cash} holdingsValue={portfolioValue-cash} b="2rem"/>
-      </Box>
-      <Box m={1}>
-        <StockChart/>
-      </Box>
-      {!holdings?.length ? <p>No Holdings, buy a stock</p> : (
+      
+      <div className={classes.container}> 
+        <div style={{ gridColumnEnd: 'span 4' }}>
+          <Box m={1}>
+            <PieChart portfolioValue={portfolioValue} cash={cash} holdingsValue={portfolioValue-cash} b="2rem"/>
+          </Box>
+        </div>
+        <div style={{ gridColumnEnd: 'span 8' }}>
+
+          <Box>
+            <div className={classes.container}> 
+              <div style={{ gridColumnEnd: 'span 4' }}>
+                <Typography variant="subtitle1">Selected Stock: {selectedValue}</Typography>
+              </div>
+              <div style={{ gridColumnEnd: 'span 8' }}>
+                <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+                  Open simple dialog
+                </Button>
+                <DialogButton holdings={holdings} selectedValue={selectedValue} open={open} onClose={handleClose} />
+              </div>
+            </div>
+
+            <StockChart selectedStock={selectedStock}/>
+          </Box>
+        </div>
+      </div>
+
+      <Divider className={classes.divider} />
+
+      {!holdings?.length ? <Button variant="contained" color="secondary" onClick={() => {toggleComponent('Order')}}>No Holdings: Buy Your First Stock</Button> : (
         <Box m={1}>
           <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="simple table">
