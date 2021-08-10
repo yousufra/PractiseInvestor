@@ -9,7 +9,6 @@ import dotenv from 'dotenv';
 import RankingI from '../interfaces/Ranking';
 dotenv.config();
 
-
 async function getPrices() {
   const users = await User.find();
   const prices: any = {};
@@ -34,7 +33,7 @@ async function setLastUpdate(date: Date) {
   .catch((err: Error) => console.log('err', err));
 }
 
-async function storeRanking(date: Date) {
+export async function storeRanking (date: Date) {
   const [prices, users] = await getPrices();
   const rankings = [];
   for (let j = 0; j < users.length; j += 1) {

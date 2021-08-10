@@ -2,7 +2,7 @@ import cors from 'cors';
 import express from 'express';
 import { CronJob } from 'cron';
 import router from './routes/router';
-import ranking from './controllers/ranking';
+import { checkLastUpdate } from './controllers/ranking';
 
 export const server = (PORT: number | string) => {
   const app = express();
@@ -15,7 +15,7 @@ export const server = (PORT: number | string) => {
 
   const job = new CronJob({
     cronTime: '5 16 * * 1-5',
-    onTick: ranking.storeRanking,
+    onTick: checkLastUpdate,
     start: false,
     timeZone: 'America/New_York',
   });

@@ -3,12 +3,7 @@ import User from '../models/userModel';
 import { generateToken } from '../generateToken';
 import { Request, Response } from 'express';
 import dotenv from 'dotenv';
-import UserI from '../interfaces/User';
 dotenv.config();
-
-interface UserRequest extends Request {
-  user: UserI;
-}
 
 export const getAllUsers = async (req: Request, res: Response) => {
   try {
@@ -47,7 +42,7 @@ export const createUser = async (req: Request, res: Response) => {
   }
 };
 
-export const getUser = async (req: UserRequest, res: Response) => {
+export const getUser = async (req: any, res: Response) => {
   try {
     const { userName } = req.user;
     const user = await User.findOne({ userName }).select('-password');
