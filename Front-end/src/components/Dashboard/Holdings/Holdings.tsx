@@ -56,7 +56,6 @@ export const Holdings = ({toggleComponent}: Props) => {
 
     getPrice();
     const interval = setInterval(() => getPrice(), 120000 ); // every 1 minute, 55 api calls/minute retriction
-
     return () => {
       clearInterval(interval);
     }
@@ -66,10 +65,12 @@ export const Holdings = ({toggleComponent}: Props) => {
     setOpen(true);
   };
 
-  const handleClose = (value:  any) => {
+  const handleClose = (value: any) => {
     setOpen(false);
-    setSelectedValue(value.company);
-    setSelectedStock(value.ticker)
+    if (value.company) {
+      setSelectedValue(value.company);
+      setSelectedStock(value.ticker)
+    }
   };
 
   return (
@@ -90,7 +91,7 @@ export const Holdings = ({toggleComponent}: Props) => {
               </div>
               <div style={{ gridColumnEnd: 'span 8' }}>
                 <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                  Open simple dialog
+                  Choose Company
                 </Button>
                 <DialogButton holdings={holdings} selectedValue={selectedValue} open={open} onClose={handleClose} />
               </div>

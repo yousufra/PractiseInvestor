@@ -14,13 +14,11 @@ export interface DialogProps {
 }
 
 export const DialogButton = ({open, selectedValue, onClose, holdings}:DialogProps) => {
-  
-  console.log(holdings);
   const handleClose = () => {
     onClose(selectedValue);
   };
 
-  const handleListItemClick = (value:  any) => {
+  const handleListItemClick = (value: any) => {
     onClose(value);
   };
 
