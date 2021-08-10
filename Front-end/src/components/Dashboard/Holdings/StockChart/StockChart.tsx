@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import { getDataForCompanyWithSymbol } from '../../../../api/stockchartApi';
 import { HoldingI } from '../../../../interfaces/Holding';
 
-
 export const StockChart = ({selectedStock}) =>  {
   const [stockData, setStockData] = useState<any>([]);
 /* eslint-disable */
@@ -25,20 +24,21 @@ export const StockChart = ({selectedStock}) =>  {
         } 
       }
       const result = await getDataForCompanyWithSymbol(maxInvestStock.ticker);
-      setStockData(formatStockData(result.data['Time Series (Daily)']));
+      if (result.data['Time Series (Daily)']){
+        setStockData(formatStockData(result.data['Time Series (Daily)']))
+      };
     }
     fet() 
   }, [])
   useEffect(() => {
     /* eslint-disable */
-    if (selectedStock.length !== 0) {
+    if (selectedStock) {
       const fet = async () => {
         let stock = selectedStock;
         const result = await getDataForCompanyWithSymbol(stock);
-        if (result) {
+        if (result.data['Time Series (Daily)']) {
           setStockData(formatStockData(result.data['Time Series (Daily)']));
         }
-        
       }
       fet() 
     }
@@ -80,11 +80,9 @@ export const StockChart = ({selectedStock}) =>  {
                   stockData.low,
                   stockData.close
                 ]
-              })
-              )
+              }))
             }
           ],
-          
           axisY: {
             title: "Price",
             minimum: Math.min(...stockData.map(data => data.low)) / 1.1,
@@ -92,17 +90,13 @@ export const StockChart = ({selectedStock}) =>  {
             crosshair: {
               enabled: true,
               snapToDataPoint: true,
-          }
+            }
           }, 
           axisX: {
             interval: 1,
-            
-            
           },
-          
         } }
       />  
     </div>
   )
-
 }
