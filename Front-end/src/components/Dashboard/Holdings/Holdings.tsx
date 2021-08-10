@@ -74,18 +74,18 @@ export const Holdings = ({toggleComponent}: Props) => {
   };
 
   return (
+    holdings &&
     <>
-      
       <div className={classes.container}> 
-        <div style={{ gridColumnEnd: 'span 4' }}>
-          <Box m={1}>
+        <div style={{ gridColumnEnd: 'span 4', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <Box m={1} >
             <PieChart portfolioValue={portfolioValue} cash={cash} holdingsValue={portfolioValue-cash} b="2rem"/>
           </Box>
         </div>
         <div style={{ gridColumnEnd: 'span 8' }}>
 
           <Box>
-            <div className={classes.container}> 
+            <div className={classes.container} style={{ padding: "1rem 0 0 0" }}> 
               <div style={{ gridColumnEnd: 'span 4' }}>
                 <Typography variant="subtitle1">Selected Stock: {selectedValue}</Typography>
               </div>

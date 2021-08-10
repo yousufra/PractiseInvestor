@@ -39,7 +39,6 @@ export const StockChart = ({selectedStock}) =>  {
         if (result.data['Time Series (Daily)']) {
           setStockData(formatStockData(result.data['Time Series (Daily)']));
         }
-        
       }
       fet() 
     }
@@ -59,13 +58,16 @@ export const StockChart = ({selectedStock}) =>  {
   } 
 
   return (
+    <div style={{ padding: "1.5rem 0 1.5rem 5rem", display: 'flex', justifyContent: 'center' }}>
       <CanvasJSChart
         options={ {
           theme: "light2", // "light1", "light2", "dark1", "dark2"
 	        title: {
 		        text: ""
 	        },
-          
+          width: 1000,
+          height: 350,
+          // backgroundColor: "red",
           data: [
             {
               type: 'candlestick',
@@ -78,11 +80,9 @@ export const StockChart = ({selectedStock}) =>  {
                   stockData.low,
                   stockData.close
                 ]
-              })
-              )
+              }))
             }
           ],
-          
           axisY: {
             title: "Price",
             minimum: Math.min(...stockData.map(data => data.low)) / 1.1,
@@ -90,15 +90,13 @@ export const StockChart = ({selectedStock}) =>  {
             crosshair: {
               enabled: true,
               snapToDataPoint: true,
-          }
+            }
           }, 
           axisX: {
             interval: 1,
-            
-            
           },
-          
         } }
       />  
+    </div>
   )
 }
