@@ -1,5 +1,5 @@
 import React, { useState, useEffect, MouseEvent, KeyboardEvent } from 'react';
-import decode from 'jwt-decode';
+// import decode from 'jwt-decode';
 import { useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import clsx from 'clsx';
@@ -32,8 +32,8 @@ import {
 
 import useStyles from './styles';
 import { EReduxActionTypes } from '../../constants/actionTypes';
-import { JwtTokenI } from '../../interfaces/JwtToken';
-import { HeaderHomeI } from '../../interfaces/HeaderHome';
+// import { JwtTokenI } from '../../interfaces/JwtToken';
+// import { HeaderHomeI } from '../../interfaces/HeaderHome';
 
 interface Props {
   title: string;

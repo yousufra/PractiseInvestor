@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const DB_URL = process.env.DB_URL || '';
 
-mongoose.connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true }).then(
+mongoose.connect("mongodb://localhost:27017/practiseInvestor", { useNewUrlParser: true, useUnifiedTopology: true }).then(
   () => console.log('Connected to DB!'),
   (err) => console.log(`Could not connect to DB: ${err}`),
 );
