@@ -16,7 +16,7 @@ interface Date {
   '4. close': number, 
 } */
 
-export const StockChart = () =>  {
+export const StockChart = ({selectedStock}) =>  {
   const [stockData, setStockData] = useState([]);
 /* eslint-disable */
   const {holdings} = useSelector((state) => state.holdings);
@@ -38,9 +38,29 @@ export const StockChart = () =>  {
       }
       const result = await getDataForCompanyWithSymbol(maxInvestStock.ticker);
       setStockData(formatStockData(result.data['Time Series (Daily)']));
+      //setSelectedStock(result);
     }
-    fet()  
-  }, [])    
+    fet() 
+     
+  }, []) 
+  useEffect(() => {
+    /* eslint-disable */
+    if (selectedStock.length !== 0) {
+      const fet = async () => {
+      
+        let stock = selectedStock;
+        const result = await getDataForCompanyWithSymbol(stock);
+        if (result) {
+          setStockData(formatStockData(result.data['Time Series (Daily)']));
+        }
+        
+      }
+      fet() 
+    }
+     
+  }, [selectedStock])
+  
+
 
   function formatStockData(stockData) {
     console.log(stockData);
@@ -59,17 +79,20 @@ export const StockChart = () =>  {
 
   return (
     //(stockData  && stockData.length) &&
+
       <CanvasJSChart
-      
         options={ {
+          theme: "light2", // "light1", "light2", "dark1", "dark2"
+	        title: {
+		        text: ""
+	        },
+          
           data: [
             {
               type: 'candlestick',
               dataPoints: stockData?.map(stockData => 
-                
                 ({
-                
-                x: new Date(stockData.date),
+                x: new Date (stockData.date),
                 y: [
                   stockData.open,
                   stockData.high,
@@ -80,7 +103,9 @@ export const StockChart = () =>  {
               )
             }
           ],
+          
           axisY: {
+            title: "Price",
             minimum: Math.min(...stockData.map(data => data.low)) / 1.1,
             maximum: Math.max(...stockData.map(data => data.high)) * 1.1,
             crosshair: {
@@ -89,32 +114,15 @@ export const StockChart = () =>  {
           }
           }, 
           axisX: {
-            scaleBreaks: {
-              if (stockData) {
-               customBreaks = stockData.reduce((breaks, value, index, array) => {
-                const currentDataPointUnix = new Date(Number(value.date));
-                const previousDataPointUnix = new Date(Number(array[index - 1].date));
-
-                const oneDayInMs = 86400000;
-                {console.log(array[index])}
-                const difference = previousDataPointUnix - currentDataPointUnix;
-
-                return (difference === oneDayInMs) ? breaks : 
-                  [...breaks, {
-                    startValue: currentDataPointUnix,
-                    endValue: previousDataPointUnix - oneDayInMs,
-                  }]
-                
-              }, [])
-              }
-              
-            }
+            interval: 1,
+            
             
           },
           
         } }
       />  
   )
+
 }
 
 /* "2021-08-06": {
