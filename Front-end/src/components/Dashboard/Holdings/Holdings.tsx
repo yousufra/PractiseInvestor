@@ -15,16 +15,11 @@ import {
 import { useSelector } from 'react-redux'; // to retrieve the data from the store in redux
 import useStyles from './styles';
 import { Holding } from './Holding/Holding';
-//import Grid from '@material-ui/core';
-//import Box from '@material-ui/core/Box';
 import { getCurrentPrice } from '../../../api/stockApi';
 import { PieChart } from './PieChart/PieChart';
 import { HoldingI, NoPriceHoldingI } from '../../../interfaces/Holding';
 import { StockChart } from './StockChart/StockChart'
 import { DialogButton, DialogProps } from './DialogButton';
-
-//import Divider from '@material-ui/core/Divider';
-
 
 interface Props {
   toggleComponent: (str: string) => void; 
@@ -68,25 +63,16 @@ export const Holdings = ({toggleComponent}: Props) => {
     }
   }, [holdings])
 
-
-  
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = (value:  any) => {
-    
-    console.log(value);
     setOpen(false);
     setSelectedValue(value.company);
-    //console.log(value.ticker);
-
     setSelectedStock(value.ticker)
-  
   };
 
- 
-  
   return (
     <>
       
@@ -118,7 +104,6 @@ export const Holdings = ({toggleComponent}: Props) => {
 
       <Divider className={classes.divider} />
 
-      
       {!holdings?.length ? <Button variant="contained" color="secondary" onClick={() => {toggleComponent('Order')}}>No Holdings: Buy Your First Stock</Button> : (
         <Box m={1}>
           <TableContainer component={Paper}>
