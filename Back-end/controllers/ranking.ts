@@ -33,7 +33,8 @@ async function setLastUpdate(date: Date) {
   .catch((err: Error) => console.log('err', err));
 }
 
-export async function storeRanking (date: Date) {
+export async function storeRanking () {
+  const date = new Date();
   const [prices, users] = await getPrices();
   const rankings = [];
   for (let j = 0; j < users.length; j += 1) {
@@ -56,32 +57,33 @@ export async function storeRanking (date: Date) {
   }
   await Ranking.deleteMany();
   Ranking.create(rankings);
+  setLastUpdate(date);
   return rankings;
 }
 
-export async function checkLastUpdate() {
-  const lastUpdate = await LastUpdate.findOne();
-  const date = new Date();
-  if (lastUpdate.date) {
-    const lastDayOfMonth = lastUpdate.date.getDate();
-    const todayDayOfWeek = date.getDay();
-    const todayDayOfMonth = date.getDate(); // only triggers Mon-Fri if last update before today
-    if (todayDayOfWeek > 0 && todayDayOfWeek < 6 && todayDayOfMonth !== lastDayOfMonth) {
-      storeRanking(date);
-      setLastUpdate(date);
-    }
-  } else {
-    storeRanking(date);
-    setLastUpdate(date);
-  }
-}
+// export async function checkLastUpdate() {
+//   const lastUpdate = await LastUpdate.findOne();
+//   const date = new Date();
+//   if (lastUpdate.date) {
+//     const lastDayOfMonth = lastUpdate.date.getDate();
+//     const todayDayOfWeek = date.getDay();
+//     const todayDayOfMonth = date.getDate(); // only triggers Mon-Fri if last update before today
+//     if (todayDayOfWeek > 0 && todayDayOfWeek < 6 && todayDayOfMonth !== lastDayOfMonth) {
+//       storeRanking(date);
+//       setLastUpdate(date);
+//     }
+//   } else {
+//     storeRanking(date);
+//     setLastUpdate(date);
+//   }
+// }
 
 export async function getRanking(req: Request, res: Response) {
   try {
     let rankings = await Ranking.find();
     const date = new Date();
     if (!rankings.length) { // Will create rankings if none have ever been created. Only happens once.
-      rankings = await storeRanking(date);
+      rankings = await storeRanking();
     }
     rankings.sort((a: RankingI, b: RankingI) => b.totalValue - a.totalValue);
     res.send(rankings);

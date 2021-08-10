@@ -61,7 +61,7 @@ export const Holdings = ({toggleComponent}: Props) => {
       <Box m={1}>
         <StockChart/>
       </Box>
-      {!holdings?.length ? <p>No Holdings, buy a stock</p> : (
+      {!holdings?.length ? <Button variant="contained" color="secondary" onClick={() => {toggleComponent('Order')}}>No Holdings: Buy Your First Stock</Button> : (
         <Box m={1}>
           <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="simple table">

@@ -12,6 +12,8 @@ interface Props {
 export const Dashboard = ({toggleComponent}: Props) => {
   
   const dispatch = useDispatch(); // allows us to dispatch an action
+  const { holdings, cash } = useSelector((state: any) => state.holdings);
+
   useEffect(() => {  
     dispatch(getAllHoldings());
   }, [dispatch]);
@@ -28,4 +30,3 @@ export const Dashboard = ({toggleComponent}: Props) => {
     </div>
   )
 }
-

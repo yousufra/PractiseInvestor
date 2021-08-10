@@ -17,12 +17,8 @@ interface Date {
 
 export const StockChart = () =>  {
   const [stockData, setStockData] = useState<any[]>([]);
-
-  
   const {holdings} = useSelector((state: { holdings: { holdings: NoPriceHoldingI[] } }) => state.holdings);
  
-  
-
   useEffect(() => {
     const apiCallArray = async () => {
       holdings?.map(async (holding: NoPriceHoldingI) => {
