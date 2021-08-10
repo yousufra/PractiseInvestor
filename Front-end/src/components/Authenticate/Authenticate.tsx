@@ -46,22 +46,16 @@ const Authenticate = () => {
     if (isRegister) {
       // dispatch an action to signup
       if (form.userName && form.password && form.confirmPassword) {
-        if (form.password === form.confirmPassword) {
-          dispatch(register(form, history)); 
-        } else {
+        if (form.password === form.confirmPassword) dispatch(register(form, history)); 
+        else {
           setForm(current => ({...current, password: '', confirmPassword: ''}));
           alert(`Passwords don't match, try again`);
         }
-      } else {
-        alert(`Please fill out all fields`)
-      }
+      } else alert(`Please fill out all fields`);
+      
     } else {
-      if (form.userName && form.password) {
-        // dspatch an action to sign in
-        dispatch(login(form, history));
-      } else {
-        alert(`Please fill out all fields`)
-      }
+      if (form.userName && form.password) /* dspatch an action to sign-in */ dispatch(login(form, history));
+      else alert(`Please fill out all fields`);
     }
   };
 

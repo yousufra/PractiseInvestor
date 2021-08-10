@@ -15,6 +15,7 @@ import Box from '@material-ui/core/Box';
 import { getCurrentPrice } from '../../../api/stockApi';
 import { PieChart } from './PieChart/PieChart';
 import { HoldingI, NoPriceHoldingI } from '../../../interfaces/Holding';
+import { StockChart } from './StockChart/StockChart'
 
 interface Props {
   toggleComponent: (str: string) => void; 
@@ -57,7 +58,10 @@ export const Holdings = ({toggleComponent}: Props) => {
       <Box m={1}>
         <PieChart portfolioValue={portfolioValue} cash={cash} holdingsValue={portfolioValue-cash} b="2rem"/>
       </Box>
-      {!holdings?.length ? <Button variant="contained" color="secondary" onClick={() => {toggleComponent('Order')}}>No Holdings: Buy Your First Stock</Button> : (
+      <Box m={1}>
+        <StockChart/>
+      </Box>
+      {!holdings?.length ? <p>No Holdings, buy a stock</p> : (
         <Box m={1}>
           <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="simple table">

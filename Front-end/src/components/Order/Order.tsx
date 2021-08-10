@@ -60,7 +60,6 @@ export default function Order({toggleComponent}: Props): ReactElement {
     if (ticker && quantity && action) {
       // checking if the holding is one you own if you are trying to sell
       if (action === 'sell' && !holding) return alert("You do not own any shares of this company");
-      
       // checking if the type of action is sell
       if (holding  && action === 'sell')  {
         // checking if the user is trying to sell more than he currently owns
@@ -73,9 +72,9 @@ export default function Order({toggleComponent}: Props): ReactElement {
           setQuantity(0);
           setPrice(0);
           toggleComponent('Dashboard');
-        } else {
-          alert(`You currently own ${holding.quantity} shares from this company.`)
-        }
+          
+        } else alert(`You currently own ${holding.quantity} shares from this company.`)
+        
       } else {
         // check cash
         const netAmount: number = Number((price * quantity).toFixed(2));
@@ -87,14 +86,12 @@ export default function Order({toggleComponent}: Props): ReactElement {
           setQuantity(0);
           setPrice(0);
           toggleComponent('Dashboard');
-        } else {
-          alert(`Not enough funds`);
-        }
+        } else alert(`Not enough funds`);
+        
       }
     }
-    else {
-      alert('Please fill out all fields');
-    }
+    else alert('Please fill out all fields');
+    
   };
 
   const handleRadio = (event: { target: { value: React.SetStateAction<string>; }; }) => {
