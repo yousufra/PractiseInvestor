@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   Divider,
-  Grid,
   Table,
   TableBody,
   TableCell,
@@ -19,7 +18,7 @@ import { getCurrentPrice } from '../../../api/stockApi';
 import { PieChart } from './PieChart/PieChart';
 import { HoldingI, NoPriceHoldingI } from '../../../interfaces/Holding';
 import { StockChart } from './StockChart/StockChart'
-import { DialogButton, DialogProps } from './DialogButton';
+import { DialogButton } from './DialogButton';
 
 interface Props {
   toggleComponent: (str: string) => void; 
