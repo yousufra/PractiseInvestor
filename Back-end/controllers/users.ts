@@ -1,9 +1,16 @@
-const bcrypt = require('bcrypt');
-const User = require('../models/userModel');
-const { generateToken } = require('../generateToken');
-require('dotenv').config();
+import bcrypt from 'bcrypt';
+import User from '../models/userModel';
+import { generateToken } from '../generateToken';
+import { Request, Response } from 'express';
+import dotenv from 'dotenv';
+import UserI from '../interfaces/User';
+dotenv.config();
 
-exports.getAllUsers = async (req, res) => {
+interface UserRequest extends Request {
+  user: UserI;
+}
+
+export const getAllUsers = async (req: Request, res: Response) => {
   try {
     const users = await User.find();
     res.status(200);
@@ -14,7 +21,7 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
-exports.createUser = async (req, res) => {
+export const createUser = async (req: Request, res: Response) => {
   const { userName, password, confirmPassword } = req.body;
 
   if (!userName || !password || !confirmPassword) return res.status(400).send({ message: 'Please enter all fields.' });
@@ -40,7 +47,7 @@ exports.createUser = async (req, res) => {
   }
 };
 
-exports.getUser = async (req, res) => {
+export const getUser = async (req: UserRequest, res: Response) => {
   try {
     const { userName } = req.user;
     const user = await User.findOne({ userName }).select('-password');
@@ -52,7 +59,7 @@ exports.getUser = async (req, res) => {
   }
 };
 
-exports.login = async (req, res) => {
+export const login = async (req: Request, res: Response) => {
   const { userName, password } = req.body;
   if (!userName || !password) return res.status(400).send({ message: 'Please enter all fields.' });
 
@@ -75,13 +82,8 @@ exports.login = async (req, res) => {
   }
 };
 
-exports.totalValueHistory = async (_id, totalValue, date) => {
-  User.updateOne({ _id },
-    { $push: { totalValueHistory: { totalValue, date } } },
-    (err, success) => {
-      /* eslint-disable no-console */
-      if (err) console.log(err);
-      else console.log(success);
-      /* eslint-disable no-console */
-    });
+export const totalValueHistory = async (_id: string, totalValue: number, date: Date | string)=> {
+  User.updateOne({ _id }, { $push: { totalValueHistory: { totalValue, date } } })
+    .then((success: any) => console.log(success))
+    .catch((err: Error) => console.log(err));
 };
