@@ -17,7 +17,6 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import useStyles from './styles';
 import { register, login } from '../../actions/authenticate';
-import { getCurrentPrice } from '../../api/stockApi';
 
 interface DefaultFormI {
   userName: string,

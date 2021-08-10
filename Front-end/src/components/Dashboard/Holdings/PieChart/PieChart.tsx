@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import Chart from 'react-apexcharts';
 import {Paper, Box, Typography} from '@material-ui/core';
+import {ChartI} from '../../../../interfaces/Chart'
 
 interface Props {
   cash: number
@@ -9,35 +10,7 @@ interface Props {
   b: string
 }
 
-// interface ChartType {
-//   width: number
-//   type?: string
-// }
-
-interface ChartI {
-  series: number[]
-  options: any
-}
-
-// interface ChartOptions {
-//   chart: ChartType
-//   labels?: string[]
-//   responsive?:ResponsiveEl[]
-//   legend?: Legend
-// }
-
-
-// interface ResponsiveEl {
-//   breakpoint: number
-//   options: ChartOptions
-// }
-
-// interface Legend {
-//   position: string
-// }
-
 export const PieChart = ({ cash, portfolioValue, holdingsValue }: Props) => {
-  
   const [chart, setChart] = useState<ChartI>({
     series: [Number(holdingsValue?.toFixed(2)), Number(cash?.toFixed(2))],
     options: {
@@ -63,8 +36,9 @@ export const PieChart = ({ cash, portfolioValue, holdingsValue }: Props) => {
   return (
       <Box width={0.27} >
       <Paper id="chart" >
-        <Typography variant="h6">Total Value: ${portfolioValue}</Typography>
-        <Chart options={chart.options} series={[Number(holdingsValue?.toFixed(2)), Number(cash?.toFixed(2))]} type="pie" width={380} />
+        <Typography variant="h6" data-testid="pieChart-portfolioValue" >Total Value: ${portfolioValue}</Typography>
+        <Typography variant="h6" data-testid="pieChart-cash" >Your Funds: ${cash?.toFixed(2)}</Typography>
+        <Chart options={chart.options} series={[Number(holdingsValue?.toFixed(2)), Number(cash?.toFixed(2))]} type="pie" width={380} data-testid="pieChart-chart"/>
       </Paper>
     </Box>
   )

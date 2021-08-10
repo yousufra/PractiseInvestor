@@ -14,8 +14,3 @@ export interface Company {
 export interface TickerStatePropertiesI {
   ticker: string;
 }
-
-export interface SuggestionsStatePropertiesI {
-  name: any;
-  
-}

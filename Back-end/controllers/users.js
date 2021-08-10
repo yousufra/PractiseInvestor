@@ -1,4 +1,3 @@
-/* eslint-disable consistent-return */
 const bcrypt = require('bcrypt');
 const User = require('../models/userModel');
 const { generateToken } = require('../generateToken');
@@ -55,7 +54,6 @@ exports.getUser = async (req, res) => {
 
 exports.login = async (req, res) => {
   const { userName, password } = req.body;
-  console.log('login');
   if (!userName || !password) return res.status(400).send({ message: 'Please enter all fields.' });
 
   try {
@@ -75,4 +73,15 @@ exports.login = async (req, res) => {
     res.status(500);
     res.send(error);
   }
+};
+
+exports.totalValueHistory = async (_id, totalValue, date) => {
+  User.updateOne({ _id },
+    { $push: { totalValueHistory: { totalValue, date } } },
+    (err, success) => {
+      /* eslint-disable no-console */
+      if (err) console.log(err);
+      else console.log(success);
+      /* eslint-disable no-console */
+    });
 };

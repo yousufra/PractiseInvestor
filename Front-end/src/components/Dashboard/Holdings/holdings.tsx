@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import {
+  Button,
   Table,
   TableBody,
   TableCell,
@@ -15,14 +16,18 @@ import { getCurrentPrice } from '../../../api/stockApi';
 import { PieChart } from './PieChart/PieChart';
 import { HoldingI, NoPriceHoldingI } from '../../../interfaces/Holding';
 
-export const Holdings = () => {
+interface Props {
+  toggleComponent: (str: string) => void; 
+}
+
+export const Holdings = ({toggleComponent}: Props) => {
   
   const classes = useStyles();
   const [holdingsPrices, setHoldingsPrices] = useState<HoldingI[]>([]);
   const [portfolioValue, setPortfolioValue] = useState<number>(0);
 
   const { holdings, cash } = useSelector((state: any) => state.holdings); // state object is all the states within the combine reducer in index.js in reducer folder
-
+  
   useEffect(() => {
     function getPrice () {
       const apiCallArray = holdings?.map(async (holding: NoPriceHoldingI) => {
@@ -52,7 +57,7 @@ export const Holdings = () => {
       <Box m={1}>
         <PieChart portfolioValue={portfolioValue} cash={cash} holdingsValue={portfolioValue-cash} b="2rem"/>
       </Box>
-      {!holdings?.length ? <p>No Holdings, buy a stock</p> : (
+      {!holdings?.length ? <Button variant="contained" color="secondary" onClick={() => {toggleComponent('Order')}}>No Holdings: Buy Your First Stock</Button> : (
         <Box m={1}>
           <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="simple table">
@@ -61,8 +66,9 @@ export const Holdings = () => {
                   <TableCell>Company</TableCell>
                   <TableCell align="right">Ticker</TableCell>
                   <TableCell align="right">Quantity</TableCell>
-                  <TableCell align="right">Current Price</TableCell>
-                  <TableCell align="right">Avg Cost</TableCell>
+                  <TableCell align="right">Market Value</TableCell>
+                  <TableCell align="right">Avg Book Cost</TableCell>
+                  <TableCell align="right">Total Avg Cost</TableCell>
                   <TableCell align="right">Unrealized Gain/Loss</TableCell>
                   <TableCell align="right">% of Portfolio</TableCell>
                 </TableRow>
