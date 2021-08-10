@@ -1,5 +1,5 @@
 import {TableRow, TableCell} from '@material-ui/core';
-import { HoldingI } from '../../../../../interfaces/Holding';
+import { HoldingI } from '../../../../interfaces/Holding';
 
 interface Props {
   holding: HoldingI

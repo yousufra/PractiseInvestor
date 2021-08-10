@@ -1,5 +1,5 @@
 import { render, screen, cleanup } from "@testing-library/react";
-import { Holding } from '../components/Dashboard/Holdings/StockChart/Holding/Holding';
+import { Holding } from '../components/Dashboard/Holdings/Holding/Holding';
 
 afterEach(() => {
   cleanup();

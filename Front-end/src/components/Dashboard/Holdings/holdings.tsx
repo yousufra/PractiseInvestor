@@ -10,7 +10,7 @@ import {
   Paper} from '@material-ui/core';
 import { useSelector } from 'react-redux'; // to retrieve the data from the store in redux
 import useStyles from './styles';
-import { Holding } from './StockChart/Holding/Holding';
+import { Holding } from './Holding/Holding';
 import Box from '@material-ui/core/Box';
 import { getCurrentPrice } from '../../../api/stockApi';
 import { PieChart } from './PieChart/PieChart';

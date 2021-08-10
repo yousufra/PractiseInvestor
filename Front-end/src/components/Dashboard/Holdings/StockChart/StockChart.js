@@ -60,6 +60,7 @@ export const StockChart = () =>  {
   return (
     //(stockData  && stockData.length) &&
       <CanvasJSChart
+      
         options={ {
           data: [
             {
