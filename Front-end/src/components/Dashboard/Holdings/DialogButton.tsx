@@ -1,11 +1,10 @@
-import React, { Props } from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
-import { HoldingI, NoPriceHoldingI } from '../../../interfaces/Holding';
-//import Button from '@material-ui/core/Button';
+import { NoPriceHoldingI } from '../../../interfaces/Holding';
+
 export interface DialogProps {
   open: boolean;
   selectedValue: string;
@@ -13,7 +12,8 @@ export interface DialogProps {
   holdings: NoPriceHoldingI[];
 }
 
-export const DialogButton = ({open, selectedValue, onClose, holdings}:DialogProps) => {
+export const DialogButton = ({open, selectedValue, onClose, holdings}: DialogProps) => {
+  
   const handleClose = () => {
     onClose(selectedValue);
   };

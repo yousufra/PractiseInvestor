@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import User from '../models/userModel';
 import { generateToken } from '../generateToken';
 import { Request, Response } from 'express';
-import dotenv from 'dotenv';
+import * as dotenv from 'dotenv';
 dotenv.config();
 
 export const getAllUsers = async (req: Request, res: Response) => {
@@ -31,7 +31,7 @@ export const createUser = async (req: Request, res: Response) => {
     }
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
-    const newUser = await User.create({ userName, password: hashedPassword });
+    const newUser: any = await User.create({ userName, password: hashedPassword });
     res.status(201).send({
       userName: newUser.userName,
       token: generateToken(userName),
@@ -59,7 +59,7 @@ export const login = async (req: Request, res: Response) => {
   if (!userName || !password) return res.status(400).send({ message: 'Please enter all fields.' });
 
   try {
-    const user = await User.findOne({ userName });
+    const user: any = await User.findOne({ userName });
     if (!user) return res.status(404).send({ message: 'Cannot find user.' });
     if (await bcrypt.compare(password, user.password)) {
       res.status(200).send(
