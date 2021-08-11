@@ -91,6 +91,7 @@ export const StockChart = ({selectedStock, holdingSelected}) =>  {
           axisY: {
             labelFontColor: "#71BC78",
             title: "Price",
+            prefix: "$",
             titleFontColor: "#71BC78",
             minimum: Math.min(...stockData.map(data => data.low)) / 1.1,
             maximum: Math.max(...stockData.map(data => data.high)) * 1.1,
