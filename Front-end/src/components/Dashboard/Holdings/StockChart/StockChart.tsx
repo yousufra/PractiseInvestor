@@ -63,6 +63,7 @@ export const StockChart = ({selectedStock, holdingSelected}) =>  {
     <div style={{ padding: "1.5rem 0 1.5rem 5rem", display: 'flex', justifyContent: 'center' }}>
       <CanvasJSChart
         options={ {
+          zoomEnabled: true,
           colorSet:  "customColorSet1",
           theme: "light2", // "light1", "light2", "dark1", "dark2"
 	        title: {
@@ -90,7 +91,7 @@ export const StockChart = ({selectedStock, holdingSelected}) =>  {
           ],
           axisY: {
             labelFontColor: "#71BC78",
-            title: "Price",
+            title: "",
             prefix: "$",
             titleFontColor: "#71BC78",
             minimum: Math.min(...stockData.map(data => data.low)) / 1.1,
