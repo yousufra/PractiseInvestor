@@ -55,6 +55,7 @@ export const StockChart = ({selectedStock, holdingSelected}) =>  {
         high: Number(value['2. high']),
         low: Number(value['3. low']),
         close: Number(value['4. close']),
+        volume: Number(value['5. volume'])
       }  
     }) 
   } 
@@ -84,7 +85,8 @@ export const StockChart = ({selectedStock, holdingSelected}) =>  {
                   stockData.open,
                   stockData.high,
                   stockData.low,
-                  stockData.close
+                  stockData.close,
+                  stockData.volume
                 ]
               }))
             }
