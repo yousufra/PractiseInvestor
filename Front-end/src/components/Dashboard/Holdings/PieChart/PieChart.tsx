@@ -57,11 +57,11 @@ export const PieChart = ({ cash, portfolioValue, holdingsValue }: Props) => {
       }]
     },
   });
-
+console.log('hv', holdingsValue, 'pv', portfolioValue)
   return (
       <Box width={0.27}>
       <Paper id="chart" style={{width: "25vw", padding: "3rem"}} >
-        <Typography variant="h6" data-testid="pieChart-portfolioValue" style={{ textAlign: 'center'}}>Total Value: ${portfolioValue}</Typography>
+        <Typography variant="h6" data-testid="pieChart-portfolioValue" style={{ textAlign: 'center'}}>Total Value: ${portfolioValue?.toFixed(2)}</Typography>
         <Typography variant="h6" data-testid="pieChart-cash" style={{ textAlign: 'center'}} >Your Funds: ${cash?.toFixed(2)}</Typography>
         <Chart options={chart.options} series={[Number(holdingsValue), Number(cash)]} type="pie" width={380} data-testid="pieChart-chart"/>
       </Paper>
