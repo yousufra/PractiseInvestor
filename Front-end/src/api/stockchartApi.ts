@@ -26,5 +26,3 @@ const apiKey = 'P3ALPJ1AEVHPEXFF';
 export const getDataForCompanyWithSymbol = (ticker) => {
   return axiosInstance.get(baseURL + `function=TIME_SERIES_DAILY&symbol=${ticker}&apikey=${apiKey}`);
 };
-
-//console.log(getDataForCompanyWithSymbol('GOOG'));

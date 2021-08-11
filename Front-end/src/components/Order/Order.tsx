@@ -35,6 +35,7 @@ export default function Order({toggleComponent}: Props): ReactElement {
   const [quantity, setQuantity] = useState<number>(0);
   const [price, setPrice] = useState<number>(0);
   const [value, setValue] = useState<string>('');
+  const [sharesHeld, setSharesHeld] = useState<number>(0);
 
   useEffect(() => {
     // getting all stocks to filter them later instead of making one api call for each filter
@@ -62,9 +63,8 @@ export default function Order({toggleComponent}: Props): ReactElement {
       if (action === 'sell' && !holding) return alert("You do not own any shares of this company");
       // checking if the type of action is sell
       if (holding  && action === 'sell')  {
-        // checking if the user is trying to sell more than he currently owns
+        // checking if the user is trying to sell more than user owns
         if (quantity <= holding.quantity) {
-
           dispatch(updateHoldings({ date, company, ticker, action, quantity, price, netAmount: Number((price * quantity).toFixed(2)) }));
           setCompany('');
           setTicker('');
@@ -110,6 +110,8 @@ export default function Order({toggleComponent}: Props): ReactElement {
         if (newValue) {
           setCompany(newValue.name);
           setTicker(newValue.symbol);
+          const companyHeld = holdings.find(holding => holding.company === newValue.name);
+          if (companyHeld) setSharesHeld(companyHeld.quantity);
         }
         if (reason === 'clear') {
           setCompany('');
@@ -120,22 +122,22 @@ export default function Order({toggleComponent}: Props): ReactElement {
       renderInput={(params) => <TextField {...params} label="Company" variant="outlined" />}
     ></Autocomplete>
   )
-
   return (
     <Box m={1}>
       <Paper className={classes.paper}>
         <form className={`${classes.form} ${classes.root}`} noValidate autoComplete="off" onSubmit={handleSubmit}>
           <Typography variant="h6">Order</Typography>
           <TextField name="date" label="Date/Time" variant="outlined" fullWidth value={date}/>
-          {renderAutocomplete}
-          <TextField name="ticker" label="Ticker" variant="outlined" fullWidth value={ticker} onChange={(e) => setTicker( ticker )} />
           <RadioGroup row aria-label="action" name="action1" value={value} onChange={handleRadio}>
             <FormControlLabel value="buy" control={<Radio color="primary"/>} label="Buy" />
             <FormControlLabel value="sell" control={<Radio color="primary"/>} label="Sell" />
           </RadioGroup>
-          <TextField type="number" name="quantity" InputProps={{inputProps: { min: 0 }}} label="Quantity" variant="outlined" fullWidth defaultValue={quantity} onChange={(e) => setQuantity(+e.target.value)} />
-          <TextField type="number" name="price" label="Price" variant="outlined" fullWidth value={price.toFixed(2)} />
-          <TextField type="number" name="netAmount" label="NetAmount" variant="outlined" autoComplete="netAmount" fullWidth value={(price * quantity).toFixed(2)} />
+          {renderAutocomplete}
+          <TextField name="ticker" label="Ticker" variant="outlined" fullWidth value={ticker} onChange={(e) => setTicker( ticker )} />
+          <TextField type="number" name="quantity" fullWidth InputProps={{inputProps: { min: 0 }}} label="Quantity" variant="outlined" defaultValue={quantity} onChange={(e) => setQuantity(+e.target.value)} />
+          {company.length ? <TextField variant="outlined" disabled color="primary" fullWidth label={<p>You currently own {sharesHeld} shares of {company} ({ticker})</p>} /> : <></>}
+          <TextField name="price" label="Price" variant="outlined" fullWidth value={price.toFixed(2)} />
+          <TextField name="netAmount" label="NetAmount" variant="outlined" autoComplete="netAmount" fullWidth value={(price * quantity).toFixed(2)} />
           <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth>Submit Order</Button>
         </form>
       </Paper>
