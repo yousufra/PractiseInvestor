@@ -1,72 +1,52 @@
 /* eslint-disable */
-import React, { ReactElement, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { CanvasJSChart } from 'canvasjs-react-charts';
 import { useSelector } from 'react-redux';
-import { getAllHoldings } from '../../../../actions/holdings';
 import { getDataForCompanyWithSymbol } from '../../../../api/stockchartApi';
-//import { NoPriceHoldingI } from '../../../../interfaces/Holding';
-
-/* interface Stocks {
-  date: Date[]
-}
-interface Date {
-  '1. open': number,
-  '2. high': number,
-  '3. low': number,
-  '4. close': number, 
-} */
+import { HoldingI } from '../../../../interfaces/Holding';
 
 export const StockChart = ({selectedStock}) =>  {
-  const [stockData, setStockData] = useState([]);
+  const [stockData, setStockData] = useState<any>([]);
 /* eslint-disable */
-  const {holdings} = useSelector((state) => state.holdings);
+  const { holdings } = useSelector((state: any) => state.holdings);
   
   useEffect(() => {
     /* eslint-disable */
     //at the moment the stock graph only displayes the stock that you currently have the most money invested in
     const fet = async () => {
-      let holding = await Promise.all(holdings);
+      let holding: HoldingI[] = await Promise.all(holdings);
       let maxInvestStock;
       let j = 0;
       maxInvestStock = holding[j];
-      //console.log(maxInvestStock.quantity);
       for (let i = 0; i < holding.length; i++) {
-        //console.log(holding[i+1].quantity);
         if (holding[i+1] && maxInvestStock && (maxInvestStock.quantity * maxInvestStock.avgCost) < (holding[i+1].quantity * holding[i+1].avgCost)) {
           maxInvestStock = holding[i+1];
         } 
       }
       const result = await getDataForCompanyWithSymbol(maxInvestStock.ticker);
-      setStockData(formatStockData(result.data['Time Series (Daily)']));
-      //setSelectedStock(result);
+      if (result.data['Time Series (Daily)']){
+        setStockData(formatStockData(result.data['Time Series (Daily)']))
+      };
     }
     fet() 
-     
-  }, []) 
+  }, [])
   useEffect(() => {
     /* eslint-disable */
-    if (selectedStock.length !== 0) {
+    if (selectedStock) {
       const fet = async () => {
-      
         let stock = selectedStock;
         const result = await getDataForCompanyWithSymbol(stock);
-        if (result) {
+        if (result.data['Time Series (Daily)']) {
           setStockData(formatStockData(result.data['Time Series (Daily)']));
         }
-        
       }
       fet() 
     }
-     
   }, [selectedStock])
-  
-
 
   function formatStockData(stockData) {
-    console.log(stockData);
     return Object.entries(stockData)?.map(entries => {
-      const [date, value] = entries;
-      //console.log(date, "date", value, "value");
+      const [date, value]: any = entries;
       return {
         date,
         open: Number(value['1. open']),
@@ -78,15 +58,16 @@ export const StockChart = ({selectedStock}) =>  {
   } 
 
   return (
-    //(stockData  && stockData.length) &&
-
+    <div style={{ padding: "1.5rem 0 1.5rem 5rem", display: 'flex', justifyContent: 'center' }}>
       <CanvasJSChart
         options={ {
           theme: "light2", // "light1", "light2", "dark1", "dark2"
 	        title: {
 		        text: ""
 	        },
-          
+          width: 1000,
+          height: 350,
+          // backgroundColor: "red",
           data: [
             {
               type: 'candlestick',
@@ -99,11 +80,9 @@ export const StockChart = ({selectedStock}) =>  {
                   stockData.low,
                   stockData.close
                 ]
-              })
-              )
+              }))
             }
           ],
-          
           axisY: {
             title: "Price",
             minimum: Math.min(...stockData.map(data => data.low)) / 1.1,
@@ -111,24 +90,13 @@ export const StockChart = ({selectedStock}) =>  {
             crosshair: {
               enabled: true,
               snapToDataPoint: true,
-          }
+            }
           }, 
           axisX: {
             interval: 1,
-            
-            
           },
-          
         } }
       />  
+    </div>
   )
-
 }
-
-/* "2021-08-06": {
-  "1. open": "143.0000",
-  "2. high": "144.3900",
-  "3. low": "142.8900",
-  "4. close": "144.0900",
-  "5. volume": "3826835"
-} */

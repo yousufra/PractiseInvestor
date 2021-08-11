@@ -5,7 +5,6 @@ const lastUpdateSchema = new mongoose.Schema({
   date: {
     type: Date,
     required: true,
-    index: true,
   },
 });
 
