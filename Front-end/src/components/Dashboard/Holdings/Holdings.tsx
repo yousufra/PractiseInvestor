@@ -9,7 +9,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
   Paper} from '@material-ui/core';
 import { useSelector } from 'react-redux'; // to retrieve the data from the store in redux
 import useStyles from './styles';
@@ -18,7 +17,6 @@ import { PieChart } from './PieChart/PieChart';
 import { HoldingI  } from '../../../interfaces/Holding';
 import { StockChart } from './StockChart/StockChart';
 import { DialogButton } from './DialogButton';
-import { UserChart } from './StockChart/UserChart/UserChart';
 
 interface Props {
   toggleComponent: (str: string) => void;

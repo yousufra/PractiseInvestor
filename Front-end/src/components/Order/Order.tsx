@@ -98,7 +98,7 @@ export default function Order({toggleComponent}: Props): ReactElement {
 
   const handleRadio = (event: { target: { value: React.SetStateAction<string>; }; }) => {
     setValue(event.target.value);
-    setAction(event.target.value)
+    setAction(event.target.value);
   };
  
   const renderAutocomplete = (
@@ -114,6 +114,7 @@ export default function Order({toggleComponent}: Props): ReactElement {
           setTicker(newValue.symbol);
           const companyHeld = holdings.find(holding => holding.company === newValue.name);
           if (companyHeld) setSharesHeld(companyHeld.quantity);
+          else setSharesHeld(0);
         }
         if (reason === 'clear') {
           setCompany('');
@@ -136,11 +137,11 @@ export default function Order({toggleComponent}: Props): ReactElement {
             <FormControlLabel value="buy" control={<Radio color="primary"/>} label="Buy" />
             <FormControlLabel value="sell" control={<Radio color="primary"/>} label="Sell" />
           </RadioGroup>
-          <TextField type="number" name="quantity" fullWidth InputProps={{inputProps: { min: 0 }}} label="Quantity" variant="outlined" defaultValue={quantity} onChange={(e) => setQuantity(+e.target.value)} />
+          <TextField type="number" name="quantity" error={price * quantity > cash} fullWidth InputProps={{inputProps: { min: 0 }}} label="Quantity" variant="outlined" defaultValue={quantity} onChange={(e) => setQuantity(+e.target.value)} />
           {company.length ? <TextField variant="filled" margin="dense" disabled color="primary" fullWidth label={<p>You currently own {sharesHeld} shares of {company} ({ticker})</p>} /> : <></>}
           <TextField name="price" label="Price" variant="outlined" fullWidth value={price.toLocaleString('en-us', {style: 'currency', currency:'USD'})} />
-          <TextField name="netAmount" label="NetAmount" variant="outlined" autoComplete="netAmount" fullWidth value={(price * quantity).toLocaleString('en-us', {style: 'currency', currency:'USD'})} />
-          {company.length ? <TextField variant="filled" margin="dense" disabled color="primary" fullWidth label={<p>You currently have {cash?.toLocaleString('en-us', {style: 'currency', currency:'USD'})} in available cash</p>} /> : <></>}
+          <TextField name="netAmount" label="NetAmount" variant="outlined" autoComplete="netAmount" fullWidth  value={(price * quantity).toLocaleString('en-us', {style: 'currency', currency:'USD'})} />
+          {company.length && action === 'buy' ? <TextField variant="filled" margin="dense" disabled color="primary" error={price * quantity > cash} fullWidth label={<p>You currently have {cash?.toLocaleString('en-us', {style: 'currency', currency:'USD'})} in available cash</p>} /> : <></>}
           <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth>Submit Order</Button>
           
         </form>

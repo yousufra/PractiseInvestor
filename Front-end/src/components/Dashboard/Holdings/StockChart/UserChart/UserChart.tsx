@@ -34,7 +34,6 @@ export const UserChart = () => {
           const result = formatUserData(userHistory);
 
           if (isMounted) {
-            console.log(result);
             setEarnings(result);
           }
         
