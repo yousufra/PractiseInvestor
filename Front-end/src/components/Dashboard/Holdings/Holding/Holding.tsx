@@ -16,7 +16,8 @@ export const Holding = ({ holding, portfolioValue }: Props) => {
       <TableCell align="right" data-testid="holding-ticker" >{holding.ticker}</TableCell>
       <TableCell align="right" data-testid="holding-quantity ">{holding.quantity}</TableCell>
       <TableCell align="right" data-testid="holding-price" >${holding.price.toFixed(2)}</TableCell>
-      <TableCell align="right" data-testid="holding-avgCost" >${holding.avgCost}</TableCell>
+      <TableCell align="right" data-testid="holding-avgCost" >${holding.avgCost.toFixed(2)}</TableCell>
+      <TableCell align="right" data-testid="holding-avgCost" >${(holding.avgCost * holding.quantity).toFixed(2)}</TableCell>
       <TableCell align="right"style=
       {(parseFloat(holding.price.toFixed(2)))-holding.avgCost < 0?{color: 'red'}:{color: 'green'}}>
         {(parseFloat(holding.price.toFixed(2)))-holding.avgCost < 0? '-':null}

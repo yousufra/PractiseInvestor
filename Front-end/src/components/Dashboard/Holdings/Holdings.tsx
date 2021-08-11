@@ -14,52 +14,27 @@ import {
 import { useSelector } from 'react-redux'; // to retrieve the data from the store in redux
 import useStyles from './styles';
 import { Holding } from './Holding/Holding';
-import { getCurrentPrice } from '../../../api/stockApi';
 import { PieChart } from './PieChart/PieChart';
-import { HoldingI, NoPriceHoldingI } from '../../../interfaces/Holding';
+import { HoldingI  } from '../../../interfaces/Holding';
 import { StockChart } from './StockChart/StockChart'
 import { DialogButton } from './DialogButton';
 
 interface Props {
-  toggleComponent: (str: string) => void; 
+  toggleComponent: (str: string) => void;
+  portfolioValue: number;
+  holdingsPrices: HoldingI[];
 }
 
-export const Holdings = ({toggleComponent}: Props) => {
+export const Holdings = ({toggleComponent, portfolioValue, holdingsPrices}: Props) => {
 
   const [open, setOpen] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<string>('');
   const [selectedStock, setSelectedStock] = useState<string>('');
   
   const classes = useStyles();
-  const [holdingsPrices, setHoldingsPrices] = useState<HoldingI[]>([]);
-  const [portfolioValue, setPortfolioValue] = useState<number>(0);
 
   const { holdings, cash } = useSelector((state: any) => state.holdings); // state object is all the states within the combine reducer in index.js in reducer folder
   
-  useEffect(() => {
-    
-    function getPrice () {
-      const apiCallArray = holdings?.map(async (holding: NoPriceHoldingI) => {
-        const price = Number((await getCurrentPrice(holding.ticker)).data.price)
-        return {...holding, price };
-      });      
-      apiCallArray && Promise.all<HoldingI>(apiCallArray).then((res: HoldingI[]) => {
-        setHoldingsPrices(res);
-        let calcPortfolioValue = cash;
-        res && res.forEach((holding: HoldingI)=>{
-          calcPortfolioValue += holding.price*holding.quantity;
-        });
-        setPortfolioValue(Number(calcPortfolioValue.toFixed(2)));
-      });
-
-    };
-
-    getPrice();
-    const interval = setInterval(() => getPrice(), 120000 ); // every 1 minute, 55 api calls/minute retriction
-    return () => {
-      clearInterval(interval);
-    }
-  }, [holdings])
 
   const handleClickOpen = () => {
     setOpen(true);
