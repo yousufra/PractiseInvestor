@@ -8,6 +8,7 @@ dotenv.config();
 export const getAllUsers = async (req: Request, res: Response) => {
   try {
     const users = await User.find();
+    console.log(users);
     res.status(200);
     res.send(users);
   } catch (error) {
@@ -31,7 +32,7 @@ export const createUser = async (req: Request, res: Response) => {
     }
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
-    const newUser = await User.create({ userName, password: hashedPassword });
+    const newUser: any = await User.create({ userName, password: hashedPassword });
     res.status(201).send({
       userName: newUser.userName,
       token: generateToken(userName),
@@ -59,7 +60,7 @@ export const login = async (req: Request, res: Response) => {
   if (!userName || !password) return res.status(400).send({ message: 'Please enter all fields.' });
 
   try {
-    const user = await User.findOne({ userName });
+    const user: any = await User.findOne({ userName });
     if (!user) return res.status(404).send({ message: 'Cannot find user.' });
     if (await bcrypt.compare(password, user.password)) {
       res.status(200).send(
