@@ -1,11 +1,10 @@
-const app = require('./index.ts');
+import { server } from './index';
 const request = require('supertest');
-
-const server = app(4567);
+const serverConnection = server(4567);
 
 describe('Stocks API', () => {
   it('GET /stocks --> array with all stocks', async () => {
-    const response = await request(server).get('/stocks')
+    const response = await request(serverConnection).get('/stocks')
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual(
@@ -20,7 +19,7 @@ describe('Stocks API', () => {
   });
 
   it('GET /users/ranking --> array with all users info sorted', async () => {
-    const response = await request(server).get('/users/ranking')
+    const response = await request(serverConnection).get('/users/ranking')
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual(
@@ -37,7 +36,7 @@ describe('Stocks API', () => {
   });
   
   it('GET /users --> array with all users', async () => {
-    const response = await request(server).get('/users')
+    const response = await request(serverConnection).get('/users')
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual(
@@ -72,8 +71,8 @@ describe('Stocks API', () => {
         ]),
         userName: expect.any(String),
         password: expect.any(String),
-        createdAt: expect.any(Number),
-        updatedAt: expect.any(Number),
+        createdAt: expect.any(String),
+        updatedAt: expect.any(String),
         __v: expect.any(Number),
       }),
     ]));

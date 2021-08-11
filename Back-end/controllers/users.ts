@@ -2,13 +2,12 @@ import bcrypt from 'bcrypt';
 import User from '../models/userModel';
 import { generateToken } from '../generateToken';
 import { Request, Response } from 'express';
-import dotenv from 'dotenv';
+import * as dotenv from 'dotenv';
 dotenv.config();
 
 export const getAllUsers = async (req: Request, res: Response) => {
   try {
     const users = await User.find();
-    console.log(users);
     res.status(200);
     res.send(users);
   } catch (error) {
