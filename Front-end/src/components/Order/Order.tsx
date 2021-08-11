@@ -3,7 +3,6 @@
 import React, { useState, ReactElement, useEffect, } from 'react';
 import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
-import moment from 'moment';
 import {Box,
   Button,
   FormControlLabel,
@@ -60,8 +59,6 @@ export default function Order({toggleComponent}: Props): ReactElement {
     e.preventDefault(); // prevent browser from refreshing , defualt when you submit a form
     // checking if the form is entirely filled
     const holding = holdings.find(holding => holding.company === company);
-    const rawDate = new Date();
-    const dateString = `${rawDate.toLocaleDateString('en-US', {timeZone: 'America/New_York', year: 'numeric', month: 'long', day: 'numeric'})}, ${rawDate.toLocaleTimeString('en-US', {hour12: true, hour: 'numeric', minute: 'numeric'})}`; 
     // checking if the form fields are all filled
     if (ticker && quantity && action) {
       // checking if the holding is one you own if you are trying to sell
@@ -140,10 +137,10 @@ export default function Order({toggleComponent}: Props): ReactElement {
             <FormControlLabel value="sell" control={<Radio color="primary"/>} label="Sell" />
           </RadioGroup>
           <TextField type="number" name="quantity" fullWidth InputProps={{inputProps: { min: 0 }}} label="Quantity" variant="outlined" defaultValue={quantity} onChange={(e) => setQuantity(+e.target.value)} />
-          {company.length ? <TextField variant="outlined" disabled color="primary" fullWidth label={<p>You currently own {sharesHeld} shares of {company} ({ticker})</p>} /> : <></>}
+          {company.length ? <TextField variant="filled" margin="dense" disabled color="primary" fullWidth label={<p>You currently own {sharesHeld} shares of {company} ({ticker})</p>} /> : <></>}
           <TextField name="price" label="Price" variant="outlined" fullWidth value={price.toLocaleString('en-us', {style: 'currency', currency:'USD'})} />
           <TextField name="netAmount" label="NetAmount" variant="outlined" autoComplete="netAmount" fullWidth value={(price * quantity).toLocaleString('en-us', {style: 'currency', currency:'USD'})} />
-          {company.length ? <TextField variant="outlined" disabled color="primary" fullWidth label={<p>You currently have {cash?.toLocaleString('en-us', {style: 'currency', currency:'USD'})} in available cash</p>} /> : <></>}
+          {company.length ? <TextField variant="filled" margin="dense" disabled color="primary" fullWidth label={<p>You currently have {cash?.toLocaleString('en-us', {style: 'currency', currency:'USD'})} in available cash</p>} /> : <></>}
           <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth>Submit Order</Button>
           
         </form>
