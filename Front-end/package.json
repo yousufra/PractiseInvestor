@@ -14,6 +14,7 @@
     "apexcharts": "^3.27.3",
     "axios": "^0.21.1",
     "axios-cache-adapter": "^2.7.3",
+    "canvasjs": "^1.8.3",
     "canvasjs-react-charts": "^1.0.5",
     "clsx": "^1.1.1",
     "jwt-decode": "^3.1.2",
