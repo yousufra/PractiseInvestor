@@ -15,18 +15,43 @@ export const PieChart = ({ cash, portfolioValue, holdingsValue }: Props) => {
     series: [Number(holdingsValue), Number(cash)],
     options: {
       chart: {
-        width: 380,
+        width: 300,
         type: 'pie',
       },
       labels: ['Investments($)', 'Cash($)'],
       responsive: [{
-        breakpoint: 480,
+        breakpoint: 1000,
         options: {
           chart: {
-            width: 200
+            width: 280
+          },
+          legend: {
+            position: 'bottom',
+            horizontalAlign: 'center'
+          }
+        }
+      },
+      {
+        breakpoint: 800,
+        options: {
+          chart: {
+            width: 230,
+            offsetX: -50
           },
           legend: {
             position: 'bottom'
+          }
+        }
+      },
+      {
+        breakpoint: 1300,
+        options: {
+          chart: {
+            width: 300
+          },
+          legend: {
+            position: 'bottom',
+            horizontalAlign: 'center'
           }
         }
       }]
