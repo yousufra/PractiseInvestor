@@ -56,7 +56,6 @@ export const Holdings = ({toggleComponent}: Props) => {
 
     getPrice();
     const interval = setInterval(() => getPrice(), 120000 ); // every 1 minute, 55 api calls/minute retriction
-
     return () => {
       clearInterval(interval);
     }
@@ -66,10 +65,12 @@ export const Holdings = ({toggleComponent}: Props) => {
     setOpen(true);
   };
 
-  const handleClose = (value:  any) => {
+  const handleClose = (value: any) => {
     setOpen(false);
-    setSelectedValue(value.company);
-    setSelectedStock(value.ticker)
+    if (value.company) {
+      setSelectedValue(value.company);
+      setSelectedStock(value.ticker)
+    }
   };
 
   return (
@@ -77,27 +78,26 @@ export const Holdings = ({toggleComponent}: Props) => {
     <>
       <div className={classes.container}> 
         <div style={{ gridColumnEnd: 'span 4', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <Box m={1} >
+          <Box m={1} width={500} >
             <PieChart portfolioValue={portfolioValue} cash={cash} holdingsValue={portfolioValue-cash} b="2rem"/>
           </Box>
         </div>
         <div style={{ gridColumnEnd: 'span 8' }}>
 
-          <Box>
+        {holdings.length ? <Box>
             <div className={classes.container} style={{ padding: "1rem 0 0 0" }}> 
               <div style={{ gridColumnEnd: 'span 4' }}>
                 <Typography variant="subtitle1">Selected Stock: {selectedValue}</Typography>
               </div>
               <div style={{ gridColumnEnd: 'span 8' }}>
                 <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                  Open simple dialog
+                  Choose Company
                 </Button>
                 <DialogButton holdings={holdings} selectedValue={selectedValue} open={open} onClose={handleClose} />
               </div>
             </div>
-
             <StockChart selectedStock={selectedStock}/>
-          </Box>
+          </Box> : <></>}
         </div>
       </div>
 
