@@ -15,10 +15,10 @@ export const Holding = ({ holding, portfolioValue }: Props) => {
       </TableCell>
       <TableCell align="right" data-testid="holding-ticker" >{holding.ticker}</TableCell>
       <TableCell align="right" data-testid="holding-quantity ">{holding.quantity}</TableCell>
-      <TableCell align="right" data-testid="holding-price" >{holding.price.toLocaleString('en-us', {style: 'currency', currency:'USD'})}</TableCell>
-      <TableCell align="right" data-testid="holding-avgCost" >{holding?.avgCost?.toLocaleString('en-us', {style: 'currency', currency:'USD'})}</TableCell>
-      <TableCell align="right" data-testid="holding-avgTotalCost" >{(holding.avgCost * holding.quantity).toLocaleString('en-us', {style: 'currency', currency:'USD'})}</TableCell>
-      <TableCell align="right"style=
+      <TableCell align="right" data-testid="holding-price" >${holding.price.toLocaleString('en-us', {style: 'currency', currency:'USD'})}</TableCell>
+      <TableCell align="right" data-testid="holding-avgCost" >${holding?.avgCost?.toLocaleString('en-us', {style: 'currency', currency:'USD'})}</TableCell>
+      <TableCell align="right" data-testid="holding-totalAvgCost" >${(holding.avgCost * holding.quantity).toLocaleString('en-us', {style: 'currency', currency:'USD'})}</TableCell>
+      <TableCell align="right" style=
       {(parseFloat(holding.price.toFixed(2)))-holding.avgCost < 0?{color: 'red'}:{color: 'green'}}>
         {(parseFloat(holding.price.toFixed(2)))-holding.avgCost < 0? '-':null}
         {((Math.abs(holding.price-holding.avgCost)*holding.quantity)).toLocaleString('en-us', {style: 'currency', currency:'USD'})} 

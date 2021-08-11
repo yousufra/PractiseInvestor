@@ -9,14 +9,13 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
   Paper} from '@material-ui/core';
 import { useSelector } from 'react-redux'; // to retrieve the data from the store in redux
 import useStyles from './styles';
 import { Holding } from './Holding/Holding';
 import { PieChart } from './PieChart/PieChart';
 import { HoldingI  } from '../../../interfaces/Holding';
-import { StockChart } from './StockChart/StockChart'
+import { StockChart } from './StockChart/StockChart';
 import { DialogButton } from './DialogButton';
 
 interface Props {
@@ -27,6 +26,7 @@ interface Props {
 
 export const Holdings = ({toggleComponent, portfolioValue, holdingsPrices}: Props) => {
   const [open, setOpen] = useState<boolean>(false);
+  const [holdingSelected, setSelectedHolding] = useState<string>('');
   const [selectedValue, setSelectedValue] = useState<string>('');
   const [selectedStock, setSelectedStock] = useState<string>('');
   const classes = useStyles();
@@ -40,7 +40,8 @@ export const Holdings = ({toggleComponent, portfolioValue, holdingsPrices}: Prop
     setOpen(false);
     if (value.company) {
       setSelectedValue(value.company);
-      setSelectedStock(value.ticker)
+      setSelectedStock(value.ticker);
+      setSelectedHolding(value.company);
     }
   };
 
@@ -51,25 +52,24 @@ export const Holdings = ({toggleComponent, portfolioValue, holdingsPrices}: Prop
         <div style={{ gridColumnEnd: 'span 4', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <Box m={1} width={500} >
             <PieChart portfolioValue={portfolioValue} cash={cash} holdingsValue={portfolioValue-cash} b="2rem"/>
-          </Box>
+            </Box>
         </div>
-        <div style={{ gridColumnEnd: 'span 8' }}>
+        <div style={{ gridColumnEnd: 'span 8', justifyContent: 'center', alignItems: 'center' }}>
 
         {holdings.length ? <Box>
             <div className={classes.container} style={{ padding: "1rem 0 0 0" }}> 
-              <div style={{ gridColumnEnd: 'span 4' }}>
-                <Typography variant="subtitle1">Selected Stock: {selectedValue}</Typography>
-              </div>
-              <div style={{ gridColumnEnd: 'span 8' }}>
+              
+              <div style={{ gridColumnEnd: 'span 12' }}>
                 <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                  Choose Company
+                  Company
                 </Button>
                 <DialogButton holdings={holdings} selectedValue={selectedValue} open={open} onClose={handleClose} />
               </div>
             </div>
-            <StockChart selectedStock={selectedStock}/>
+            <StockChart holdingSelected={holdingSelected} selectedStock={selectedStock}/>
           </Box> : <></>}
         </div>
+        
       </div>
 
       <Divider className={classes.divider} />
@@ -97,9 +97,15 @@ export const Holdings = ({toggleComponent, portfolioValue, holdingsPrices}: Prop
               </TableBody>
             </Table>
           </TableContainer>
-          </Box>
-        )
+          
+         
+          </Box>  
+            
+         )
+         
       }
+      
+      
   </>
   )
 }

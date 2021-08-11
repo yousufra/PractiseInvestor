@@ -3,7 +3,6 @@
 import React, { useState, ReactElement, useEffect, } from 'react';
 import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
-import moment from 'moment';
 import {Box,
   Button,
   FormControlLabel,
@@ -31,7 +30,7 @@ export default function Order({toggleComponent}: Props): ReactElement {
   const [company, setCompany] = useState<string>('');
   const [ticker, setTicker] = useState<string>('');
   const [action, setAction] = useState<string>('');
-  const [date, setDate] = useState<string>(moment().format('MMMM Do YYYY, h:mm a'));
+  const [date, setDate] = useState<string>('');
   const [quantity, setQuantity] = useState<number>(0);
   const [price, setPrice] = useState<number>(0);
   const [value, setValue] = useState<string>('');
@@ -40,6 +39,9 @@ export default function Order({toggleComponent}: Props): ReactElement {
   useEffect(() => {
     // getting all stocks to filter them later instead of making one api call for each filter
     getMatchingStocks(company).then(res => setAllStocks(res.data));
+    const rawDate = new Date();
+    const dateString = `${rawDate.toLocaleDateString('en-US', {timeZone: 'America/New_York', year: 'numeric', month: 'long', day: 'numeric'})}, ${rawDate.toLocaleTimeString('en-US', {hour12: true, hour: 'numeric', minute: 'numeric'})}`;
+    setDate(dateString);
   }, [])
 
   useEffect(() => {
@@ -96,7 +98,7 @@ export default function Order({toggleComponent}: Props): ReactElement {
 
   const handleRadio = (event: { target: { value: React.SetStateAction<string>; }; }) => {
     setValue(event.target.value);
-    setAction(event.target.value)
+    setAction(event.target.value);
   };
  
   const renderAutocomplete = (
@@ -112,6 +114,7 @@ export default function Order({toggleComponent}: Props): ReactElement {
           setTicker(newValue.symbol);
           const companyHeld = holdings.find(holding => holding.company === newValue.name);
           if (companyHeld) setSharesHeld(companyHeld.quantity);
+          else setSharesHeld(0);
         }
         if (reason === 'clear') {
           setCompany('');
@@ -128,17 +131,17 @@ export default function Order({toggleComponent}: Props): ReactElement {
         <form className={`${classes.form} ${classes.root}`} noValidate autoComplete="off" onSubmit={handleSubmit}>
           <Typography variant="h6">Order</Typography>
           <TextField name="date" label="Date/Time" variant="outlined" fullWidth value={date}/>
+          {renderAutocomplete}
+          <TextField name="ticker" label="Ticker" variant="outlined" fullWidth value={ticker} onChange={(e) => setTicker( ticker )} />
           <RadioGroup row aria-label="action" name="action1" value={value} onChange={handleRadio}>
             <FormControlLabel value="buy" control={<Radio color="primary"/>} label="Buy" />
             <FormControlLabel value="sell" control={<Radio color="primary"/>} label="Sell" />
           </RadioGroup>
-          {renderAutocomplete}
-          <TextField name="ticker" label="Ticker" variant="outlined" fullWidth value={ticker} onChange={(e) => setTicker( ticker )} />
-          <TextField type="number" name="quantity" fullWidth InputProps={{inputProps: { min: 0 }}} label="Quantity" variant="outlined" defaultValue={quantity} onChange={(e) => setQuantity(+e.target.value)} />
-          {company.length ? <TextField variant="outlined" disabled color="primary" fullWidth label={<p>You currently own {sharesHeld} shares of {company} ({ticker})</p>} /> : <></>}
+          <TextField type="number" name="quantity" error={(price * quantity > cash && action === 'buy') || quantity > sharesHeld} fullWidth InputProps={{inputProps: { min: 0 }}} label="Quantity" variant="outlined" defaultValue={quantity} onChange={(e) => setQuantity(+e.target.value)} />
+          {company.length ? <TextField variant="filled" margin="dense" disabled color="primary" fullWidth label={<p>You currently own {sharesHeld} shares of {company} ({ticker})</p>} /> : <></>}
           <TextField name="price" label="Price" variant="outlined" fullWidth value={price.toLocaleString('en-us', {style: 'currency', currency:'USD'})} />
-          <TextField name="netAmount" label="NetAmount" variant="outlined" autoComplete="netAmount" fullWidth value={(price * quantity).toLocaleString('en-us', {style: 'currency', currency:'USD'})} />
-          {company.length ? <TextField variant="outlined" disabled color="primary" fullWidth label={<p>You currently have {cash?.toLocaleString('en-us', {style: 'currency', currency:'USD'})} in available cash</p>} /> : <></>}
+          <TextField name="netAmount" label="NetAmount" variant="outlined" autoComplete="netAmount" fullWidth  value={(price * quantity).toLocaleString('en-us', {style: 'currency', currency:'USD'})} />
+          {company.length && action === 'buy' ? <TextField variant="filled" margin="dense" disabled color="primary" error={price * quantity > cash} fullWidth label={<p>You currently have {cash?.toLocaleString('en-us', {style: 'currency', currency:'USD'})} in available cash</p>} /> : <></>}
           <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth>Submit Order</Button>
           
         </form>

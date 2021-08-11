@@ -53,7 +53,9 @@ export async function storeRanking () {
       totalNumberOfActivities,
       numberOfStocks,
     });
+    console.log()
     totalValueHistory(_id, calcPortfolioValue, date);
+    console.log(totalValueHistory, "totalvalueHistory");
   }
   await Ranking.deleteMany();
   Ranking.create(rankings);
