@@ -78,7 +78,7 @@ export const Holdings = ({toggleComponent}: Props) => {
     <>
       <div className={classes.container}> 
         <div style={{ gridColumnEnd: 'span 4', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <Box m={1} >
+          <Box m={1} width={500} >
             <PieChart portfolioValue={portfolioValue} cash={cash} holdingsValue={portfolioValue-cash} b="2rem"/>
           </Box>
         </div>
