@@ -31,7 +31,7 @@ export default function Order({toggleComponent}: Props): ReactElement {
   const [company, setCompany] = useState<string>('');
   const [ticker, setTicker] = useState<string>('');
   const [action, setAction] = useState<string>('');
-  const [date, setDate] = useState<string>(moment().format('MMMM Do YYYY, h:mm a'));
+  const [date, setDate] = useState<string>('');
   const [quantity, setQuantity] = useState<number>(0);
   const [price, setPrice] = useState<number>(0);
   const [value, setValue] = useState<string>('');
@@ -40,6 +40,9 @@ export default function Order({toggleComponent}: Props): ReactElement {
   useEffect(() => {
     // getting all stocks to filter them later instead of making one api call for each filter
     getMatchingStocks(company).then(res => setAllStocks(res.data));
+    const rawDate = new Date();
+    const dateString = `${rawDate.toLocaleDateString('en-US', {timeZone: 'America/New_York', year: 'numeric', month: 'long', day: 'numeric'})}, ${rawDate.toLocaleTimeString('en-US', {hour12: true, hour: 'numeric', minute: 'numeric'})}`;
+    setDate(dateString);
   }, [])
 
   useEffect(() => {
@@ -57,6 +60,8 @@ export default function Order({toggleComponent}: Props): ReactElement {
     e.preventDefault(); // prevent browser from refreshing , defualt when you submit a form
     // checking if the form is entirely filled
     const holding = holdings.find(holding => holding.company === company);
+    const rawDate = new Date();
+    const dateString = `${rawDate.toLocaleDateString('en-US', {timeZone: 'America/New_York', year: 'numeric', month: 'long', day: 'numeric'})}, ${rawDate.toLocaleTimeString('en-US', {hour12: true, hour: 'numeric', minute: 'numeric'})}`; 
     // checking if the form fields are all filled
     if (ticker && quantity && action) {
       // checking if the holding is one you own if you are trying to sell
@@ -128,12 +133,12 @@ export default function Order({toggleComponent}: Props): ReactElement {
         <form className={`${classes.form} ${classes.root}`} noValidate autoComplete="off" onSubmit={handleSubmit}>
           <Typography variant="h6">Order</Typography>
           <TextField name="date" label="Date/Time" variant="outlined" fullWidth value={date}/>
+          {renderAutocomplete}
+          <TextField name="ticker" label="Ticker" variant="outlined" fullWidth value={ticker} onChange={(e) => setTicker( ticker )} />
           <RadioGroup row aria-label="action" name="action1" value={value} onChange={handleRadio}>
             <FormControlLabel value="buy" control={<Radio color="primary"/>} label="Buy" />
             <FormControlLabel value="sell" control={<Radio color="primary"/>} label="Sell" />
           </RadioGroup>
-          {renderAutocomplete}
-          <TextField name="ticker" label="Ticker" variant="outlined" fullWidth value={ticker} onChange={(e) => setTicker( ticker )} />
           <TextField type="number" name="quantity" fullWidth InputProps={{inputProps: { min: 0 }}} label="Quantity" variant="outlined" defaultValue={quantity} onChange={(e) => setQuantity(+e.target.value)} />
           {company.length ? <TextField variant="outlined" disabled color="primary" fullWidth label={<p>You currently own {sharesHeld} shares of {company} ({ticker})</p>} /> : <></>}
           <TextField name="price" label="Price" variant="outlined" fullWidth value={price.toLocaleString('en-us', {style: 'currency', currency:'USD'})} />
