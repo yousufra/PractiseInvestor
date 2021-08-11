@@ -16,8 +16,8 @@ export const PastActivity = ({ activity }: Props) => {
       <TableCell align="right" data-testid="activity-ticker">{activity.ticker}</TableCell>
       <TableCell align="right" data-testid="activity-action">{activity.action}</TableCell>
       <TableCell align="right" data-testid="activity-quantity">{activity.quantity}</TableCell>
-      <TableCell align="right" data-testid="activity-price">${activity.price.toFixed(2)}</TableCell>
-      <TableCell align="right" data-testid="activity-netAmount">${activity.netAmount.toFixed(2)}</TableCell>
+      <TableCell align="right" data-testid="activity-price">{activity.price.toLocaleString('en-us', {style: 'currency', currency:'USD'})}</TableCell>
+      <TableCell align="right" data-testid="activity-netAmount">{activity.netAmount.toLocaleString('en-us', {style: 'currency', currency:'USD'})}</TableCell>
     </TableRow>
   )
 };

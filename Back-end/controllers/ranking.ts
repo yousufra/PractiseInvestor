@@ -5,8 +5,8 @@ import User from '../models/userModel';
 import LastUpdate from '../models/lastUpdateModel';
 import { totalValueHistory } from './users';
 import { Request, Response } from 'express';
-import dotenv from 'dotenv';
 import RankingI from '../interfaces/Ranking';
+import * as dotenv from 'dotenv';
 dotenv.config();
 
 async function getPrices() {

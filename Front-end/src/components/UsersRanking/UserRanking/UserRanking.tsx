@@ -13,7 +13,7 @@ const UserRanking = ({ranking, index}: Props) => (
       {index + 1}
     </TableCell>
     <TableCell align="right" data-testid="ranking-username">{ranking.userName}</TableCell>
-    <TableCell align="right" data-testid="ranking-totalValue">${ranking.totalValue?.toFixed(2)}</TableCell>
+    <TableCell align="right" data-testid="ranking-totalValue">{ranking.totalValue?.toLocaleString('en-us', {style: 'currency', currency:'USD'})}</TableCell>
     <TableCell align="right" data-testid="ranking-totalActivities">{ranking.totalNumberOfActivities}</TableCell>
     <TableCell align="right" data-testid="ranking-numberOfStocks">{ranking.numberOfStocks}</TableCell>
   </TableRow>

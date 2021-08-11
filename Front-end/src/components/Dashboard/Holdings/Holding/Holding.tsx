@@ -22,7 +22,7 @@ export const Holding = ({ holding, portfolioValue }: Props) => {
       <TableCell align="right"style=
       {(parseFloat(holding.price.toFixed(2)))-holding.avgCost < 0?{color: 'red'}:{color: 'green'}}>
         {(parseFloat(holding.price.toFixed(2)))-holding.avgCost < 0? '-':null}
-        ${((Math.abs(holding.price-holding.avgCost)*holding.quantity)).toFixed(2)} 
+        {((Math.abs(holding.price-holding.avgCost)*holding.quantity)).toLocaleString('en-us', {style: 'currency', currency:'USD'})} 
         ({(((parseFloat(holding.price.toFixed(2))-holding.avgCost)/holding.avgCost)*100).toFixed(2)}%)</TableCell>
       <TableCell align="right">{Number(((holding.price*holding.quantity/portfolioValue)*100).toFixed(2))}%</TableCell>
     </TableRow>
