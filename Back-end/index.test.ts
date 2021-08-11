@@ -78,3 +78,35 @@ describe('Stocks API', () => {
     ]));
   });
 });
+
+describe('Stocks API filter', () => {
+  it('GET /stocks/:filter --> array with all stocks that contain the filter in the company name', async () => {
+    const response = await request(serverConnection).get('/stocks/apple')
+
+    expect(response.status).toBe(200)
+    expect(response.body).toEqual(
+      expect.arrayContaining([
+      expect.objectContaining({
+        _id: expect.any(String),
+        symbol: expect.stringMatching("AAPL"),
+        name: expect.stringMatching("Apple Inc"),
+        __v: expect.any(Number),
+      }),
+    ]));
+  });
+
+  it('GET /stocks/:filter --> array with all stocks that contain the filter in the company name', async () => {
+    const response = await request(serverConnection).get('/stocks/tesla')
+
+    expect(response.status).toBe(200)
+    expect(response.body).toEqual(
+      expect.arrayContaining([
+      expect.objectContaining({
+        _id: expect.any(String),
+        symbol: expect.stringMatching("TSLA"),
+        name: expect.stringMatching("Tesla Inc"),
+        __v: expect.any(Number),
+      }),
+    ]));
+  });
+})
