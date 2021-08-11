@@ -136,9 +136,11 @@ export default function Order({toggleComponent}: Props): ReactElement {
           <TextField name="ticker" label="Ticker" variant="outlined" fullWidth value={ticker} onChange={(e) => setTicker( ticker )} />
           <TextField type="number" name="quantity" fullWidth InputProps={{inputProps: { min: 0 }}} label="Quantity" variant="outlined" defaultValue={quantity} onChange={(e) => setQuantity(+e.target.value)} />
           {company.length ? <TextField variant="outlined" disabled color="primary" fullWidth label={<p>You currently own {sharesHeld} shares of {company} ({ticker})</p>} /> : <></>}
-          <TextField name="price" label="Price" variant="outlined" fullWidth value={price.toFixed(2)} />
-          <TextField name="netAmount" label="NetAmount" variant="outlined" autoComplete="netAmount" fullWidth value={(price * quantity).toFixed(2)} />
+          <TextField name="price" label="Price" variant="outlined" fullWidth value={price.toLocaleString('en-us', {style: 'currency', currency:'USD'})} />
+          <TextField name="netAmount" label="NetAmount" variant="outlined" autoComplete="netAmount" fullWidth value={(price * quantity).toLocaleString('en-us', {style: 'currency', currency:'USD'})} />
+          {company.length ? <TextField variant="outlined" disabled color="primary" fullWidth label={<p>You currently have {cash?.toLocaleString('en-us', {style: 'currency', currency:'USD'})} in available cash</p>} /> : <></>}
           <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth>Submit Order</Button>
+          
         </form>
       </Paper>
     </Box>
