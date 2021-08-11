@@ -84,7 +84,7 @@ export const Holdings = ({toggleComponent}: Props) => {
         </div>
         <div style={{ gridColumnEnd: 'span 8' }}>
 
-          <Box>
+        {holdings.length ? <Box>
             <div className={classes.container} style={{ padding: "1rem 0 0 0" }}> 
               <div style={{ gridColumnEnd: 'span 4' }}>
                 <Typography variant="subtitle1">Selected Stock: {selectedValue}</Typography>
@@ -96,9 +96,8 @@ export const Holdings = ({toggleComponent}: Props) => {
                 <DialogButton holdings={holdings} selectedValue={selectedValue} open={open} onClose={handleClose} />
               </div>
             </div>
-
             <StockChart selectedStock={selectedStock}/>
-          </Box>
+          </Box> : <></>}
         </div>
       </div>
 
