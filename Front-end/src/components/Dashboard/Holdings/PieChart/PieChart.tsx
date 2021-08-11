@@ -57,7 +57,7 @@ export const PieChart = ({ cash, portfolioValue, holdingsValue }: Props) => {
       }]
     },
   });
-console.log('hv', holdingsValue, 'pv', portfolioValue)
+
   return (
       <Box width={0.27}>
       <Paper id="chart" style={{width: "25vw", padding: "3rem"}} >

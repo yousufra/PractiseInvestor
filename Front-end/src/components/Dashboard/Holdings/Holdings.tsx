@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   Box,
   Button,
@@ -26,16 +26,12 @@ interface Props {
 }
 
 export const Holdings = ({toggleComponent, portfolioValue, holdingsPrices}: Props) => {
-
   const [open, setOpen] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<string>('');
   const [selectedStock, setSelectedStock] = useState<string>('');
-  
   const classes = useStyles();
-
   const { holdings, cash } = useSelector((state: any) => state.holdings); // state object is all the states within the combine reducer in index.js in reducer folder
   
-
   const handleClickOpen = () => {
     setOpen(true);
   };
