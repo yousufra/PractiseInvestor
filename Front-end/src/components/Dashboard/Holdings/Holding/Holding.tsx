@@ -8,7 +8,6 @@ interface Props {
 
 export const Holding = ({ holding, portfolioValue }: Props) => {
   //instead of using just holding.price we change it to parseFloat(number.toFixed(2)) so that it'll be more correct in showing if there is loss or gain only after having been rounded to the nearest penny and subtracting the cost that was payed aka holding.avgCost 
-  console.log(holding, "holding", holding.avgCost, "holding.avgCost")
   return (
     <TableRow key={holding.company}>
       <TableCell component="th" scope="holding" data-testid="holding-company">
