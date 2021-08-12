@@ -35,6 +35,21 @@ describe('Stocks API create user', () => {
       })
     );
   });
+
+  it('POST /users --> should not create a user if passwords do not match', async () => {
+    const newUser = {
+      "userName": "test", 
+      "password": "test123", 
+      "confirmPassword": "test1234"
+    }
+    const response = await request(serverConnection).post('/users').send(newUser)
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual(
+      expect.objectContaining({
+        message: expect.stringMatching(`Passwords don't match.`),
+      })
+    );
+  });
 })
 
 describe('Users data', () => {
