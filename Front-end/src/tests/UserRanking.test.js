@@ -24,7 +24,7 @@ test('should render UserRanking component', () => {
   expect(screen.getByTestId("ranking-username").textContent).toBe("test");
 
   expect(screen.getByTestId("ranking-totalValue")).toBeInTheDocument();
-  expect(screen.getByTestId("ranking-totalValue").textContent).toBe("$279339.59");
+  expect(screen.getByTestId("ranking-totalValue").textContent).toBe("$279,339.59");
 
   expect(screen.getByTestId("ranking-totalActivities")).toBeInTheDocument();
   expect(screen.getByTestId("ranking-totalActivities").textContent).toBe("15");

@@ -9,7 +9,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
   Paper} from '@material-ui/core';
 import { useSelector } from 'react-redux'; // to retrieve the data from the store in redux
 import useStyles from './styles';
@@ -18,7 +17,6 @@ import { PieChart } from './PieChart/PieChart';
 import { HoldingI  } from '../../../interfaces/Holding';
 import { StockChart } from './StockChart/StockChart';
 import { DialogButton } from './DialogButton';
-import { UserChart } from './StockChart/UserChart/UserChart';
 
 interface Props {
   toggleComponent: (str: string) => void;
@@ -53,14 +51,12 @@ export const Holdings = ({toggleComponent, portfolioValue, holdingsPrices}: Prop
       <div className={classes.container}> 
         <div style={{ gridColumnEnd: 'span 4', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <Box m={1} width={500} >
-            <PieChart portfolioValue={portfolioValue} cash={cash} holdingsValue={portfolioValue-cash} b="2rem"/>
+            <PieChart portfolioValue={portfolioValue} cash={cash} b="2rem"/>
             </Box>
         </div>
         <div style={{ gridColumnEnd: 'span 8', justifyContent: 'center', alignItems: 'center' }}>
-
         {holdings.length ? <Box>
             <div className={classes.container} style={{ padding: "1rem 0 0 0" }}> 
-              
               <div style={{ gridColumnEnd: 'span 12' }}>
                 <Button variant="outlined" color="primary" onClick={handleClickOpen}>
                   Company
@@ -71,7 +67,6 @@ export const Holdings = ({toggleComponent, portfolioValue, holdingsPrices}: Prop
             <StockChart holdingSelected={holdingSelected} selectedStock={selectedStock}/>
           </Box> : <></>}
         </div>
-        
       </div>
 
       <Divider className={classes.divider} />
@@ -99,15 +94,9 @@ export const Holdings = ({toggleComponent, portfolioValue, holdingsPrices}: Prop
               </TableBody>
             </Table>
           </TableContainer>
-          
-         
-          </Box>  
-            
+          </Box>   
          )
-         
       }
-      
-      
   </>
   )
 }
