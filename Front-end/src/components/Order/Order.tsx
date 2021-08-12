@@ -137,7 +137,7 @@ export default function Order({toggleComponent}: Props): ReactElement {
             <FormControlLabel value="buy" control={<Radio color="primary"/>} label="Buy" />
             <FormControlLabel value="sell" control={<Radio color="primary"/>} label="Sell" />
           </RadioGroup>
-          <TextField type="number" name="quantity" error={(price * quantity > cash && action === 'buy') || quantity > sharesHeld} fullWidth InputProps={{inputProps: { min: 0 }}} label="Quantity" variant="outlined" defaultValue={quantity} onChange={(e) => setQuantity(+e.target.value)} />
+          <TextField type="number" name="quantity" error={(price * quantity > cash && action === 'buy') || (quantity > sharesHeld && action === 'sell')} fullWidth InputProps={{inputProps: { min: 0 }}} label="Quantity" variant="outlined" defaultValue={quantity} onChange={(e) => setQuantity(+e.target.value)} />
           {company.length ? <TextField variant="filled" margin="dense" disabled color="primary" fullWidth label={<p>You currently own {sharesHeld} shares of {company} ({ticker})</p>} /> : <></>}
           <TextField name="price" label="Price" variant="outlined" fullWidth value={price.toLocaleString('en-us', {style: 'currency', currency:'USD'})} />
           <TextField name="netAmount" label="NetAmount" variant="outlined" autoComplete="netAmount" fullWidth  value={(price * quantity).toLocaleString('en-us', {style: 'currency', currency:'USD'})} />

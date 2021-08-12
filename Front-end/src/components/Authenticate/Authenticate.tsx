@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, SyntheticEvent } from 'react';
+import { useState, ChangeEvent } from 'react';
 import {
   Avatar,
   Button,

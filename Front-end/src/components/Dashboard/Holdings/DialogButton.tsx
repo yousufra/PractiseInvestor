@@ -35,6 +35,3 @@ export const DialogButton = ({open, selectedValue, onClose, holdings}: DialogPro
     </Dialog>
   );
 }
-
-
-

@@ -27,7 +27,3 @@ export const Holding = ({ holding, portfolioValue }: Props) => {
     </TableRow>
   )
 }
-
-
-
-
