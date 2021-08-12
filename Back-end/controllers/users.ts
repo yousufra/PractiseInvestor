@@ -18,7 +18,7 @@ export const getAllUsers = async (req: Request, res: Response) => {
 
 export const createUser = async (req: Request, res: Response) => {
   const { userName, password, confirmPassword } = req.body;
-
+  console.log(userName, password, confirmPassword);
   if (!userName || !password || !confirmPassword) return res.status(400).send({ message: 'Please enter all fields.' });
 
   try {

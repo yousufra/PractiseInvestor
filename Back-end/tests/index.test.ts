@@ -1,6 +1,12 @@
-import { server } from './index';
+import { server } from '../index';
 const request = require('supertest');
 const serverConnection = server(4567);
+import User from '../models/userModel';
+// const db = require('./db')
+
+// beforeAll(async () => await db.connect());
+// afterEach(async () => await db.clearDatabase());
+// afterAll(async () => await db.closeDatabase());
 
 describe('Stocks API', () => {
   it('GET /stocks --> array with all stocks', async () => {
@@ -108,5 +114,26 @@ describe('Stocks API filter', () => {
         __v: expect.any(Number),
       }),
     ]));
+  });
+})
+
+describe('Stocks API create user', () => {
+  it('POST /users --> object with username and token', async () => {
+    const response = await request(serverConnection).post('/users', 
+    {
+      userName: "biancaprocopio", 
+      password: "teste123", 
+      confirmPassword: "teste123"
+    })
+
+    expect(response.status).toBe(200)
+    expect(response.body).toEqual(
+      expect.objectContaining({
+        userName: expect.stringMatching("biancaprocopio"),
+        token: expect.any(String)
+      })
+    );
+    await User.findOne({userName: "biancaprocopio"}).then((doc: any) => doc.remove()).catch((error: Error) => console.log(error));
+
   });
 })
