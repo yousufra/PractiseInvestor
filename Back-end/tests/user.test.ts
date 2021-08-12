@@ -1,6 +1,6 @@
 import { server } from '../index';
 const request = require('supertest');
-const serverConnection = server(4567);
+const serverConnection = server(9089);
 import User from '../models/userModel';
 
 describe('Stocks API create user', () => {
@@ -19,6 +19,21 @@ describe('Stocks API create user', () => {
       })
     );
     await User.findOne({userName: "test"}).then((doc: any) => doc.remove()).catch((error: Error) => console.log(error));
+  });
+
+  it('POST /users --> should not create a user because it already exists', async () => {
+    const newUser = {
+      "userName": "bianca", 
+      "password": "test123", 
+      "confirmPassword": "test123"
+    }
+    const response = await request(serverConnection).post('/users').send(newUser)
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual(
+      expect.objectContaining({
+        message: expect.stringMatching('Username taken, choose another one.'),
+      })
+    );
   });
 })
 
