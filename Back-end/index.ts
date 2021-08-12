@@ -12,7 +12,7 @@ export const server = (PORT: number | string) => {
   app.use(express.urlencoded({ extended: true }));
   
   app.use(router);
-  
+
   const job = new CronJob({
     cronTime: '0 5 16 * * 1-5',
     onTick: storeRanking,

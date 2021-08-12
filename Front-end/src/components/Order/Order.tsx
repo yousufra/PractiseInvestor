@@ -127,8 +127,8 @@ export default function Order({toggleComponent}: Props): ReactElement {
   )
   return (
     <Box m={1}>
-      <Paper className={classes.paper}>
-        <form className={`${classes.form} ${classes.root}`} noValidate autoComplete="off" onSubmit={handleSubmit}>
+      <Paper className={classes.paper} >
+        <form className={`${classes.form} ${classes.root}`} noValidate autoComplete="off" onSubmit={handleSubmit} data-testid="order-form">
           <Typography variant="h6">Order</Typography>
           <TextField name="date" label="Date/Time" variant="outlined" fullWidth value={date}/>
           {renderAutocomplete}
