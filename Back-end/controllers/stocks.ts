@@ -1,5 +1,6 @@
 import Stock from '../models/stockModel';
 import { Request, Response } from 'express';
+import request from 'request';
 
 export const getAllStocks = async (req: Request, res: Response) => {
   try {
@@ -24,4 +25,3 @@ export const getMatchingStocks = async (req: Request, res: Response) => {
     res.send(error);
   }
 };
-

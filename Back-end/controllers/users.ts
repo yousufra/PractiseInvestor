@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+const bcrypt = require('bcrypt');
 import User from '../models/userModel';
 import { generateToken } from '../generateToken';
 import { Request, Response } from 'express';
@@ -18,7 +18,6 @@ export const getAllUsers = async (req: Request, res: Response) => {
 
 export const createUser = async (req: Request, res: Response) => {
   const { userName, password, confirmPassword } = req.body;
-
   if (!userName || !password || !confirmPassword) return res.status(400).send({ message: 'Please enter all fields.' });
 
   try {
@@ -37,6 +36,7 @@ export const createUser = async (req: Request, res: Response) => {
       token: generateToken(userName),
     });
   } catch (error) {
+    console.log(`Could not create user: ${error}`)
     res.status(500);
     res.send(error);
   }
