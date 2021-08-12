@@ -8,14 +8,15 @@ import { getCurrentPrice } from '../../api/stockApi';
 import './Dashboard.css';
 
 interface Props {
-  toggleComponent: (str: string) => void; 
+  toggleComponent: (str: string) => void;
+  setPortfolioValue: (num: number) => void;
+  portfolioValue: number;
 }
 
-export const Dashboard = ({toggleComponent}: Props) => {
+export const Dashboard = ({toggleComponent, setPortfolioValue, portfolioValue}: Props) => {
   const { holdings, cash } = useSelector((state: any) => state.holdings);
   const dispatch = useDispatch(); // allows us to dispatch an action
   const [loading, setLoading] = useState(true);
-  const [portfolioValue, setPortfolioValue] = useState<number>(0);
   const [holdingsPrices, setHoldingsPrices] = useState<HoldingI[]>([]);
 
   useEffect(() => {    
@@ -27,12 +28,11 @@ export const Dashboard = ({toggleComponent}: Props) => {
   }, [portfolioValue])
 
   useEffect(() => {
-
     function getPrice () {
       const apiCallArray = holdings?.map(async (holding: NoPriceHoldingI) => {
-        const price = Number((await getCurrentPrice(holding.ticker)).data.price)
+        const price = Number((await getCurrentPrice(holding.ticker)).data.price);
         return {...holding, price };
-      });      
+      });
       apiCallArray && Promise.all<HoldingI>(apiCallArray).then((res: HoldingI[]) => {
         setHoldingsPrices(res);
         let calcPortfolioValue = cash;

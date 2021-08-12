@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { useState, useEffect } from 'react'
 import { CanvasJSChart } from 'canvasjs-react-charts';
 import { useSelector } from 'react-redux';
@@ -8,11 +7,9 @@ import { HoldingI } from '../../../../interfaces/Holding';
 export const StockChart = ({selectedStock, holdingSelected}) =>  {
   const [stockData, setStockData] = useState<any>([]);
   const [stock, setStock] = useState<string>('');
-/* eslint-disable */
   const { holdings } = useSelector((state: any) => state.holdings);
   
   useEffect(() => {
-    /* eslint-disable */
     //stock-graph by default displays the stock you have invested the most money into
     const fet = async () => {
       let holding: HoldingI[] = await Promise.all(holdings);
@@ -33,7 +30,6 @@ export const StockChart = ({selectedStock, holdingSelected}) =>  {
     fet() 
   }, [])
   useEffect(() => {
-    /* eslint-disable */
     if (selectedStock) {
       const fet = async () => {
         const result = await getDataForCompanyWithSymbol(selectedStock);
@@ -71,7 +67,6 @@ export const StockChart = ({selectedStock, holdingSelected}) =>  {
 		        text: `${stock}`,
             fontColor: "#b5b5c6",
 	        },
-          
           width: 1000,
           height: 350,
           backgroundColor: "#ffffff",

@@ -1,9 +1,5 @@
-/* eslint-disable */
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux'; // to retrieve the data from the store in redux
-import { Box, Button, Divider, Typography, Paper} from '@material-ui/core';
+import { useState, useEffect } from 'react';
 import { CanvasJSChart } from 'canvasjs-react-charts';
-import CanvasJS from 'canvasjs';
 import { getUser } from '../../../../../api/backendApi';
 // attempted to also graph the totalValueHistory But it just never came out quitw right
 
@@ -20,44 +16,30 @@ export const UserChart = () => {
   const [earnings, setEarnings] = useState<any[]>([])
   //const { holdings } = useSelector((state: any) => state.holdings);
 
-  
- 
-  
-    useEffect(() => {
+  useEffect(() => {
+    let isMounted:boolean = true;
+    const getUserHistoy = async () => {
+      const user = await getUser();
+      const userHistory:EarningsHistory = user.data.  totalValueHistory;
+      const result = formatUserData(userHistory);
+      if (isMounted) {
+        setEarnings(result);
+      }
+    }
+    getUserHistoy();
+  }, []);
 
-      let isMounted:boolean = true;
-     
-      
-      const getUserHistoy = async () => {
-          const user = await getUser();
-          const userHistory:EarningsHistory = user.data.  totalValueHistory;
-          const result = formatUserData(userHistory);
-
-          if (isMounted) {
-            setEarnings(result);
-          }
-        
-        }
-        getUserHistoy();
-      
-    }, []);
-
-   function formatUserData(earnings:EarningsHistory) {
+  function formatUserData(earnings:EarningsHistory) {
     return Object.values(earnings)?.map(entries => {
-     return entries; 
+      return entries; 
     }) 
   } 
      
-  
-  
   return (
-    <div>
-     
+    <div> 
 			<CanvasJSChart options={{
         theme: "light2",
-        
         zoomEnabled: true,
-        
         title: {
           text: "Total Earnings History"
         },
@@ -72,9 +54,7 @@ export const UserChart = () => {
         axisY: {
           labelFontColor: "#71BC78",
           title: "Amount",
-          titleFontColor: "#71BC78",
-          
-          
+          titleFontColor: "#71BC78",    
         },
         data: [
           {
@@ -82,23 +62,17 @@ export const UserChart = () => {
             xValueFormatString: "week",
             yValueFormatString: '',
             dataPoints: earnings?.map(data => 
-                (
-                   
+                ( 
                    {x: new Date(data.date.substring(data.date.length)), y:(data.totalValue.toFixed(2))}
-                  
                 ))
-      
-            
           }
           ]
       }}
 				/* onRef={ref => this.chart = ref} */
 			/>
 			{/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
-	
     </div>
   )
-
 }
 
 
