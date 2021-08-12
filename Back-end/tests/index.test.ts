@@ -2,11 +2,6 @@ import { server } from '../index';
 const request = require('supertest');
 const serverConnection = server(4567);
 import User from '../models/userModel';
-// const db = require('./db')
-
-// beforeAll(async () => await db.connect());
-// afterEach(async () => await db.clearDatabase());
-// afterAll(async () => await db.closeDatabase());
 
 describe('Stocks API', () => {
   it('GET /stocks --> array with all stocks', async () => {
@@ -74,7 +69,8 @@ describe('Stocks API', () => {
             totalValue: expect.any(Number),
             date: expect.any(String)
           })
-        ]),
+        ])
+        ,
         userName: expect.any(String),
         password: expect.any(String),
         createdAt: expect.any(String),
@@ -118,15 +114,14 @@ describe('Stocks API filter', () => {
 })
 
 describe('Stocks API create user', () => {
-  it('POST /users --> object with username and token', async () => {
-    const response = await request(serverConnection).post('/users', 
-    {
-      userName: "biancaprocopio", 
-      password: "teste123", 
-      confirmPassword: "teste123"
-    })
-
-    expect(response.status).toBe(200)
+  it('POST /users --> should create a user, verify the status and delete it from db', async () => {
+    const newUser = {
+      "userName": "biancaprocopio", 
+      "password": "teste123", 
+      "confirmPassword": "teste123"
+    }
+    const response = await request(serverConnection).post('/users').send(newUser)
+    expect(response.status).toBe(201)
     expect(response.body).toEqual(
       expect.objectContaining({
         userName: expect.stringMatching("biancaprocopio"),

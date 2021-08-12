@@ -1,9 +1,6 @@
 /* eslint-disable */
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux'; // to retrieve the data from the store in redux
-import { Box, Button, Divider, Typography, Paper} from '@material-ui/core';
+import { useState, useEffect } from 'react';
 import { CanvasJSChart } from 'canvasjs-react-charts';
-import CanvasJS from 'canvasjs';
 import { getUser } from '../../../../../api/backendApi';
 // attempted to also graph the totalValueHistory But it just never came out quitw right
 
@@ -20,9 +17,6 @@ export const UserChart = () => {
   const [earnings, setEarnings] = useState<any[]>([])
   //const { holdings } = useSelector((state: any) => state.holdings);
 
-  
- 
-  
     useEffect(() => {
 
       let isMounted:boolean = true;
