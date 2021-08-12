@@ -23,7 +23,7 @@ export const createUser = async (req: Request, res: Response) => {
   try {
     const user = await User.findOne({ userName });
     if (user) {
-      return res.status(400).send({ message: 'Username taken, chose another one.' });
+      return res.status(400).send({ message: 'Username taken, choose another one.' });
     }
     if (password !== confirmPassword) {
       return res.status(400).send({ message: "Passwords don't match." });
