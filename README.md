@@ -26,20 +26,20 @@ The technologies we used in the development of this project:
 
 1. You will need an api key from
 * [TwelveData](https://twelvedata.com/) 
-3. You will need a Postgres database running.
-2. Clone the repo
+2. You will need a MongoDB database running.
+3. Clone the repo
    ```sh
-   git clone https://github.com/your_username_/tutorworld.git
+   https://github.com/yousufra/PractiseInvestor.git
    ```
-3. Install NPM packages in both client and server folders:
+4. Install NPM packages in both client and route folders:
    ```sh
-   tutorworld/client % npm install
+   practiseinvestor % npm install
 
-   tutorworld/server % npm install
+   practiseinvestor/Front-end % npm install
    ```
-4. Create `server/.env` using `server/.env.example` as a template.
+5. Create `Back-end/.env` using `Back-end/.env.example` as a template.
 
-5. Create `client/.env` using `client/.env.example` as a template.
+6. Create `Front-end/.env` using `Front-end/.env.example` as a template.
 
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/othneildrew
@@ -47,7 +47,7 @@ The technologies we used in the development of this project:
 
 
 
-# Populate name and ticker api
+# Script to Populate name and ticker api collection
 ```js
 const url = 'https://api.twelvedata.com/stocks';
 
