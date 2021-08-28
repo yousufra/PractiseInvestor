@@ -37,10 +37,8 @@ const Authenticate = () => {
     e.preventDefault();
 
     if (isRegister) {
-      // dispatch an action to signup
       dispatch(register(form, history));
     } else {
-      // dspatch an action to sign in
       dispatch(login(form, history));
     }
   };
@@ -55,7 +53,6 @@ const Authenticate = () => {
   };
 
   return (
-    // eslint-disable-next-line react/jsx-filename-extension
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>

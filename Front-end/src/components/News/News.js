@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, {useEffect, useState} from 'react';
 import './News.css';
 import { topNews } from '../../api/newsApi';
@@ -33,7 +32,7 @@ const News = () => {
       setArticles((await topNews()).data.articles);
     }
     getArticles();
-    const interval = setInterval(() => getArticles(), 1800000 ); // every 30 mins
+    const interval = setInterval(() => getArticles(), 1800000 );
 
     return () => {
       clearInterval(interval);
@@ -47,7 +46,7 @@ const News = () => {
         :
       <>
       <Box display="flex" flexWrap="wrap" justifyContent="center">
-        {articles.map(article => ( article.source.name !== "Bloomberg" && //get rid of bloomberg they have some protection
+        {articles.map(article => ( article.source.name !== "Bloomberg" && 
           <Box m={1} width={0.3}>
             <Card className={classes.root}>
               <CardActionArea>

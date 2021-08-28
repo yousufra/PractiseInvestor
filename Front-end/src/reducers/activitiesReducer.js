@@ -1,7 +1,6 @@
 import { FETCH_ACTIVITIES } from '../constants/actionTypes';
 
-// eslint-disable-next-line max-len
-const activitiesReducer = (activities = [], action) => { // need to inialize state(holdings) , holdings is gunna be an array of objects, reducer returns the new state
+const activitiesReducer = (activities = [], action) => {
   switch (action.type) {
     case FETCH_ACTIVITIES:
       return action.payload;

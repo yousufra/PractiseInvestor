@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useState, useEffect } from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -7,7 +6,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { useSelector } from 'react-redux'; // to retrieve the data from the store in redux
+import { useSelector } from 'react-redux';
 import useStyles from './styles';
 import Holding from './Holding/holding';
 import Box from '@material-ui/core/Box';
@@ -16,17 +15,16 @@ import PieChart from './PieChart/PieChart';
 
 const Holdings = () => {
   const classes = useStyles();
-  const [totalHoldingsValue, setTotalHoldingsValue] = useState(0); //state has to only refresh the component if first time user has come onto page
+  const [totalHoldingsValue, setTotalHoldingsValue] = useState(0);
   const [holdingsPrices, setHoldingsPrices] = useState([]);
   const [portfolioValue, setPortfolioValue] = useState(0);
 
-  const { holdings, cash } = useSelector((state) => state.holdings); // state object is all the states within the combine reducer in index.js in reducer folder
+  const { holdings, cash } = useSelector((state) => state.holdings);
 
   useEffect(() => {
     function getPrice () {
       const apiCallArray = holdings.map(async (holding) => {
         const price = Number((await getCurrentPrice(holding.ticker)).data.price)
-        // const price = 0;
         return {...holding, price };
       });
       Promise.all(apiCallArray).then((res)=>{
@@ -41,7 +39,7 @@ const Holdings = () => {
     };
 
     getPrice();
-    const interval = setInterval(() => getPrice(), 120000 ); // every 1 minute, 55 api calls/minute retriction
+    const interval = setInterval(() => getPrice(), 15000 );
 
     return () => {
       clearInterval(interval);

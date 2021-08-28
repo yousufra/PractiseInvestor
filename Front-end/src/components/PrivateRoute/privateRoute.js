@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useEffect, useState } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -23,7 +22,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     } else {
       setIsAuthenticated(false);
     }
-    // eslint-disable-next-line
   }, [auth])
 
   if (isAuthenticated === null) {

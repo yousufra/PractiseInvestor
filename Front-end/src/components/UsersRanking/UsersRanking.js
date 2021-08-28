@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, {useEffect, useState} from 'react';
 import './UsersRanking.css';
 import PropTypes from 'prop-types';
@@ -105,7 +104,7 @@ export default function CustomPaginationActionsTable() {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 4500);
+    }, 6000);
     const ranking = (await getRanking()).data;
     setRankings(ranking);
   }, []);

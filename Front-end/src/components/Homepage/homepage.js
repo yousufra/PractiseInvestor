@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, {useState, useEffect} from 'react';
 import './Homepage.css';
 import NavBar from '../NavBar/navBar';
@@ -14,7 +13,6 @@ const Homepage = () => {
   const [component, setComponent] = useState('Dashboard');
   const [title, setTitle] = useState('Practise Investing');
 
-  //Dashboard, Order, Past Acitivities, Ranking
   const toggleComponent = (componentString) => {
     setComponent(componentString);
     setTitle(componentString);

@@ -23,43 +23,10 @@ const userSchema = new mongoose.Schema({
   },
   totalValueHistory: {
     type: Array,
-    default: [], // {totalValue, date}
+    default: [], 
   },
 }, {
-  timestamps: true, // creates an createdat and updated at field whenever a document is created
+  timestamps: true,
 });
-// Mongoose automatically looks for the plural, lowercased version of your model name. Thus,
-// for the example above, the model Post is for the posts collection in the database.
+
 module.exports = mongoose.model('User', userSchema);
-
-/*
-
-Activity object:
-
-{
-"date": "26thjuly",
-"company": "Matterport",
-"ticker": "GHVI",
-"action": "buy",
-"quantity": 500,
-"price": 15.21,
-"netAmount": 7605
-}
-
-CreateUser:
-
-{
-  "userName": "RahmatYousufi",
-  "password": "123456"
-}
-
-holdings object:
-
-{
-  company:
-  ticker:
-  quantity:
-  avgCost:
-}
-
-*/

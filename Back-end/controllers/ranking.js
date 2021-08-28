@@ -33,13 +33,12 @@ exports.getRanking = async (req, response) => {
           const url = 'https://api.twelvedata.com'+ `/price?symbol=${ticker}&apikey=${apiKey}`;
           await axios.get(url)
             .then(res => {
-              const price = Number(res.data.price);//current price for that specific holding
+              const price = Number(res.data.price);
               const holdingValue = price * holdings[i].quantity;
               calcPortfolioValue+=holdingValue;
               if(i===holdings.length-1 ) {
                 rankings.push({userName, totalValue: calcPortfolioValue, totalNumberOfActivities, numberOfStocks});
                 if(j===users.length-1) {
-                  //I wanna sort by totalValue
                   rankings.sort((a,b) => b.totalValue - a.totalValue);
                   response.status(200);
                   response.send(rankings);

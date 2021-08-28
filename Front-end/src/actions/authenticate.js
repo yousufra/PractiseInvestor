@@ -9,7 +9,7 @@ export const login = (form, history) => async (dispatch) => {
       data,
     });
 
-    history.push('/');// after login push user to homepage
+    history.push('/');
   } catch (error) {
     console.log(error);
   }

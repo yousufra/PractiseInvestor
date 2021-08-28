@@ -1,5 +1,3 @@
-/* eslint-disable */
-/* eslint-disable react/jsx-filename-extension */
 import React, { useState } from 'react';
 import {
   TextField, Button, Typography, Paper, Tooltip,
@@ -46,13 +44,12 @@ const Order = ({ toggleComponent }) => {
     setSuggestions([]);
     setTicker(company.symbol);
 
-    //set price here with real time api call
     const realTimePrice = Number((await getCurrentPrice(company.symbol)).data.price);
     setPrice(realTimePrice)
   }
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // prevent browser from refreshing , defualt when you submit a form
+    e.preventDefault(); 
     dispatch(updateHoldings({ date, company, ticker, action, quantity, price, netAmount: Number((price * quantity).toFixed(2)) }));
     setCompany('');
     setTicker('');
