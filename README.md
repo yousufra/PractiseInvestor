@@ -27,7 +27,8 @@ The technologies we used in the development of this project:
 1. You will need an api key from
 * [TwelveData](https://twelvedata.com/) 
 2. You will need a MongoDB database running.
-3. Clone the repo
+3. Populate name and ticker api collection with script at bottom of readme
+4. Clone the repo
    ```sh
    https://github.com/yousufra/PractiseInvestor.git
    ```
@@ -40,6 +41,13 @@ The technologies we used in the development of this project:
 5. Create `Back-end/.env` using `Back-end/.env.example` as a template.
 
 6. Create `Front-end/.env` using `Front-end/.env.example` as a template.
+
+7. Running the application:
+   ```sh
+   pactiseinvestor/front-end % npm start
+
+   pactiseinvestor/back-end % node index.js
+   ```
 
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/othneildrew
