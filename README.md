@@ -4,6 +4,8 @@
 
 Pactise Investor allows users to buy and sell stock with real-time stock market prices with fake money. Allows users to practise investing with zero risk, has features such as porfolio diversity metrics, stock holdings metrics, top news in the stock market and a application ranking feature to add a gamified twist.
 
+![image](https://ibb.co/SPb7t7d)
+
 ## Contributor
 * Rahmat Yousufi [![LinkedIn][linkedin-shield]](https://www.linkedin.com/in/rahmatyousufi/)
 
